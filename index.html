@@ -183,10 +183,7 @@
   }
   .pick .ic{font-size:2rem;line-height:1.1}
   .pick .t{font-weight:600;font-size:1rem}
-  .pick .n{display:block;font-size:.82rem;color:rgba(255,243,247,.7);line-height:1.3}
-  .pick[data-custom="true"]{grid-column:1 / -1;min-height:76px;flex-direction:row;justify-content:center;gap:.8rem}
-  .pick[data-custom="true"] .ic{font-size:1.8rem}
-  .pick[data-custom="true"] .t{font-size:1.05rem}
+  .pick .n{font-size:.82rem;color:rgba(255,243,247,.7);line-height:1.3}
   .pick:hover{transform:translateY(-3px);background:rgba(255,255,255,.15);border-color:rgba(255,200,215,.6)}
   .pick.sel{transform:scale(1.04);background:linear-gradient(135deg,rgba(255,143,171,.55),rgba(255,201,168,.45));border-color:#ffd6e0}
   .custom{display:flex;gap:.6rem;margin-top:1rem}
@@ -199,10 +196,7 @@
   }
   .field::placeholder{color:rgba(255,255,255,.5)}
   .field:focus{outline:none;border-color:#ffc9d8;background:rgba(255,255,255,.14)}
-  textarea.field{resize:none;min-height:110px;line-height:1.5;scrollbar-width:thin;scrollbar-color:rgba(255,190,215,.65) rgba(255,255,255,.06)}
-  textarea.field::-webkit-scrollbar{width:7px}
-  textarea.field::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:99px}
-  textarea.field::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ffc0d5,#b86aff);border-radius:99px;border:1px solid rgba(255,255,255,.18)}
+  textarea.field{resize:none;min-height:110px;line-height:1.5}
 
   /* календарь */
   .cal{margin-top:1.4rem;text-align:left}
@@ -258,27 +252,6 @@
   .ticket .date{font-size:1.05rem;line-height:1.35}
   .ticket .time{font-family:var(--serif);font-weight:700;font-size:2.1rem;line-height:1}
   .ticket .wish{padding:0 1.3rem 1.1rem;font-size:.95rem;color:rgba(255,243,247,.85);font-style:italic}
-  .signature-area{padding:1rem 1.1rem 1.2rem}
-  .signature-title{font-family:var(--serif);font-size:1.1rem;margin-bottom:.35rem}
-  .signature-hint{font-size:.82rem;opacity:.75;margin-bottom:.7rem}
-  #signature{display:block;width:100%;height:150px;border:1px dashed rgba(255,255,255,.45);border-radius:14px;background:rgba(255,255,255,.07);touch-action:none;cursor:crosshair}
-  .sign-tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.65rem}
-  .sign-tools .btn{padding:.7rem 1rem;font-size:.9rem}
-  .ticket .ticket-footer{padding:.8rem 1.2rem;text-align:center;font-size:.75rem;letter-spacing:.14em;border-top:1px dashed rgba(255,255,255,.25);opacity:.8}
-  #signature{display:block;width:100%;height:150px;min-height:150px;box-sizing:border-box;border:1px solid rgba(255,220,235,.35);border-radius:12px;background:rgba(255,255,255,.07);touch-action:none;cursor:crosshair;pointer-events:auto}
-  .signature-area{width:100%;min-width:0}
-  .sign-tools{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}
-  .sign-tools .btn{flex:1 1 120px;min-width:0}
-  #doneActions{width:100%;min-width:0;display:flex;flex-direction:column;gap:.65rem}
-  #doneActions .btn{width:100%;box-sizing:border-box;min-width:0;overflow-wrap:anywhere}
-  .custom{width:100%;min-width:0;flex-wrap:wrap}
-  .custom .field{flex:1 1 180px;min-width:0}
-  .custom .btn{flex:0 1 auto;max-width:100%;white-space:normal}
-  #doneActions .btn{max-width:100%;white-space:normal}
-  .card, .screen, .ticket, .grid, .actions, .pick{min-width:0;max-width:100%;box-sizing:border-box}
-  .ticket *{overflow-wrap:anywhere}
-  @media(max-width:480px){main{width:100%;padding-left:10px;padding-right:10px;box-sizing:border-box}.card{width:100%;padding:1.25rem .85rem}.grid{gap:.55rem}.pick{padding:.85rem .45rem}.ticket .top{padding:1rem}.ticket .bot{padding:.9rem 1rem;gap:.5rem}.ticket .time{font-size:1.7rem}.actions{gap:.6rem}.btn{max-width:100%;white-space:normal}.ticket .big{font-size:2.2rem}}
-  @media(min-width:720px){.card{width:min(760px,94vw)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
   .count{margin-top:1.2rem;font-size:1.02rem;color:rgba(255,243,247,.9)}
   .warn{margin-top:1.1rem;padding:.8rem 1rem;border-radius:14px;background:rgba(255,200,120,.16);border:1px solid rgba(255,210,150,.4);font-size:.93rem;line-height:1.45}
   .dbg{margin-top:1rem;font-size:.8rem;color:rgba(255,255,255,.55)}
@@ -407,7 +380,7 @@
   .pick .n{font-size:.8rem}
   .pick .ic{display:inline-block}
   .pick:hover .ic,.pick.sel .ic{transform:none;scale:1.2}
-  .bit{display:none!important}
+  .bit{position:absolute;top:34px;left:46%;font-size:.8rem;opacity:0;pointer-events:none;animation:rise 3.2s ease-in infinite}
   .bit.b1{left:54%;animation-delay:1.1s;--dx:-8px}.bit.b2{left:60%;animation-delay:2.1s;--dx:10px}
   @keyframes rise{0%{transform:translate(0,0) scale(.6);opacity:0}25%{opacity:.95}100%{transform:translate(var(--dx,6px),-30px) scale(1.15);opacity:0}}
   [data-fx=coffee] .ic,.big[data-fx=coffee]{animation:sip 2.8s ease-in-out infinite}
@@ -452,91 +425,6 @@
     .mascot.sm{display:none}.face{width:72px;height:72px}.card{padding:1.2rem 1.2rem}
   }
   @media (prefers-reduced-motion:reduce){.heart-wrap::before{animation:none}}
-
-  /* Cross-device performance and safe-area tuning */
-  html{width:100%;min-width:0;scrollbar-gutter:auto;-webkit-overflow-scrolling:touch}
-  body{width:100%;min-width:0;min-height:100%;overscroll-behavior-x:none}
-  main{width:100%;min-height:100vh;min-height:100svh;min-height:100dvh;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom));padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));}
-  .card{width:min(100%,540px);min-width:0;margin:auto;padding:clamp(14px,4vw,28px) clamp(12px,4vw,24px);}
-  .screen,.grid,.pick,.actions,.btn,.ticket,.ticket *{min-width:0;max-width:100%;overflow-wrap:anywhere}
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,2.5vw,12px)}
-  .pick{padding:clamp(10px,3vw,16px) clamp(6px,2vw,12px)}
-  .pick .ic{font-size:clamp(1.6rem,7vw,2.4rem)}
-  input,textarea,select,button{font:inherit;max-width:100%;}
-  input,textarea,select{font-size:16px!important}
-  button,.btn{touch-action:manipulation;-webkit-appearance:none}
-  textarea{resize:vertical;overscroll-behavior:contain}
-  #fx{width:100%;height:100%;contain:strict}
-  .orb{filter:blur(36px)}
-  .card::before{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-  #doneActions{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;width:100%}
-  #doneActions>*{width:100%;min-width:0}
-  @media(max-width:520px){
-    .orb{filter:blur(24px)}
-    .orb.a{width:65vmax;height:65vmax}
-    .orb.b{width:55vmax;height:55vmax}
-    .orb.c{display:none}
-    .card::before{-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 12px 32px rgba(15,0,28,.22),inset 0 1px 0 rgba(255,255,255,.22)}
-    .screen.active{animation:mobileEnter .22s ease-out both}
-    @keyframes mobileEnter{from{opacity:.65;transform:translateY(5px)}to{opacity:1;transform:none}}
-    .mascot{filter:none}
-    .pick{box-shadow:none}
-  }
-  @media(max-width:360px){
-    .grid{grid-template-columns:minmax(0,1fr)}
-    .card{border-radius:22px;padding:14px 10px}
-    .sub{font-size:.95rem}
-    .sub.script{font-size:1.45rem}
-    .ticket .bot{flex-wrap:wrap}
-  }
-  @media(max-height:520px) and (orientation:landscape){
-    main{place-items:start center;padding-top:12px;padding-bottom:12px}
-    .card{margin:0 auto}
-    .mascot{font-size:2.3rem}
-  }
-  @media(hover:none),(pointer:coarse){
-    .orb{animation:none!important}
-    .card::before{-webkit-backdrop-filter:none;backdrop-filter:none}
-  }
-  @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-
-  /* Final responsive pass: fluid viewport, stable scrolling, low-cost mobile rendering */
-  *,*::before,*::after{box-sizing:border-box}
-  html{min-height:100%;width:100%;overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-  body{margin:0;width:100%;min-height:100%;overflow-x:clip;overscroll-behavior-y:contain;}
-  main{width:100%;min-height:100vh;min-height:100svh;min-height:100dvh;display:grid;align-items:center;justify-items:center;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(14px,env(safe-area-inset-bottom));padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));}
-  .card{width:min(100%,600px);max-width:100%;min-width:0;margin-inline:auto;}
-  .screen,.grid,.pick,.actions,.ticket,#doneActions{min-width:0;max-width:100%;}
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr));}
-  .pick,.btn,button,input,textarea,select{min-width:0;max-width:100%;}
-  .pick{overflow-wrap:anywhere;}
-  img,canvas,svg{max-width:100%;}
-  #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;}
-  @media(max-width:520px){
-    main{align-items:start;padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom));padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right));}
-    .card{width:100%;padding:clamp(12px,3.8vw,18px) clamp(10px,3.2vw,16px);border-radius:22px;}
-    .grid{gap:8px;}
-    .pick{padding:12px 7px;border-radius:16px;}
-    .pick .title,.pick h3{overflow-wrap:anywhere;}
-    .actions{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;}
-    .actions>*{width:100%;}
-    #doneActions{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;}
-    #doneActions>*{width:100%;}
-    .orb{filter:none!important;opacity:.55;}
-    .card::before,.pick,.no{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
-    .heart-btn{filter:drop-shadow(0 3px 8px rgba(255,90,150,.45));}
-    .mascot,.face,.pick .ic{filter:none!important;}
-    .screen.active{animation:mobileEnter .16s ease-out both;}
-  }
-  @media(max-width:360px){
-    .grid{grid-template-columns:minmax(0,1fr);}
-    .pick{display:grid;grid-template-columns:42px minmax(0,1fr);column-gap:8px;align-items:center;text-align:left;}
-    .pick .ic{grid-row:1 / span 2;}
-    .pick .title,.pick .desc{text-align:left;}
-    .card{padding:12px 9px;}
-  }
-  @media(max-height:520px) and (orientation:landscape){main{align-items:start}.card{margin-block:8px;}}
-  @media(prefers-reduced-motion:reduce){.screen.active{animation:none!important}}
 </style>
 </head>
 <body data-s="s-cover">
@@ -675,6 +563,7 @@
       { icon: "🍽️", fx: "dinner", bits: ["🍷","✨","🕯️"], title: "Ужин", note: "Вкусная еда, спокойная музыка и душевная беседа", done: "Вкусный ужин и тёплая беседа — постараюсь выбрать самое уютное место 🕯️" },
       { icon: "🎡", fx: "ferris", bits: ["🎈","⭐","✨"], title: "Аттракционы", note: "Немного веселья и смеха — как в детстве, со сладкой ватой", done: "Немного детской радости, смех и сладкая вата 🎡" },
       { icon: "🎳", fx: "bowl", bits: ["💥","⭐","✨"], title: "Боулинг", note: "Легко и весело. Кто проиграет — тот угощает десертом", done: "Страйки, смех, а проигравший угощает десертом 🎳" },
+      { icon: "🎁", fx: "gift", bits: ["🎉","✨","💖"], title: "Удиви меня", note: "Доверься мне — я подготовлю что-нибудь приятное", done: "Тссс… я придумаю что-то приятное. Надеюсь, тебе понравится ✨" },
       { icon: "✍️", fx: "write", bits: ["💌","✨","💖"], title: "Свой вариант", note: "Есть любимое место? Напиши — с радостью пойду", custom: true, done: "Отличный выбор — мне уже нравится, как ты придумываешь 🌸" }
     ],
     times: ["12:00", "14:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"],
@@ -852,14 +741,13 @@
   }
 
   let stars = [], bg = [], fx = [], shoot = null;
-  let tx = 0, ty = 0, px = 0, py = 0, lastTrail = 0, running = false, lastFrame = 0;
+  let tx = 0, ty = 0, px = 0, py = 0, lastTrail = 0, running = false;
 
   function build(){
     stars = []; bg = [];
-    const touchDevice = isMobile || matchMedia('(pointer: coarse)').matches;
-    const ns = Math.min(touchDevice ? 10 : 36, Math.round(W * H / (touchDevice ? 85000 : 36000)));
+    const ns = Math.min(90, Math.round(W * H / 16000));
     for (let i = 0; i < ns; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: .4 + Math.random() * 1.2, ph: Math.random() * 6.28, sp: 500 + Math.random() * 900, d: Math.random() });
-    const n = Math.max(4, Math.min(touchDevice ? 5 : 16, Math.round(W * H / (touchDevice ? 120000 : 60000))));
+    const n = Math.max(14, Math.min(isMobile ? 18 : 36, Math.round(W * H / 26000)));
     for (let i = 0; i < n; i++){
       const depth = [.4, .8, 1.3][i % 3];
       const fly = Math.random() < .14;
@@ -875,7 +763,7 @@
     bg.sort((a, b) => a.d - b.d);
   }
   function resize(){
-    dpr = Math.min(window.devicePixelRatio || 1, (isMobile || matchMedia('(pointer: coarse)').matches) ? 1.25 : 1.75);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = innerWidth; H = innerHeight;
     cv.width = W * dpr; cv.height = H * dpr;
     cx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -895,15 +783,12 @@
         life: 1, decay, g, spr: sprite(set[(Math.random() * set.length) | 0])
       });
     }
-    const fxLimit = (isMobile || matchMedia('(pointer: coarse)').matches) ? 36 : 180; if (fx.length > fxLimit) fx.splice(0, fx.length - fxLimit);
+    if (fx.length > 700) fx.splice(0, fx.length - 700);
     start();
   }
   const burst = (x, y, n = 70) => emit(x, y, { n });
 
   function frame(t){
-    if (document.hidden){ running = false; return; }
-    if ((isMobile || matchMedia('(pointer: coarse)').matches) && t - lastFrame < 50){ requestAnimationFrame(frame); return; }
-    lastFrame = t;
     cx.clearRect(0, 0, W, H);
     px += (tx - px) * .05; py += (ty - py) * .05;
 
@@ -947,12 +832,11 @@
     cx.globalAlpha = 1;
     if (!reduce) requestAnimationFrame(frame); else running = false;
   }
-  function start(){ if (!running && !reduce && !document.hidden){ running = true; requestAnimationFrame(frame); } }
-  document.addEventListener('visibilitychange', () => { if (document.hidden) { running = false; } else start(); });
+  function start(){ if (!running && !reduce){ running = true; requestAnimationFrame(frame); } }
 
   addEventListener('pointermove', e => {
     tx = (e.clientX / W - .5) * 2; ty = (e.clientY / H - .5) * 2;
-    if (e.pointerType === 'mouse' && !isMobile){
+    if (e.pointerType === 'mouse'){
       const now = performance.now();
       if (now - lastTrail > 45){
         lastTrail = now;
@@ -961,7 +845,7 @@
     }
   }, { passive: true });
   addEventListener('pointerdown', e => {
-    emit(e.clientX, e.clientY, { n: isMobile ? 3 : 7, sp: 4, size: [12, 22], g: .12, decay: .02, up: 2, set: SET_TAP });
+    emit(e.clientX, e.clientY, { n: 7, sp: 4, size: [12, 22], g: .12, decay: .02, up: 2, set: SET_TAP });
   }, { passive: true });
 
   /* ---------- уведомления тебе ---------- */
@@ -1046,11 +930,9 @@
   }
   function clampNo(){
     if (!floating) return;
-    const w = noBtn.offsetWidth, h = noBtn.offsetHeight;
-    const minX = Math.max(12, innerWidth * .28), maxX = Math.max(minX, Math.min(innerWidth * .72 - w, innerWidth - w - 12));
-    const minY = Math.max(12, innerHeight * .28), maxY = Math.max(minY, Math.min(innerHeight * .72 - h, innerHeight - h - 12));
-    const x = Math.min(Math.max(minX, parseFloat(noBtn.style.left) || innerWidth * .5), maxX);
-    const y = Math.min(Math.max(minY, parseFloat(noBtn.style.top) || innerHeight * .5), maxY);
+    const m = 12, w = noBtn.offsetWidth, h = noBtn.offsetHeight;
+    const x = Math.min(Math.max(m, parseFloat(noBtn.style.left) || m), innerWidth - w - m);
+    const y = Math.min(Math.max(m, parseFloat(noBtn.style.top) || m), innerHeight - h - m);
     noBtn.style.left = x + 'px'; noBtn.style.top = y + 'px';
   }
   function dodge(pX, pY){
@@ -1074,21 +956,18 @@
     noBtn.textContent = CONFIG.noLabels[Math.min(state.attempts, CONFIG.noLabels.length - 1)];
     floatNo();
 
-    const w = noBtn.offsetWidth, h = noBtn.offsetHeight;
-    // Кнопка игриво перемещается только в центральной области экрана.
-    const minX = Math.max(12, innerWidth * .28), maxX = Math.max(minX, Math.min(innerWidth * .72 - w, innerWidth - w - 12));
-    const minY = Math.max(12, innerHeight * .28), maxY = Math.max(minY, Math.min(innerHeight * .72 - h, innerHeight - h - 12));
+    const w = noBtn.offsetWidth, h = noBtn.offsetHeight, m = 12;
     const yr = yesBtn.getBoundingClientRect();
     let best = null;
     for (let i = 0; i < 40; i++){
-      const x = minX + Math.random() * Math.max(1, maxX - minX);
-      const y = minY + Math.random() * Math.max(1, maxY - minY);
+      const x = m + Math.random() * Math.max(1, innerWidth - w - 2 * m);
+      const y = m + Math.random() * Math.max(1, innerHeight - h - 2 * m);
       const hitsYes = x < yr.right + 12 && x + w > yr.left - 12 && y < yr.bottom + 12 && y + h > yr.top - 12;
       if (hitsYes) continue;
       const far = Math.hypot(x + w / 2 - pX, y + h / 2 - pY);
       if (!best || far > best.far) best = { x, y, far };
     }
-    if (!best) best = { x: minX, y: minY };
+    if (!best) best = { x: m, y: m };
     noBtn.style.left = best.x + 'px';
     noBtn.style.top = best.y + 'px';
   }
@@ -1144,7 +1023,6 @@
     const b = document.createElement('button');
     b.className = 'pick';
     b.dataset.fx = p.fx || '';
-    if (p.custom) b.dataset.custom = "true";
     b.innerHTML = `<span class="ic">${p.icon}</span>${(p.bits || []).map((x, i) => `<i class="bit b${i}">${x}</i>`).join()}<span class="t">${esc(p.title)}</span><span class="n">${esc(p.note)}</span>`;
     b.addEventListener('click', () => {
       placesEl.querySelectorAll('.pick').forEach(x => x.classList.remove('sel'));
@@ -1350,108 +1228,16 @@
       ? 'Файл скачан — нажми на него в уведомлении, и календарь сохранит встречу 💖'
       : 'Файл скачан — открой его, и встреча появится в календаре 💖';
   }
-  let signCanvas = null, signCtx = null, drawing = false, hasInk = false;
-  function setupSignature(){
-    signCanvas = $('#signature');
-    if (!signCanvas) return;
-    const rect = signCanvas.getBoundingClientRect();
-    if (rect.width < 2) { requestAnimationFrame(setupSignature); return; }
-    const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    signCanvas.width = Math.max(1, Math.round(rect.width * ratio));
-    signCanvas.height = Math.max(1, Math.round(rect.height * ratio));
-    signCtx = signCanvas.getContext('2d');
-    signCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    signCtx.lineWidth = 3;
-    signCtx.lineCap = 'round';
-    signCtx.lineJoin = 'round';
-    signCtx.strokeStyle = '#ffe2ed';
-    const point = e => {
-      const r = signCanvas.getBoundingClientRect();
-      return {x:e.clientX-r.left,y:e.clientY-r.top};
-    };
-    signCanvas.onpointerdown = e => {
-      e.preventDefault(); drawing = true; hasInk = true;
-      signCanvas.setPointerCapture(e.pointerId);
-      const p = point(e); signCtx.beginPath(); signCtx.moveTo(p.x,p.y);
-    };
-    signCanvas.onpointermove = e => {
-      if (!drawing) return;
-      e.preventDefault(); const p = point(e);
-      signCtx.lineTo(p.x,p.y); signCtx.stroke();
-    };
-    const end = () => { drawing = false; };
-    signCanvas.onpointerup = end; signCanvas.onpointercancel = end;
-    $('#clearSign').onclick = () => { signCtx.clearRect(0,0,signCanvas.width/(Math.min(window.devicePixelRatio||1,2)),signCanvas.height/(Math.min(window.devicePixelRatio||1,2))); hasInk = false; };
-    $('#heartStamp').onclick = () => {
-      const r = signCanvas.getBoundingClientRect();
-      const x = 22 + Math.random() * Math.max(1,r.width-44);
-      const y = 22 + Math.random() * Math.max(1,r.height-44);
-      signCtx.save();
-      signCtx.font = '28px sans-serif'; signCtx.textAlign = 'center'; signCtx.textBaseline = 'middle';
-      signCtx.fillText('💖', x, y); signCtx.restore(); hasInk = true; chime([783.99,1046.5]);
-    };
-  }
-  function saveTicketImage(){
-    const c = document.createElement('canvas'), ctx = c.getContext('2d');
-    const W = 1000, pad = 64, sigH = 250, H = 660 + sigH + (state.note ? 70 : 0);
-    c.width = W; c.height = H;
-    const grad = ctx.createLinearGradient(0,0,W,H);
-    grad.addColorStop(0,'#3a174f'); grad.addColorStop(.55,'#762c70'); grad.addColorStop(1,'#c44e7d');
-    ctx.fillStyle = grad; ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle = 'rgba(255,224,237,.75)'; ctx.lineWidth = 3;
-    ctx.setLineDash([12,10]); ctx.strokeRect(24,24,W-48,H-48); ctx.setLineDash([]);
-    ctx.textAlign = 'center'; ctx.fillStyle = '#ffd9e8';
-    ctx.font = '600 30px sans-serif'; ctx.fillText('OUR LITTLE DATE',W/2,88);
-    ctx.font = '100px sans-serif'; ctx.fillText(placeIcon(),W/2,210);
-    ctx.fillStyle = '#ffffff'; ctx.font = 'bold 54px Georgia,serif'; ctx.fillText(placeName(),W/2,290, W-100);
-    ctx.font = '34px sans-serif'; ctx.fillStyle = '#ffe8f0';
-    ctx.fillText(fmtDate(state.date),W/2,370);
-    ctx.font = 'bold 62px Georgia,serif'; ctx.fillStyle = '#fff';
-    ctx.fillText(state.time,W/2,455);
-    if (state.note){
-      ctx.font = 'italic 26px sans-serif'; ctx.fillStyle = '#ffe8f0';
-      const note = '“' + state.note + '”';
-      ctx.fillText(note.length > 70 ? note.slice(0,67)+'…”' : note,W/2,510,W-100);
-    }
-    const sy = state.note ? 565 : 525;
-    ctx.font = '28px Georgia,serif'; ctx.fillStyle = '#ffd9e8'; ctx.fillText('ТВОЯ ПОДПИСЬ 💗',W/2,sy);
-    if (signCanvas && hasInk) ctx.drawImage(signCanvas, pad, sy+22, W-pad*2, sigH-50);
-    ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.setLineDash([8,8]); ctx.beginPath(); ctx.moveTo(pad,sy+sigH-18); ctx.lineTo(W-pad,sy+sigH-18); ctx.stroke(); ctx.setLineDash([]);
-    ctx.font = '22px sans-serif'; ctx.fillStyle = '#ffe8f0'; ctx.fillText('A LITTLE MEMORY TO KEEP ✨',W/2,H-55);
-    c.toBlob(blob => {
-      if (!blob) { alert('Не удалось сохранить билет. Попробуй сделать скриншот.'); return; }
-      const url = URL.createObjectURL(blob), a = document.createElement('a');
-      a.href = url; a.download = 'bilet-nashej-vstrechi.png'; document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(url),3000);
-    },'image/png');
-  }
-
   function renderDone(res){
     $('#ticket').innerHTML = `
       <div class="top"><div class="big" data-fx="${esc((state.place && state.place.fx) || '')}">${esc(placeIcon())}</div>
         <div><div class="k">Встреча</div><div class="v">${esc(placeName())}</div></div></div>
       <div class="sep"></div>
       <div class="bot"><div class="date">${esc(fmtDate(state.date))}</div><div class="time">${esc(state.time)}</div></div>
-      ${state.note ? `<div class="wish">«${esc(state.note)}»</div>` : ''}
-      <div class="signature-area">
-        <div class="signature-title">Твоя подпись 💗</div>
-        <div class="signature-hint">Поставь свой маленький знак согласия 💗</div>
-        <canvas id="signature" aria-label="Поле для подписи"></canvas>
-        <div class="sign-tools">
-          <button class="btn ghost" type="button" id="heartStamp">Добавить 💖</button>
-          <button class="btn ghost" type="button" id="clearSign">Очистить</button>
-        </div>
-      </div>
-      <div class="ticket-footer">ONE SPECIAL DATE · WITH LOVE</div>`;
+      ${state.note ? `<div class="wish">«${esc(state.note)}»</div>` : ''}`;
 
     const warn = $('#warn'), box = $('#doneActions');
     warn.innerHTML = ''; box.innerHTML = '';
-
-    const saveTicket = document.createElement('button');
-    saveTicket.className = 'btn yes'; saveTicket.style.setProperty('--grow', 1);
-    saveTicket.textContent = 'Сохранить билет на память 💖';
-    saveTicket.addEventListener('click', saveTicketImage);
-    box.appendChild(saveTicket);
 
     const cal = document.createElement('button');
     cal.className = 'btn yes'; cal.style.setProperty('--grow', 1);
@@ -1480,13 +1266,12 @@
 
     $('#doneLine').textContent = (state.place && state.place.done) || 'Я уже считаю часы до встречи 💖';
     show('s-done');
-    requestAnimationFrame(() => setupSignature());
     startCount();
     mood('🥰', $('#mascotDone'));
     chime([523.25, 659.25, 783.99, 1046.5, 1318.5]);
-    emit(innerWidth / 2, innerHeight * .3, { n: (isMobile || matchMedia('(pointer: coarse)').matches) ? 28 : 100 });
+    emit(innerWidth / 2, innerHeight * .3, { n: 130 });
     const rainSet = [placeIcon(), ...((state.place && state.place.bits) || ['💖'])];
-    for (let i = 0; i < ((isMobile || matchMedia('(pointer: coarse)').matches) ? 2 : 5); i++) setTimeout(() => emit(Math.random() * innerWidth, -20, { n: (isMobile || matchMedia('(pointer: coarse)').matches) ? 5 : 14, sp: 1.5, g: .09, up: 0, decay: .005, size: [16, 30], set: rainSet }), 500 + i * 450);
+    for (let i = 0; i < 5; i++) setTimeout(() => emit(Math.random() * innerWidth, -20, { n: 14, sp: 1.5, g: .09, up: 0, decay: .005, size: [16, 30], set: rainSet }), 500 + i * 450);
     setTimeout(() => emit(innerWidth * .2, innerHeight * .5, { n: 55 }), 250);
     setTimeout(() => emit(innerWidth * .8, innerHeight * .5, { n: 55 }), 450);
   }
@@ -1503,10 +1288,8 @@
     cardEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
     cardEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
   };
-  if (matchMedia('(hover: hover) and (pointer: fine)').matches){
-    addEventListener('pointermove', glow, { passive: true });
-    addEventListener('pointerdown', glow, { passive: true });
-  }
+  addEventListener('pointermove', glow, { passive: true });
+  addEventListener('pointerdown', glow, { passive: true });
 
   resize(); start();
 })();
