@@ -452,6 +452,91 @@
     .mascot.sm{display:none}.face{width:72px;height:72px}.card{padding:1.2rem 1.2rem}
   }
   @media (prefers-reduced-motion:reduce){.heart-wrap::before{animation:none}}
+
+  /* Cross-device performance and safe-area tuning */
+  html{width:100%;min-width:0;scrollbar-gutter:auto;-webkit-overflow-scrolling:touch}
+  body{width:100%;min-width:0;min-height:100%;overscroll-behavior-x:none}
+  main{width:100%;min-height:100vh;min-height:100svh;min-height:100dvh;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(16px,env(safe-area-inset-bottom));padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));}
+  .card{width:min(100%,540px);min-width:0;margin:auto;padding:clamp(14px,4vw,28px) clamp(12px,4vw,24px);}
+  .screen,.grid,.pick,.actions,.btn,.ticket,.ticket *{min-width:0;max-width:100%;overflow-wrap:anywhere}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,2.5vw,12px)}
+  .pick{padding:clamp(10px,3vw,16px) clamp(6px,2vw,12px)}
+  .pick .ic{font-size:clamp(1.6rem,7vw,2.4rem)}
+  input,textarea,select,button{font:inherit;max-width:100%;}
+  input,textarea,select{font-size:16px!important}
+  button,.btn{touch-action:manipulation;-webkit-appearance:none}
+  textarea{resize:vertical;overscroll-behavior:contain}
+  #fx{width:100%;height:100%;contain:strict}
+  .orb{filter:blur(36px)}
+  .card::before{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+  #doneActions{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;width:100%}
+  #doneActions>*{width:100%;min-width:0}
+  @media(max-width:520px){
+    .orb{filter:blur(24px)}
+    .orb.a{width:65vmax;height:65vmax}
+    .orb.b{width:55vmax;height:55vmax}
+    .orb.c{display:none}
+    .card::before{-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 12px 32px rgba(15,0,28,.22),inset 0 1px 0 rgba(255,255,255,.22)}
+    .screen.active{animation:mobileEnter .22s ease-out both}
+    @keyframes mobileEnter{from{opacity:.65;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .mascot{filter:none}
+    .pick{box-shadow:none}
+  }
+  @media(max-width:360px){
+    .grid{grid-template-columns:minmax(0,1fr)}
+    .card{border-radius:22px;padding:14px 10px}
+    .sub{font-size:.95rem}
+    .sub.script{font-size:1.45rem}
+    .ticket .bot{flex-wrap:wrap}
+  }
+  @media(max-height:520px) and (orientation:landscape){
+    main{place-items:start center;padding-top:12px;padding-bottom:12px}
+    .card{margin:0 auto}
+    .mascot{font-size:2.3rem}
+  }
+  @media(hover:none),(pointer:coarse){
+    .orb{animation:none!important}
+    .card::before{-webkit-backdrop-filter:none;backdrop-filter:none}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+  /* Final responsive pass: fluid viewport, stable scrolling, low-cost mobile rendering */
+  *,*::before,*::after{box-sizing:border-box}
+  html{min-height:100%;width:100%;overflow-x:clip;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+  body{margin:0;width:100%;min-height:100%;overflow-x:clip;overscroll-behavior-y:contain;}
+  main{width:100%;min-height:100vh;min-height:100svh;min-height:100dvh;display:grid;align-items:center;justify-items:center;padding-top:max(12px,env(safe-area-inset-top));padding-bottom:max(14px,env(safe-area-inset-bottom));padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right));}
+  .card{width:min(100%,600px);max-width:100%;min-width:0;margin-inline:auto;}
+  .screen,.grid,.pick,.actions,.ticket,#doneActions{min-width:0;max-width:100%;}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .pick,.btn,button,input,textarea,select{min-width:0;max-width:100%;}
+  .pick{overflow-wrap:anywhere;}
+  img,canvas,svg{max-width:100%;}
+  #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;}
+  @media(max-width:520px){
+    main{align-items:start;padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(12px,env(safe-area-inset-bottom));padding-left:max(8px,env(safe-area-inset-left));padding-right:max(8px,env(safe-area-inset-right));}
+    .card{width:100%;padding:clamp(12px,3.8vw,18px) clamp(10px,3.2vw,16px);border-radius:22px;}
+    .grid{gap:8px;}
+    .pick{padding:12px 7px;border-radius:16px;}
+    .pick .title,.pick h3{overflow-wrap:anywhere;}
+    .actions{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;}
+    .actions>*{width:100%;}
+    #doneActions{display:grid;grid-template-columns:minmax(0,1fr);gap:9px;}
+    #doneActions>*{width:100%;}
+    .orb{filter:none!important;opacity:.55;}
+    .card::before,.pick,.no{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+    .heart-btn{filter:drop-shadow(0 3px 8px rgba(255,90,150,.45));}
+    .mascot,.face,.pick .ic{filter:none!important;}
+    .screen.active{animation:mobileEnter .16s ease-out both;}
+  }
+  @media(max-width:360px){
+    .grid{grid-template-columns:minmax(0,1fr);}
+    .pick{display:grid;grid-template-columns:42px minmax(0,1fr);column-gap:8px;align-items:center;text-align:left;}
+    .pick .ic{grid-row:1 / span 2;}
+    .pick .title,.pick .desc{text-align:left;}
+    .card{padding:12px 9px;}
+  }
+  @media(max-height:520px) and (orientation:landscape){main{align-items:start}.card{margin-block:8px;}}
+  @media(prefers-reduced-motion:reduce){.screen.active{animation:none!important}}
 </style>
 </head>
 <body data-s="s-cover">
@@ -767,13 +852,14 @@
   }
 
   let stars = [], bg = [], fx = [], shoot = null;
-  let tx = 0, ty = 0, px = 0, py = 0, lastTrail = 0, running = false;
+  let tx = 0, ty = 0, px = 0, py = 0, lastTrail = 0, running = false, lastFrame = 0;
 
   function build(){
     stars = []; bg = [];
-    const ns = Math.min(90, Math.round(W * H / 16000));
+    const touchDevice = isMobile || matchMedia('(pointer: coarse)').matches;
+    const ns = Math.min(touchDevice ? 10 : 36, Math.round(W * H / (touchDevice ? 85000 : 36000)));
     for (let i = 0; i < ns; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: .4 + Math.random() * 1.2, ph: Math.random() * 6.28, sp: 500 + Math.random() * 900, d: Math.random() });
-    const n = Math.max(14, Math.min(isMobile ? 18 : 36, Math.round(W * H / 26000)));
+    const n = Math.max(4, Math.min(touchDevice ? 5 : 16, Math.round(W * H / (touchDevice ? 120000 : 60000))));
     for (let i = 0; i < n; i++){
       const depth = [.4, .8, 1.3][i % 3];
       const fly = Math.random() < .14;
@@ -789,7 +875,7 @@
     bg.sort((a, b) => a.d - b.d);
   }
   function resize(){
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, (isMobile || matchMedia('(pointer: coarse)').matches) ? 1.25 : 1.75);
     W = innerWidth; H = innerHeight;
     cv.width = W * dpr; cv.height = H * dpr;
     cx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -809,12 +895,15 @@
         life: 1, decay, g, spr: sprite(set[(Math.random() * set.length) | 0])
       });
     }
-    if (fx.length > 700) fx.splice(0, fx.length - 700);
+    const fxLimit = (isMobile || matchMedia('(pointer: coarse)').matches) ? 36 : 180; if (fx.length > fxLimit) fx.splice(0, fx.length - fxLimit);
     start();
   }
   const burst = (x, y, n = 70) => emit(x, y, { n });
 
   function frame(t){
+    if (document.hidden){ running = false; return; }
+    if ((isMobile || matchMedia('(pointer: coarse)').matches) && t - lastFrame < 50){ requestAnimationFrame(frame); return; }
+    lastFrame = t;
     cx.clearRect(0, 0, W, H);
     px += (tx - px) * .05; py += (ty - py) * .05;
 
@@ -858,11 +947,12 @@
     cx.globalAlpha = 1;
     if (!reduce) requestAnimationFrame(frame); else running = false;
   }
-  function start(){ if (!running && !reduce){ running = true; requestAnimationFrame(frame); } }
+  function start(){ if (!running && !reduce && !document.hidden){ running = true; requestAnimationFrame(frame); } }
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { running = false; } else start(); });
 
   addEventListener('pointermove', e => {
     tx = (e.clientX / W - .5) * 2; ty = (e.clientY / H - .5) * 2;
-    if (e.pointerType === 'mouse'){
+    if (e.pointerType === 'mouse' && !isMobile){
       const now = performance.now();
       if (now - lastTrail > 45){
         lastTrail = now;
@@ -871,7 +961,7 @@
     }
   }, { passive: true });
   addEventListener('pointerdown', e => {
-    emit(e.clientX, e.clientY, { n: 7, sp: 4, size: [12, 22], g: .12, decay: .02, up: 2, set: SET_TAP });
+    emit(e.clientX, e.clientY, { n: isMobile ? 3 : 7, sp: 4, size: [12, 22], g: .12, decay: .02, up: 2, set: SET_TAP });
   }, { passive: true });
 
   /* ---------- уведомления тебе ---------- */
@@ -1394,9 +1484,9 @@
     startCount();
     mood('🥰', $('#mascotDone'));
     chime([523.25, 659.25, 783.99, 1046.5, 1318.5]);
-    emit(innerWidth / 2, innerHeight * .3, { n: 130 });
+    emit(innerWidth / 2, innerHeight * .3, { n: (isMobile || matchMedia('(pointer: coarse)').matches) ? 28 : 100 });
     const rainSet = [placeIcon(), ...((state.place && state.place.bits) || ['💖'])];
-    for (let i = 0; i < 5; i++) setTimeout(() => emit(Math.random() * innerWidth, -20, { n: 14, sp: 1.5, g: .09, up: 0, decay: .005, size: [16, 30], set: rainSet }), 500 + i * 450);
+    for (let i = 0; i < ((isMobile || matchMedia('(pointer: coarse)').matches) ? 2 : 5); i++) setTimeout(() => emit(Math.random() * innerWidth, -20, { n: (isMobile || matchMedia('(pointer: coarse)').matches) ? 5 : 14, sp: 1.5, g: .09, up: 0, decay: .005, size: [16, 30], set: rainSet }), 500 + i * 450);
     setTimeout(() => emit(innerWidth * .2, innerHeight * .5, { n: 55 }), 250);
     setTimeout(() => emit(innerWidth * .8, innerHeight * .5, { n: 55 }), 450);
   }
@@ -1413,8 +1503,10 @@
     cardEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
     cardEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
   };
-  addEventListener('pointermove', glow, { passive: true });
-  addEventListener('pointerdown', glow, { passive: true });
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches){
+    addEventListener('pointermove', glow, { passive: true });
+    addEventListener('pointerdown', glow, { passive: true });
+  }
 
   resize(); start();
 })();
