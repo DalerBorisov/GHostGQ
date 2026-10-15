@@ -1,1297 +1,554 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2a0f3f">
-<meta name="color-scheme" content="dark">
-<meta name="robots" content="noindex,nofollow">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="format-detection" content="telephone=no">
-<meta property="og:title" content="Для тебя 💌">
-<meta property="og:description" content="Тут кое-что есть. Нажми на сердце.">
-<meta property="og:type" content="website">
-<title>Для тебя 💌</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💖%3C/text%3E%3C/svg%3E">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10091c">
+<meta name="description" content="Маленькое романтическое приглашение, созданное специально для тебя. ♡">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Marck+Script&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<title>Только для тебя — маленькое чудо ♡</title>
+<meta name="color-scheme" content="dark">
 <style>
-  :root{
-    --ink:#2a0d3a;
-    --pearl:#fff3f7;
-    --serif:"Playfair Display", Georgia, "Times New Roman", serif;
-    --script:"Marck Script", "Playfair Display", Georgia, serif;
-    --sans:"Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --grow:1;
-  }
-  *{box-sizing:border-box;margin:0}
-  html,body{min-height:100%}
-  html{background:#150726}
-  body{
-    font-family:var(--sans);
-    color:var(--pearl);
-    background:linear-gradient(160deg,#150726 0%,#35104f 38%,#7d2768 74%,#d9567f 100%);
-    overflow-x:hidden;
-    -webkit-text-size-adjust:100%;overscroll-behavior-y:none;
-    -webkit-tap-highlight-color:transparent;
-  }
+:root{
+  --night:#10091c;--plum:#24112f;--pink:#ff7da8;--rose:#ffb4c9;--cream:#fff5f7;
+  --muted:#d7c2d8;--glass:rgba(255,255,255,.075);--line:rgba(255,255,255,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:var(--night);color:var(--cream);font-family:"DM Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden; -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #ffd2df;outline-offset:3px}
+.bg{position:fixed;inset:0;z-index:-3;overflow:hidden;background:radial-gradient(ellipse at 15% 10%,#4a1c52 0,transparent 38%),radial-gradient(ellipse at 85% 70%,#51223d 0,transparent 36%),linear-gradient(145deg,#10091c,#1c0d28 55%,#120a1b)}
+.bg:before,.bg:after{content:"";position:absolute;width:70vmax;height:70vmax;border-radius:50%;filter:blur(90px);opacity:.18;animation:drift 18s ease-in-out infinite alternate}
+.bg:before{background:#ff5791;left:-30vmax;top:15vh}.bg:after{background:#9b65ff;right:-35vmax;bottom:-15vh;animation-delay:-8s}
+@keyframes drift{to{transform:translate(12vw,-8vh) scale(1.15)}}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;opacity:.55;animation:twinkle 3s infinite ease-in-out alternate}
+@keyframes twinkle{to{opacity:.12;transform:scale(.55)}}
+.topbar{width:min(1120px,calc(100% - 36px));margin:auto;display:flex;align-items:center;justify-content:space-between;padding:23px 0;position:relative;z-index:2}
+.brand{display:flex;gap:10px;align-items:center;font-weight:750;letter-spacing:.04em;color:#fff}
+.brandmark{width:34px;height:34px;display:grid;place-items:center;border:1px solid #ffffff30;border-radius:12px;background:#ffffff0d;color:var(--rose);font-size:19px;box-shadow:0 0 25px #ff7da81c}
+.top-note{font-size:12px;color:#d9c2db;letter-spacing:.16em;text-transform:uppercase}
+main{width:min(1060px,calc(100% - 32px));margin:0 auto}
+.screen{display:none;min-height:calc(100svh - 90px);align-items:center;justify-content:center;padding:30px 0 70px;animation:appear .7s cubic-bezier(.2,.7,.2,1)}
+.screen.active{display:flex}
+@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.panel{width:100%;position:relative;border:1px solid var(--line);border-radius:30px;background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.035));box-shadow:0 30px 100px #0004,inset 0 1px 0 #ffffff14;backdrop-filter:blur(18px);overflow:hidden}
+.hero{min-height:590px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;padding:clamp(28px,6vw,72px);gap:20px}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;border:1px solid #ffb4c934;background:#ffb4c90d;color:#ffd5e1;border-radius:100px;padding:9px 14px;font-size:12px;letter-spacing:.13em;text-transform:uppercase}
+.pip{width:6px;height:6px;border-radius:50%;background:#ff90b2;box-shadow:0 0 14px #ff90b2}
+h1,h2,p{margin-top:0}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(44px,7vw,78px);line-height:1.02;letter-spacing:-.045em;margin:24px 0 20px;font-weight:600}
+.gradient-text{background:linear-gradient(100deg,#fff5f8 5%,#ffc1d3 48%,#e7c6ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic;font-weight:600}
+.lead{font-size:clamp(16px,2vw,19px);line-height:1.75;color:#ddcddd;max-width:490px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{border:0;border-radius:15px;padding:15px 22px;font-weight:750;transition:transform .2s,box-shadow .2s,background .2s;display:inline-flex;justify-content:center;align-items:center;gap:9px}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{color:#351225;background:linear-gradient(115deg,#fff0f5 0%,#ffc0d2 45%,#ff83aa 100%);box-shadow:0 10px 35px #ff73a633,inset 0 1px 0 #ffffffb5}
+.btn-primary:hover{box-shadow:0 14px 42px #ff73a64d}
+.btn-ghost{color:#fff;background:#ffffff0b;border:1px solid #ffffff26}
+.btn-ghost:hover{background:#ffffff16}
+.hero-art{min-height:360px;display:grid;place-items:center;position:relative}
+.orbit{position:absolute;width:min(33vw,340px);aspect-ratio:1;border:1px solid #ffb4c92e;border-radius:50%;animation:spin 28s linear infinite}
+.orbit:before,.orbit:after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#ffc3d6;box-shadow:0 0 18px #ff91b9}
+.orbit:before{top:16%;left:14%}.orbit:after{right:8%;bottom:28%;background:#d7b7ff;box-shadow:0 0 18px #b990ff}
+@keyframes spin{to{transform:rotate(360deg)}}
+.heart-wrap{position:relative;width:240px;height:240px;display:grid;place-items:center;filter:drop-shadow(0 0 48px #ff5e9b52)}
+.big-heart{font-size:150px;line-height:1;animation:heartbeat 2.2s ease-in-out infinite;filter:drop-shadow(0 14px 20px #ff5e9b38)}
+@keyframes heartbeat{0%,100%{transform:scale(1)}8%{transform:scale(1.09)}16%{transform:scale(1)}24%{transform:scale(1.05)}34%{transform:scale(1)}}
+.floating{position:absolute;font-size:24px;animation:float 5s ease-in-out infinite}.f1{top:18%;right:10%}.f2{bottom:17%;left:10%;animation-delay:-2s}.f3{top:15%;left:13%;font-size:17px;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-15px) rotate(8deg)}}
+.art-caption{position:absolute;bottom:0;text-align:center;color:#e5cddd;font-size:13px;letter-spacing:.06em}
+.content{padding:clamp(25px,5vw,58px);max-width:790px;margin:auto}
+.center{text-align:center}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.2em;color:#ffb4c9;margin-bottom:14px}
+h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(32px,5vw,52px);line-height:1.12;letter-spacing:-.035em;margin-bottom:16px;font-weight:600}
+.sub{color:#d9c7dc;line-height:1.75;font-size:16px}
+.little-heart{font-size:40px;display:inline-block;margin-bottom:15px;animation:heartbeat 2.2s infinite}
+.question-card{margin:28px auto 0;max-width:650px;padding:clamp(20px,4vw,36px);border:1px solid #ffffff20;border-radius:24px;background:#ffffff08}
+.question{font-size:clamp(24px,4vw,38px);line-height:1.2;font-weight:760;letter-spacing:-.04em;margin-bottom:28px}
+.answer-row{display:flex;justify-content:center;align-items:center;gap:13px;flex-wrap:wrap;min-height:58px;position:relative}
+#noBtn{position:relative;transition:left .18s,top .18s,transform .18s}
+.microcopy{font-size:13px;color:#d8bfd4;margin-top:22px;line-height:1.6}
+#noReaction{position:relative;display:block;width:fit-content;max-width:100%;min-height:0;margin:16px auto 0;padding:0;color:#ffe2ec;font-size:14px;font-weight:700;line-height:1.65;opacity:1;transition:opacity .2s}
+#noReaction:not(:empty){padding:13px 17px;border:1px solid #ffb4c955;border-radius:16px;background:linear-gradient(135deg,#ff8eb21c,#b68cff18);box-shadow:0 12px 35px #08030d55,0 0 28px #ff6c9c12}
+#noReaction:empty{margin-top:0}
+#noReaction:not(:empty):before{content:'✦  маленькое признание  ✦';display:block;color:#ffb4c9;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:5px}
+.no-reaction-pop{animation:reactionPop .42s cubic-bezier(.2,.8,.2,1)}
+@keyframes reactionPop{0%{transform:translateY(7px) scale(.94);opacity:.2;filter:blur(3px)}70%{transform:translateY(-2px) scale(1.015)}100%{transform:translateY(0) scale(1);opacity:1;filter:blur(0)}}
+.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:28px 0}
+.choice{border:1px solid #ffffff20;border-radius:20px;padding:20px 16px;background:#ffffff08;color:#fff;text-align:left;min-height:145px;transition:.2s}
+.choice:hover{transform:translateY(-3px);background:#ffffff10}
+.choice:focus-visible{border-color:#ffb4c9}
+.field input,.field textarea{transition:border-color .2s,box-shadow .2s}
+.field input:focus,.field textarea:focus{border-color:#ff9fbd;box-shadow:0 0 0 4px #ff9fbd17;outline:none}
+.choice.selected{border-color:#ff9fbd;background:linear-gradient(140deg,#ff8eb21c,#c6a0ff12);box-shadow:0 0 0 1px #ff9fbd33,0 12px 35px #ff78a612}
+.choice .emoji{font-size:29px;display:block;margin-bottom:14px}
+.choice strong{display:block;font-size:16px;margin-bottom:7px}
+.choice small{color:#cdbbd2;line-height:1.5}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;text-align:left;margin:26px 0}
+.field label{display:block;font-size:12px;color:#ddc8df;margin-bottom:9px;letter-spacing:.05em}
+.field input,.field textarea{width:100%;border:1px solid #ffffff24;background:#10091c99;border-radius:13px;padding:14px;color:#fff;min-width:0}
+.field input::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.75}
+.field textarea{resize:vertical;min-height:105px}
+.field.full{grid-column:1/-1}
+.note{border-left:2px solid #ff9fbd;padding:12px 15px;color:#d9c7dc;background:#ffffff06;text-align:left;border-radius:0 12px 12px 0;font-size:13px;line-height:1.6}
+.ticket{max-width:630px;margin:30px auto 0;border:1px solid #ffb4c944;border-radius:22px;overflow:hidden;background:linear-gradient(120deg,#ffb4c914,#bca3ff0b);text-align:left;position:relative}
+.ticket-top{padding:25px 26px 20px;border-bottom:1px dashed #ffb4c95c}
+.ticket-label{font-size:11px;letter-spacing:.2em;color:#ffb4c9;text-transform:uppercase}
+.ticket-title{font-size:30px;font-weight:800;letter-spacing:-.04em;margin:10px 0 5px}
+.ticket-body{padding:22px 26px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ticket-item span{display:block;font-size:11px;color:#bca8c4;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.ticket-item strong{font-size:15px;line-height:1.5}
+.ticket-footer{border-top:1px dashed #ffb4c95c;padding:17px 26px;color:#dfc9df;font-size:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.footer{padding:0 0 26px;text-align:center;color:#9f8aa8;font-size:12px}
+.footer span{color:#e6b6cc}
+.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px) scale(.97);background:linear-gradient(125deg,#fff5f8,#ffd0df);color:#321627;padding:14px 20px;border:1px solid #fff9;border-radius:16px;font-size:14px;font-weight:750;box-shadow:0 16px 50px #0005,0 0 30px #ff8eaf22;opacity:0;pointer-events:none;transition:opacity .28s,transform .28s cubic-bezier(.2,.8,.2,1);z-index:20;max-width:calc(100% - 30px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.confetti{position:fixed;top:-20px;width:8px;height:12px;z-index:30;pointer-events:none;animation:fall 3.2s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(760deg);opacity:.1}}
+.progress{width:min(1060px,calc(100% - 32px));height:2px;background:#ffffff13;margin:0 auto 6px;border-radius:9px;overflow:hidden}
+.progress span{display:block;height:100%;width:25%;background:linear-gradient(90deg,#ff8eaf,#d3b0ff);transition:width .4s}
+.back-btn{margin-top:15px;background:none;border:0;color:#c7b1cc;padding:10px}
+.back-btn:hover{color:#fff}
 
-  /* ---------- живой фон ---------- */
-  .orb{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0;will-change:transform}
-  .orb.a{width:50vmax;height:50vmax;left:-16vmax;top:-14vmax;background:#ff5f93;opacity:.42;animation:driftA 24s ease-in-out infinite alternate}
-  .orb.b{width:44vmax;height:44vmax;right:-14vmax;bottom:-16vmax;background:#8b4dff;opacity:.4;animation:driftB 30s ease-in-out infinite alternate}
-  .orb.c{width:34vmax;height:34vmax;left:30vw;top:38vh;background:#ffb27a;opacity:.18;animation:driftC 36s ease-in-out infinite alternate}
-  @keyframes driftA{to{transform:translate(12vmax,8vmax) scale(1.15)}}
-  @keyframes driftB{to{transform:translate(-10vmax,-9vmax) scale(1.2)}}
-  @keyframes driftC{to{transform:translate(-14vmax,10vmax) scale(.8)}}
-  #fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.sound-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff24;background:#ffffff0a;color:#f8dce8;border-radius:999px;padding:9px 13px;font-size:12px;white-space:nowrap;backdrop-filter:blur(10px)}
+.sound-toggle:hover{background:#ffffff15}
+#ambient{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.ambient-heart{position:absolute;bottom:-35px;opacity:0;color:#ff9fbd;text-shadow:0 0 18px #ff72a755;animation:rise-heart linear forwards}
+@keyframes rise-heart{0%{transform:translateY(0) translateX(0) rotate(0deg) scale(.7);opacity:0}12%{opacity:.5}80%{opacity:.35}100%{transform:translateY(-115vh) translateX(var(--drift)) rotate(35deg) scale(1.2);opacity:0}}
+.btn:active,.choice:active{transform:scale(.98)}
+.hint-glow{animation:hintGlow 1.2s ease-out}
+@keyframes hintGlow{0%{filter:drop-shadow(0 0 0 #ff8eaf00)}45%{filter:drop-shadow(0 0 32px #ff8eaf99)}100%{filter:drop-shadow(0 0 0 #ff8eaf00)}}
+.panel{transition:box-shadow .4s}
+.panel:hover{box-shadow:0 35px 110px #0005,inset 0 1px 0 #ffffff1c}
+@media(max-width:760px){.topbar{padding:16px 0}.sound-toggle{padding:9px 11px}.top-note{display:none}}
 
-  #snd{
-    position:fixed;z-index:30;top:max(.8rem,env(safe-area-inset-top));right:max(.8rem,env(safe-area-inset-right));
-    width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
-    background:rgba(255,255,255,.1);color:#fff;font-size:1.1rem;cursor:pointer;
-    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  }
+@media(max-width:760px){
+ .top-note{display:none}.hero{grid-template-columns:1fr;padding:32px 25px;min-height:auto}.hero-art{min-height:280px;grid-row:1}.heart-wrap{transform:scale(.82)}.orbit{width:250px}.art-caption{bottom:-3px}h1{font-size:clamp(46px,13vw,68px)}.choices{grid-template-columns:1fr}.choice{min-height:0;display:grid;grid-template-columns:44px 1fr;column-gap:12px;align-items:center}.choice .emoji{grid-row:span 2;margin:0}.choice strong{margin:0}.choice small{grid-column:2}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.content{padding:30px 21px}.screen{min-height:calc(100svh - 85px);padding-top:12px}.ticket-body{gap:18px}.panel{border-radius:24px}
+}
+@media(max-width:420px){.topbar{width:calc(100% - 24px)}main,.progress{width:calc(100% - 20px)}.brand{font-size:12px}.brandmark{width:30px;height:30px}.hero{padding:24px 18px}.hero-art{min-height:230px}.heart-wrap{transform:scale(.7)}.orbit{width:205px}.art-caption{font-size:11px;max-width:100%}.hero-actions{gap:9px}.btn{padding:13px 16px;font-size:14px;border-radius:13px}.question-card{padding:20px 14px}.answer-row{gap:9px}.ticket-top,.ticket-body,.ticket-footer{padding-left:17px;padding-right:17px}.ticket-title{font-size:25px}.ticket-item strong{font-size:14px}.sound-toggle{font-size:11px;padding:8px 9px}}
+@media(max-height:650px) and (min-width:761px){.screen{min-height:auto;padding:22px 0 38px}.hero{min-height:480px}.hero-art{min-height:300px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 
-  main{
-    position:relative;z-index:2;
-    min-height:100dvh;
-    display:grid;place-items:center;
-    padding:max(1.6rem,env(safe-area-inset-top)) 1rem max(1.6rem,env(safe-area-inset-bottom));
-  }
+/* A fresh, editorial midnight-rose redesign */
+:root{--night:#090b18;--plum:#17182c;--pink:#f6a9c5;--rose:#f7d7b5;--cream:#fffaf5;--muted:#d7d1e3;--glass:rgba(255,248,250,.055);--line:rgba(246,216,225,.17)}
+body{background:#090b18;letter-spacing:.005em}
+.bg{background:radial-gradient(ellipse at 12% 18%,#3b2449 0,transparent 34%),radial-gradient(ellipse at 88% 22%,#422338 0,transparent 29%),radial-gradient(ellipse at 50% 100%,#1c2542 0,transparent 46%),linear-gradient(145deg,#080a16,#121126 55%,#090b18)}
+.bg:before{background:#ed85b2;opacity:.11}.bg:after{background:#b6a1ff;opacity:.12}
+.topbar{padding-top:25px}.brand{font-size:11px;letter-spacing:.24em}.brandmark{border-radius:50%;color:#f7d7b5;border-color:#f7d7b566;background:linear-gradient(145deg,#f7d7b51b,#f6a9c51a);box-shadow:0 0 32px #f6a9c51c}
+.top-note{letter-spacing:.12em;color:#c7bed8;font-size:10px}
+.panel{border-color:#f5c8d62b;background:linear-gradient(135deg,rgba(255,250,248,.085),rgba(255,255,255,.018));box-shadow:0 35px 120px #0006,inset 0 1px 0 #ffffff19;border-radius:34px}
+.hero{min-height:620px}.eyebrow{border-color:#f7d7b53c;background:#f7d7b50b;color:#f7d7b5;letter-spacing:.17em;font-size:10px}
+.pip{background:#f7d7b5;box-shadow:0 0 16px #f7d7b5}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:-.035em}
+h1{font-size:clamp(58px,8vw,92px);line-height:.91;margin:26px 0 24px}
+h2{font-size:clamp(42px,6vw,62px);line-height:.98}
+.gradient-text{background:linear-gradient(105deg,#fff8f1 0%,#f7d7b5 38%,#f4a9c9 72%,#d5c4ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:#d9d4e4;line-height:1.85;font-size:clamp(16px,1.65vw,18px);max-width:475px}
+.btn{border-radius:999px;padding:15px 24px;letter-spacing:.01em;font-size:14px}
+.btn-primary{color:#211323;background:linear-gradient(115deg,#fff4e7 0%,#f7d7b5 43%,#f2a8c8 100%);box-shadow:0 10px 36px #f6a9c52b,inset 0 1px 0 #fff}
+.btn-ghost{background:rgba(255,255,255,.035);border:1px solid #f5d6e23b;color:#f8eaf1}
+.btn-ghost:hover{background:#f5d6e20d;border-color:#f7d7b57a}
+.hero-art{min-height:390px}.orbit{border-color:#f7d7b52a;width:min(34vw,360px)}.orbit:before{background:#f7d7b5;box-shadow:0 0 18px #f7d7b5}.big-heart{filter:drop-shadow(0 12px 28px #f6a9c52e)}
+.art-caption{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:18px;letter-spacing:.02em;color:#dcd1e3;max-width:100%}
+.content{padding:clamp(30px,5.5vw,66px)}.kicker{color:#f7d7b5;font-size:10px;letter-spacing:.24em}.sub{color:#d6d0e1;line-height:1.85}
+.little-heart{filter:drop-shadow(0 0 22px #f6a9c533)}
+.question-card{background:linear-gradient(145deg,#ffffff08,#f7d7b505);border-color:#f7d7b526;border-radius:28px;padding:clamp(24px,4vw,42px)}
+.question{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(34px,5vw,48px);font-weight:600;letter-spacing:-.02em;line-height:1.02}
+.no-choice-wrap{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-width:110px;max-width:min(100%,290px)}
+#noReaction{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(19px,2.2vw,23px);font-weight:600;line-height:1.18;color:#fff0f4;margin:12px 0 0;width:100%;max-width:290px;min-height:0;text-align:center}
+#noReaction:not(:empty){padding:12px 13px;background:linear-gradient(120deg,#f7d7b50b,#f6a9c515,#b6a1ff0b);border:1px solid #f7d7b52e;border-radius:17px;box-shadow:0 12px 30px #0002}
+#noReaction:not(:empty):before{content:'✧  маленькая тайна  ✧';display:block;color:#f7d7b5;font-size:8px;letter-spacing:.16em;margin-bottom:4px}
+.microcopy{font-size:12px;color:#bcb3cd;max-width:440px;margin:19px auto 0}
+.hint-message{max-width:450px;margin:16px 0 0;color:#f7d7b5;font-family:"Cormorant Garamond",Georgia,serif;font-size:21px;font-style:italic;line-height:1.3}
+.hint-message:empty{display:none}.hint-message-pop{animation:reactionPop .5s cubic-bezier(.2,.8,.2,1)}
+.choices{gap:16px}.choice{border-color:#f7d7b526;background:linear-gradient(145deg,#ffffff08,#ffffff02);border-radius:23px;padding:23px 19px}.choice:hover{border-color:#f7d7b575}.choice strong{font-family:"Cormorant Garamond",Georgia,serif;font-size:23px;font-weight:600}.choice small{color:#c9c1d6}.choice.selected{border-color:#f7d7b5a8;background:linear-gradient(140deg,#f7d7b514,#f6a9c510);box-shadow:0 0 0 1px #f7d7b522,0 18px 40px #0002}
+.note{border-left-color:#f7d7b5;background:#f7d7b508;color:#cfc6d9}
+.field label{color:#e2d5e4;font-size:10px;letter-spacing:.14em}.field input,.field textarea{background:#090b18b8;border-color:#f7d7b52c;border-radius:16px}.field input:focus,.field textarea:focus{border-color:#f7d7b5;box-shadow:0 0 0 4px #f7d7b512}
+.ticket{border-color:#f7d7b55c;background:linear-gradient(120deg,#f7d7b50d,#f6a9c50a,#b6a1ff08);border-radius:26px}.ticket-top{border-color:#f7d7b555}.ticket-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:38px}.ticket-label{color:#f7d7b5}.ticket-footer{border-color:#f7d7b555;color:#c9c0d4}.footer{color:#968ca9;letter-spacing:.05em}.footer span{color:#f7d7b5}
+.sound-toggle{border-color:#f7d7b52c;background:#ffffff05;color:#f6e5ec;border-radius:999px;font-size:11px;letter-spacing:.03em}.sound-toggle:hover{border-color:#f7d7b577}
+.toast{background:linear-gradient(125deg,#fff7ed,#f7d7b5 55%,#f6b5cd);color:#251425;border-radius:999px;box-shadow:0 18px 55px #0006;font-size:13px;padding:13px 21px}
+.progress{background:#ffffff0b}.progress span{background:linear-gradient(90deg,#f7d7b5,#f6a9c5,#c8b6ff)}
+@media(max-width:760px){.hero{padding:32px 25px}.hero-art{min-height:275px}.art-caption{font-size:17px;bottom:-4px}.panel{border-radius:26px}h1{font-size:clamp(54px,13vw,74px)}}
+@media(max-width:420px){.no-choice-wrap{min-width:100px;max-width:calc(100vw - 50px)}h1{font-size:56px}.hero-art{min-height:225px}.art-caption{font-size:15px}.content{padding:29px 19px}#noReaction:not(:empty){padding:14px 13px}.question{font-size:35px}.btn{padding:13px 18px;font-size:13px}.hint-message{font-size:20px}}
 
-  /* карточка: стекло вынесено в ::before, чтобы не ломать position:fixed у кнопки «Нет» */
-  .card{
-    position:relative;isolation:isolate;
-    width:min(92vw,540px);
-    padding:2rem 1.5rem 2rem;
-    border-radius:32px;
-    text-align:center;
-  }
-  .card::before{
-    content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
-    background:linear-gradient(160deg,rgba(255,255,255,.17),rgba(255,255,255,.06));
-    border:1px solid rgba(255,255,255,.24);
-    box-shadow:0 30px 90px rgba(15,0,28,.5), inset 0 1px 0 rgba(255,255,255,.28);
-    -webkit-backdrop-filter:blur(20px) saturate(1.2);backdrop-filter:blur(20px) saturate(1.2);
-  }
-  .screen{display:none}
-  .screen.active{display:block;animation:enter .55s cubic-bezier(.2,.8,.2,1) both}
-  @keyframes enter{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 
-  .dots{display:none;gap:6px;justify-content:center;margin-bottom:1.3rem}
-  .dots.on{display:flex}
-  .dots i{width:22px;height:5px;border-radius:3px;background:rgba(255,255,255,.2);transition:all .4s}
-  .dots i.done{background:rgba(255,200,215,.7)}
-  .dots i.now{width:36px;background:linear-gradient(90deg,#ff8fab,#ffc9a8)}
+/* Secret quest ticket: collectible game-pass styling */
+.ticket{isolation:isolate;border:1px solid #f7d7b5a8;background:
+  radial-gradient(circle at 100% 0%,#f7d7b51b,transparent 28%),
+  radial-gradient(circle at 0% 100%,#b6a1ff14,transparent 30%),
+  linear-gradient(135deg,#15111f,#1e1526 52%,#17111f);box-shadow:0 24px 70px #0005,0 0 50px #f6a9c50a}
+.ticket:before,.ticket:after{content:"";position:absolute;z-index:-1;width:24px;height:24px;border:1px solid #f7d7b56b;border-radius:50%;top:50%;transform:translateY(-50%);background:#100d18}
+.ticket:before{left:-13px}.ticket:after{right:-13px}
+.ticket-stamp{position:absolute;right:22px;top:20px;border:1px solid #f7d7b5a1;color:#f7d7b5;border-radius:999px;padding:7px 11px;font-size:9px;font-weight:800;letter-spacing:.18em;transform:rotate(8deg);background:#f7d7b50c}
+.ticket-top{padding:30px 27px 22px;border-bottom:1px dashed #f7d7b56b}
+.ticket-label{font-size:10px;letter-spacing:.2em;color:#f7d7b5}
+.ticket-title{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(29px,4vw,42px);line-height:1.03;max-width:80%;margin:17px 0 8px}
+.ticket-subtitle{color:#c9bed8;font-size:12px;letter-spacing:.045em}
+.ticket-body{padding:25px 27px;gap:24px}
+.ticket-item{position:relative;padding-left:13px;border-left:1px solid #f7d7b54d}
+.ticket-item span{font-size:9px;letter-spacing:.16em;color:#c8b8d2}
+.ticket-item strong{display:block;color:#fff4f6;font-size:16px;line-height:1.4}
+.ticket-quest{display:flex;align-items:center;justify-content:space-between;gap:13px;margin:0 27px 22px;padding:15px 16px;border:1px solid #f7d7b533;border-radius:15px;background:linear-gradient(110deg,#f7d7b509,#b6a1ff0b);color:#f4e7f1;font-size:11px;line-height:1.65;letter-spacing:.035em}
+.ticket-sigil{font-size:23px;color:#f7d7b5;flex-shrink:0;text-shadow:0 0 20px #f7d7b566}
+.ticket-footer{border-top:1px dashed #f7d7b56b;padding:16px 27px;color:#c9c0d4;font-size:9px;letter-spacing:.09em;text-transform:uppercase}
+.ticket-send-note{max-width:600px;margin:22px auto 0;padding:14px 18px;border:1px solid #f7d7b53d;border-radius:16px;background:#f7d7b508;color:#f2e4ef;font-size:14px;line-height:1.7}
+#noReaction:not(:empty){animation:reactionPop .42s cubic-bezier(.2,.8,.2,1)}
+@media(max-width:520px){
+ .ticket-stamp{right:14px;top:14px;font-size:8px;padding:6px 8px}
+ .ticket-top{padding:25px 18px 19px}
+ .ticket-title{font-size:29px;max-width:100%;padding-top:17px}
+ .ticket-body{padding:21px 18px;grid-template-columns:1fr 1fr;gap:19px 12px}
+ .ticket-item strong{font-size:14px}
+ .ticket-quest{margin:0 18px 18px;padding:12px 10px;font-size:10px}
+ .ticket-footer{padding:15px 18px;font-size:8px}
+}
 
-  h1,h2{font-family:var(--serif);font-weight:700;line-height:1.15;letter-spacing:.2px}
-  h1{font-size:clamp(1.9rem,7vw,2.7rem)}
-  h2{font-size:clamp(1.6rem,5.6vw,2.2rem)}
-  .script{font-family:var(--script);font-weight:400;font-size:clamp(2.2rem,8.5vw,3.1rem);line-height:1.1}
-  .sub{margin-top:.8rem;font-size:1.02rem;line-height:1.55;color:rgba(255,243,247,.82)}
-  .sub.script{font-size:1.7rem;color:rgba(255,243,247,.9)}
 
-  /* маскот */
-  .mascot{display:inline-block;font-size:3.8rem;line-height:1;margin-bottom:.4rem;animation:bob 3s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(255,90,150,.45))}
-  .mascot span{display:inline-block}
-  .mascot span.bump{animation:bump .55s cubic-bezier(.34,1.56,.64,1)}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-  @keyframes bump{0%{transform:scale(.4) rotate(-14deg)}100%{transform:scale(1) rotate(0)}}
+/* Interactive, touch-friendly atmosphere and shy animated emoji */
+:root{--pointer-x:50%;--pointer-y:40%}
+.bg{background:radial-gradient(ellipse at var(--pointer-x) var(--pointer-y),#f6a9c51c 0,transparent 32%),radial-gradient(ellipse at 12% 18%,#3b2449 0,transparent 34%),radial-gradient(ellipse at 88% 22%,#422338 0,transparent 29%),radial-gradient(ellipse at 50% 100%,#1c2542 0,transparent 46%),linear-gradient(145deg,#080a16,#121126 55%,#090b18);transition:background-position .15s}
+.cute-buddy{font-size:clamp(66px,13vw,100px);line-height:1.2;display:inline-block;filter:drop-shadow(0 0 24px #f6a9c52a);animation:bubby 2.8s ease-in-out infinite;transform-origin:50% 75%;user-select:none}
+@keyframes bubby{0%,100%{transform:translateY(0) rotate(-4deg) scale(1)}22%{transform:translateY(-7px) rotate(5deg) scale(1.06)}45%{transform:translateY(0) rotate(0) scale(1)}62%{transform:translateY(-3px) rotate(-7deg) scale(1.02)}}
+.buddy-caption{color:#f7d7b5;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(21px,4vw,27px);font-style:italic;margin:8px 0 0;animation:captionPulse 3s ease-in-out infinite}
+@keyframes captionPulse{0%,100%{opacity:.75}50%{opacity:1;text-shadow:0 0 18px #f6a9c52e}}
+@media(max-width:520px){.cute-buddy{font-size:76px}.buddy-caption{font-size:21px}.ticket-send-note{font-size:13px}}
+@media print{
+ @page{size:auto;margin:10mm}
+ body{background:#fff!important;color:#111!important}
+ body *{visibility:hidden!important}
+ #ticket,#ticket *{visibility:visible!important}
+ #ticket{position:absolute;left:0;top:0;width:100%;max-width:none;margin:0;box-shadow:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #ticket .ticket-quest{break-inside:avoid}
+}
 
-  /* обложка */
-  .heart-wrap{position:relative;width:150px;height:150px;margin:0 auto 1.2rem;display:grid;place-items:center}
-  .heart-wrap::before,.heart-wrap::after{
-    content:"";position:absolute;inset:16px;border-radius:50%;
-    border:1.5px solid rgba(255,160,190,.55);
-    animation:ring 2.8s ease-out infinite;pointer-events:none;
-  }
-  .heart-wrap::after{animation-delay:1.4s}
-  @keyframes ring{from{transform:scale(.7);opacity:.9}to{transform:scale(1.6);opacity:0}}
-  .heart-btn{
-    position:relative;z-index:3;width:104px;height:104px;border:0;background:none;cursor:pointer;
-    animation:beat 1.8s ease-in-out infinite;
-    filter:drop-shadow(0 8px 30px rgba(255,100,150,.75));
-  }
-  .heart-btn svg{width:100%;height:100%;display:block}
-  @keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.14)}28%{transform:scale(1)}42%{transform:scale(1.09)}56%{transform:scale(1)}}
-  .bloom{
-    position:fixed;z-index:5;width:20px;height:20px;border-radius:50%;pointer-events:none;
-    background:radial-gradient(circle,rgba(255,170,205,.85),rgba(255,170,205,0) 70%);
-    transform:translate(-50%,-50%) scale(0);animation:bloom 1.1s ease-out forwards;
-  }
-  @keyframes bloom{to{transform:translate(-50%,-50%) scale(70);opacity:0}}
-
-  /* кнопки */
-  .actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.9rem;margin-top:1.8rem;min-height:3.4rem}
-  .btn{
-    font:600 1.05rem/1 var(--sans);
-    border:0;border-radius:999px;cursor:pointer;
-    padding:1rem 1.7rem;
-    touch-action:manipulation;
-    transition:transform .2s ease, box-shadow .25s ease, opacity .25s;
-  }
-  .btn:focus-visible,.pick:focus-visible,.heart-btn:focus-visible,.day:focus-visible,.chip:focus-visible,.nav:focus-visible,#snd:focus-visible{outline:3px solid #fff;outline-offset:3px}
-  .yes{
-    color:var(--ink);
-    background:linear-gradient(135deg,#ff8fab,#ffc9a8);
-    box-shadow:0 10px 30px rgba(255,120,160,.45);
-    font-size:calc(1.05rem * var(--grow));
-    padding:calc(1rem * var(--grow)) calc(1.7rem * var(--grow));
-    transition:font-size .35s cubic-bezier(.34,1.56,.64,1), padding .35s cubic-bezier(.34,1.56,.64,1), transform .2s, box-shadow .25s, opacity .25s;
-  }
-  .yes:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 14px 36px rgba(255,120,160,.6)}
-  .yes:active:not(:disabled){transform:scale(.97)}
-  .yes:disabled{opacity:.38;cursor:default;box-shadow:none}
-  .yes.ready{animation:readyPulse 1.6s ease-in-out infinite}
-  @keyframes readyPulse{0%,100%{box-shadow:0 10px 30px rgba(255,120,160,.45)}50%{box-shadow:0 10px 44px rgba(255,150,180,.9)}}
-  .no{
-    color:var(--pearl);background:transparent;
-    border:1.5px solid rgba(255,255,255,.4);
-    user-select:none;-webkit-user-select:none;
-  }
-  .no.float{
-    position:fixed;z-index:20;margin:0;
-    transition:left .38s cubic-bezier(.34,1.56,.64,1), top .38s cubic-bezier(.34,1.56,.64,1), background .2s;
-    background:rgba(40,10,60,.6);
-  }
-  .no.give-up{
-    color:var(--ink);border-color:transparent;
-    background:linear-gradient(135deg,#ffd6e0,#ffc9a8);
-    animation:pop .5s cubic-bezier(.34,1.56,.64,1);
-  }
-  @keyframes pop{from{transform:scale(.6)}to{transform:scale(1)}}
-  .hint{min-height:1.4rem;margin-top:1.1rem;font-size:.95rem;color:rgba(255,243,247,.75)}
-  .link{
-    display:inline-block;margin-top:1.1rem;color:rgba(255,243,247,.8);
-    background:none;border:0;font:inherit;font-size:.95rem;cursor:pointer;text-decoration:underline;text-underline-offset:3px;
-  }
-  a.btn{display:inline-block;text-decoration:none}
-  .btn.ghost{background:rgba(255,255,255,.1);color:var(--pearl);border:1.5px solid rgba(255,255,255,.3);box-shadow:none;font-size:1rem;padding:1rem 1.4rem}
-
-  /* выбор места */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1.6rem}
-  .pick{
-    display:flex;flex-direction:column;align-items:center;gap:.3rem;
-    padding:1.05rem .6rem;border-radius:20px;cursor:pointer;
-    font-family:var(--sans);color:var(--pearl);
-    background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.18);
-    transition:transform .25s cubic-bezier(.34,1.56,.64,1), background .25s, border-color .25s;
-    touch-action:manipulation;
-  }
-  .pick .ic{font-size:2rem;line-height:1.1}
-  .pick .t{font-weight:600;font-size:1rem}
-  .pick .n{font-size:.82rem;color:rgba(255,243,247,.7);line-height:1.3}
-  .pick:hover{transform:translateY(-3px);background:rgba(255,255,255,.15);border-color:rgba(255,200,215,.6)}
-  .pick.sel{transform:scale(1.04);background:linear-gradient(135deg,rgba(255,143,171,.55),rgba(255,201,168,.45));border-color:#ffd6e0}
-  .custom{display:flex;gap:.6rem;margin-top:1rem}
-  .custom[hidden]{display:none}
-  .custom .btn{padding:0 1.2rem;white-space:nowrap;font-size:1rem}
-
-  .field{
-    width:100%;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.25);
-    border-radius:16px;padding:.9rem 1rem;color:#fff;font:inherit;font-size:1rem;color-scheme:dark;
-  }
-  .field::placeholder{color:rgba(255,255,255,.5)}
-  .field:focus{outline:none;border-color:#ffc9d8;background:rgba(255,255,255,.14)}
-  textarea.field{resize:none;min-height:110px;line-height:1.5}
-
-  /* календарь */
-  .cal{margin-top:1.4rem;text-align:left}
-  .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem}
-  .cal-head .m{font-family:var(--serif);font-size:1.25rem;font-weight:700;text-transform:capitalize}
-  .nav{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:1.1rem;cursor:pointer;transition:background .2s}
-  .nav:hover:not(:disabled){background:rgba(255,255,255,.18)}
-  .nav:disabled{opacity:.3;cursor:default}
-  .wd,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-  .wd span{text-align:center;font-size:.8rem;color:rgba(255,243,247,.6);padding:.25rem 0}
-  .day{
-    aspect-ratio:1;border-radius:50%;border:0;background:transparent;color:var(--pearl);
-    font:600 .98rem var(--sans);cursor:pointer;transition:background .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
-    touch-action:manipulation;
-  }
-  .day:hover:not(:disabled){background:rgba(255,255,255,.18)}
-  .day:disabled{opacity:.25;cursor:default}
-  .day.today{box-shadow:inset 0 0 0 1.5px rgba(255,200,215,.85)}
-  .day.sel{background:linear-gradient(135deg,#ff8fab,#ffc9a8);color:var(--ink);transform:scale(1.1);box-shadow:0 6px 18px rgba(255,120,160,.5)}
-
-  .times{display:none;margin-top:1.3rem;text-align:left}
-  .times.show{display:block;animation:enter .5s cubic-bezier(.2,.8,.2,1) both}
-  .times .lbl{font-size:.95rem;color:rgba(255,243,247,.8);margin-bottom:.6rem}
-  .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
-  .chip{
-    padding:.75rem 0;border-radius:14px;cursor:pointer;
-    background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.18);color:var(--pearl);
-    font:600 .98rem var(--sans);transition:background .2s, transform .25s cubic-bezier(.34,1.56,.64,1);
-    touch-action:manipulation;
-  }
-  .chip:hover:not(:disabled){background:rgba(255,255,255,.16)}
-  .chip:disabled{opacity:.28;cursor:default}
-  .chip.sel{background:linear-gradient(135deg,rgba(255,143,171,.6),rgba(255,201,168,.5));border-color:#ffd6e0;transform:scale(1.05)}
-  .ctime{display:flex;align-items:center;gap:.7rem;margin-top:.8rem;font-size:.95rem;color:rgba(255,243,247,.8)}
-  .ctime .field{width:auto;flex:1;padding:.65rem .9rem}
-  .tmsg{min-height:1.2rem;margin-top:.4rem;font-size:.88rem;color:#ffc9d8}
-
-  .recap{margin:1rem auto 0;font-size:.98rem;line-height:1.6;color:rgba(255,243,247,.85)}
-  .note-wrap{margin-top:1.4rem;text-align:left}
-
-  /* билет */
-  .ticket{
-    margin:1.5rem auto 0;border-radius:24px;overflow:hidden;text-align:left;
-    background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.08));
-    border:1px solid rgba(255,255,255,.3);box-shadow:0 14px 40px rgba(20,0,35,.35);
-  }
-  .ticket .top{display:flex;gap:1rem;align-items:center;padding:1.1rem 1.3rem}
-  .ticket .big{font-size:2.8rem;line-height:1}
-  .ticket .k{font-size:.85rem;color:rgba(255,243,247,.7)}
-  .ticket .v{font-family:var(--serif);font-weight:700;font-size:1.35rem;line-height:1.2}
-  .ticket .sep{border-top:2px dashed rgba(255,255,255,.32);margin:0 1rem}
-  .ticket .bot{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;padding:1rem 1.3rem 1.2rem}
-  .ticket .date{font-size:1.05rem;line-height:1.35}
-  .ticket .time{font-family:var(--serif);font-weight:700;font-size:2.1rem;line-height:1}
-  .ticket .wish{padding:0 1.3rem 1.1rem;font-size:.95rem;color:rgba(255,243,247,.85);font-style:italic}
-  .count{margin-top:1.2rem;font-size:1.02rem;color:rgba(255,243,247,.9)}
-  .warn{margin-top:1.1rem;padding:.8rem 1rem;border-radius:14px;background:rgba(255,200,120,.16);border:1px solid rgba(255,210,150,.4);font-size:.93rem;line-height:1.45}
-  .dbg{margin-top:1rem;font-size:.8rem;color:rgba(255,255,255,.55)}
-
-  .bubbles-in{animation:enter .6s .1s both}
-
-  .tip{min-height:1.2rem;margin-top:.9rem;font-size:.9rem;line-height:1.45;color:rgba(255,243,247,.8)}
-  .btn,.pick,.chip{min-height:44px}
-  @media (hover:none){
-    .orb{filter:blur(48px)}
-    .orb.c{display:none}
-    .card{padding:1.7rem 1.1rem}
-  }
-  @media (max-width:380px){.grid{grid-template-columns:1fr}.tgrid{grid-template-columns:repeat(3,1fr)}}
-  @media (prefers-reduced-motion:reduce){
-    .orb,.heart-btn,.heart-wrap::before,.heart-wrap::after,.mascot,.yes.ready{animation:none}
-    .screen.active,.times.show{animation:none}
-    .no.float{transition:none}
-    .bloom{display:none}
-  }
-
-  /* ================== WOW-СЛОЙ ================== */
-  body{background:
-    radial-gradient(60vmax 60vmax at 12% 8%,rgba(255,95,147,.36),transparent 60%),
-    radial-gradient(55vmax 55vmax at 92% 92%,rgba(139,77,255,.42),transparent 60%),
-    radial-gradient(40vmax 40vmax at 82% 14%,rgba(255,178,122,.2),transparent 60%),
-    linear-gradient(160deg,#12051f,#2d0e47 45%,#5a1a5e 76%,#a8386a)}
-  body::after{content:"";position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.09;mix-blend-mode:soft-light;
-    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
-
-  /* карточка: живая светящаяся рамка + блик за пальцем/курсором */
-  @property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
-  .card::before{box-shadow:0 30px 90px rgba(15,0,28,.55),0 0 80px rgba(255,100,160,.16),inset 0 1px 0 rgba(255,255,255,.35)}
-  .card::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;padding:1.5px;pointer-events:none;
-    background:conic-gradient(from var(--ang),rgba(255,143,171,0),#ff8fab 12%,rgba(255,201,168,0) 32%,rgba(139,77,255,0) 52%,#c18bff 70%,rgba(255,143,171,0));
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
-    mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:spin 7s linear infinite}
-  @keyframes spin{to{--ang:360deg}}
-  .shine{position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
-    background:radial-gradient(circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.2),transparent 46%)}
-
-  /* появление экранов */
-  @keyframes enter{from{opacity:0;transform:translateY(18px) scale(.96);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
-
-  /* заголовки с переливом */
-  h1,h2,.script{background:linear-gradient(100deg,#fff 0%,#ffd9e8 35%,#ffb7a8 62%,#fff 100%);background-size:220% auto;
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;
-    animation:sheen 7s linear infinite;filter:drop-shadow(0 4px 22px rgba(255,100,160,.38))}
-  .sub.script{background:none;-webkit-text-fill-color:currentColor;animation:none;filter:none}
-  @keyframes sheen{to{background-position:-220% center}}
-
-  /* сердце */
-  .heart-wrap{background:radial-gradient(circle,rgba(255,105,160,.5) 0,transparent 66%);animation:halo 1.8s ease-in-out infinite;border-radius:50%}
-  @keyframes halo{0%,100%{opacity:.7;transform:scale(1)}14%{opacity:1;transform:scale(1.1)}}
-  .heart-btn{filter:drop-shadow(0 8px 34px rgba(255,90,150,.9)) drop-shadow(0 0 18px rgba(255,170,200,.6))}
-
-  /* кнопки */
-  .yes{position:relative;overflow:hidden;background:linear-gradient(135deg,#ff7eb0,#ffb199 58%,#ffd9a8);
-    box-shadow:0 12px 34px rgba(255,110,160,.5),inset 0 1px 0 rgba(255,255,255,.6)}
-  .yes::after{content:"";position:absolute;inset:0;pointer-events:none;transform:translateX(-130%);
-    background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.7) 50%,transparent 70%);animation:sweep 3.4s ease-in-out infinite}
-  .yes:disabled::after{display:none}
-  @keyframes sweep{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
-  .no{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
-
-  /* прогресс, плашки */
-  .dots i.now{box-shadow:0 0 14px rgba(255,143,171,.9)}
-  .recap,.count{display:inline-block;padding:.65rem 1.1rem;border-radius:18px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);font-variant-numeric:tabular-nums}
-  .count{font-weight:600}
-
-  /* выбор места, дни, время */
-  .pick{background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.05));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-  .pick .ic{transition:transform .35s cubic-bezier(.34,1.56,.64,1);filter:drop-shadow(0 6px 10px rgba(255,90,150,.4))}
-  .pick:hover .ic,.pick.sel .ic{transform:scale(1.22) rotate(-6deg)}
-  .pick.sel{box-shadow:0 10px 30px rgba(255,120,160,.45),0 0 0 3px rgba(255,214,224,.25)}
-  .day.sel,.chip.sel{box-shadow:0 8px 22px rgba(255,120,160,.6),0 0 0 3px rgba(255,214,224,.25)}
-  .field:focus{box-shadow:0 0 0 4px rgba(255,160,190,.2)}
-
-  /* билет */
-  .ticket{position:relative;box-shadow:0 18px 50px rgba(20,0,35,.45),0 0 60px rgba(255,100,160,.18)}
-  .ticket::after{content:"";position:absolute;inset:0;pointer-events:none;background-size:250% 100%;
-    background-image:linear-gradient(115deg,transparent 36%,rgba(255,255,255,.22) 48%,rgba(255,190,230,.2) 52%,transparent 64%);animation:holo 5.5s linear infinite}
-  @keyframes holo{from{background-position:130% 0}to{background-position:-130% 0}}
-  .ticket .time{background:linear-gradient(135deg,#fff,#ffc4d6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-
-  @media (prefers-reduced-motion:reduce){
-    .card::after,h1,h2,.script,.yes::after,.ticket::after,.heart-wrap{animation:none}
-  }
-
-  /* ================== v3: ЖИВОЕ ================== */
-  @property --g1{syntax:"<color>";inherits:false;initial-value:#ff5f9366}
-  @property --g2{syntax:"<color>";inherits:false;initial-value:#8b4dff77}
-  @property --bb{syntax:"<color>";inherits:false;initial-value:#4a1560}
-  body{--g1:#ff5f9366;--g2:#8b4dff77;--bb:#4a1560;transition:--g1 1.4s,--g2 1.4s,--bb 1.4s;
-    background:radial-gradient(60vmax 60vmax at 12% 8%,var(--g1),transparent 60%),radial-gradient(55vmax 55vmax at 92% 92%,var(--g2),transparent 60%),linear-gradient(160deg,#12051f,#2d0e47 45%,var(--bb))}
-  body[data-s=s-ask]{--g1:#ff6f9a88;--g2:#ffa07a66;--bb:#a8386a}
-  body[data-s=s-place]{--g1:#ffb27a77;--g2:#ff5f9377;--bb:#9a3a64}
-  body[data-s=s-date],body[data-s=s-note]{--g1:#9b7bff77;--g2:#ff6f9a66;--bb:#4a1d6e}
-  body[data-s=s-done]{--g1:#ffd27a88;--g2:#ff6f9a88;--bb:#c4457a}
-
-  /* персонаж с эмоциями */
-  .mascot{font-size:0}
-  .mascot.sm{margin-bottom:.2rem}.mascot.sm .face{width:84px;height:84px}
-  .face{width:128px;height:128px;overflow:visible;filter:drop-shadow(0 12px 22px rgba(255,90,150,.45))}
-  .face .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
-  @keyframes blink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.08)}}
-  .face .pu{transform:translate(var(--ex,0px),var(--ey,0px));transition:transform .12s}
-  .face .mo,.face .hr,.face .tear,.face .sw{display:none}
-  .face .mo{fill:none;stroke:#7a2d4f;stroke-width:3;stroke-linecap:round}
-  .face .m-o,.face .m-cry,.face .m-big{fill:#7a2d4f}
-  .face[data-m=shy] .m-shy,.face[data-m=blush] .m-o,.face[data-m=sweat] .m-flat,.face[data-m=tear] .m-sad,.face[data-m=sad] .m-sad,.face[data-m=cry] .m-cry,.face[data-m=love] .m-big,.face[data-m=love] .hr,.face[data-m=sweat] .sw,.face[data-m=sad] .tear,.face[data-m=cry] .tear,.face[data-m=tear] .tear.l{display:inline}
-  .face[data-m=love] .pu,.face[data-m=love] .sc{display:none}
-  .face .ck{opacity:.35;transition:opacity .4s}
-  .face[data-m=shy] .ck,.face[data-m=blush] .ck,.face[data-m=love] .ck{opacity:.8}
-  .face .tear,.face .sw{fill:#8fd3ff;animation:drip 1.5s ease-in infinite}
-  .face .tear.r{animation-delay:.6s}
-  .face .sw{animation:drip 2s ease-in infinite}
-  @keyframes drip{0%{transform:translateY(-3px);opacity:0}25%{opacity:1}100%{transform:translateY(20px);opacity:0}}
-  .face[data-m=love]{animation:love .9s ease-in-out infinite}
-  .face[data-m=cry]{animation:cry .25s linear infinite}
-  @keyframes love{50%{transform:scale(1.07)}}
-  @keyframes cry{25%{transform:translateX(-1.5px)}75%{transform:translateX(1.5px)}}
-
-  /* места: у каждого своя жизнь */
-  .pick{position:relative;overflow:hidden}
-  .pick .n{font-size:.8rem}
-  .pick .ic{display:inline-block}
-  .pick:hover .ic,.pick.sel .ic{transform:none;scale:1.2}
-  .bit{position:absolute;top:34px;left:46%;font-size:.8rem;opacity:0;pointer-events:none;animation:rise 3.2s ease-in infinite}
-  .bit.b1{left:54%;animation-delay:1.1s;--dx:-8px}.bit.b2{left:60%;animation-delay:2.1s;--dx:10px}
-  @keyframes rise{0%{transform:translate(0,0) scale(.6);opacity:0}25%{opacity:.95}100%{transform:translate(var(--dx,6px),-30px) scale(1.15);opacity:0}}
-  [data-fx=coffee] .ic,.big[data-fx=coffee]{animation:sip 2.8s ease-in-out infinite}
-  [data-fx=cinema] .ic,.big[data-fx=cinema]{animation:snap 2.6s infinite;transform-origin:0 100%}
-  [data-fx=walk] .ic,.big[data-fx=walk]{animation:sway 3s ease-in-out infinite;transform-origin:50% 100%}
-  [data-fx=dinner] .ic,.big[data-fx=dinner]{animation:flick 1.6s ease-in-out infinite}
-  [data-fx=ferris] .ic,.big[data-fx=ferris]{animation:spin2 7s linear infinite}
-  [data-fx=bowl] .ic,.big[data-fx=bowl]{animation:roll 2.4s ease-in-out infinite}
-  [data-fx=gift] .ic,.big[data-fx=gift]{animation:shake 2.2s ease-in-out infinite}
-  [data-fx=write] .ic,.big[data-fx=write]{animation:write 1.8s ease-in-out infinite}
-  @keyframes sip{50%{transform:translateY(-5px) rotate(-6deg)}}
-  @keyframes snap{0%,60%,100%{transform:rotate(0)}70%{transform:rotate(-20deg)}80%{transform:rotate(3deg)}}
-  @keyframes sway{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
-  @keyframes flick{0%,100%{transform:scale(1);filter:drop-shadow(0 0 6px rgba(255,200,120,.6))}35%{transform:scale(1.1) rotate(-3deg);filter:drop-shadow(0 0 14px rgba(255,210,130,.95))}65%{transform:scale(.97) rotate(3deg)}}
-  @keyframes spin2{to{transform:rotate(360deg)}}
-  @keyframes roll{0%,100%{transform:translateX(-9px) rotate(-25deg)}50%{transform:translateX(9px) rotate(25deg)}}
-  @keyframes shake{0%,60%,100%{transform:none}66%{transform:rotate(-14deg)}74%{transform:rotate(14deg)}82%{transform:rotate(-9deg)}90%{transform:rotate(9deg)}}
-  @keyframes write{0%,100%{transform:translate(-3px,1px) rotate(-10deg)}50%{transform:translate(4px,-3px) rotate(8deg)}}
-  .ticket .big{display:inline-block}
-  #doneLine{margin:.3rem auto 0;max-width:30ch}
-  @media (prefers-reduced-motion:reduce){.face .eye,.face,.bit,.pick .ic,.big{animation:none!important}}
-
-  /* ================== v4: адаптив + нежность ================== */
-  main{min-height:100vh;min-height:100svh;padding-left:max(1rem,env(safe-area-inset-left));padding-right:max(1rem,env(safe-area-inset-right))}
-  .card{width:min(94vw,560px)}
-  h1,h2,.sub,.hint{text-wrap:balance}
-  h1{font-size:clamp(2.1rem,9.5vw,3.1rem)}h1.script{font-size:clamp(2.6rem,12vw,3.9rem)}
-  h2{font-size:clamp(1.4rem,6.2vw,1.9rem)}
-  .sub{font-size:clamp(.95rem,3.9vw,1.05rem);line-height:1.55;color:rgba(255,243,247,.88)}
-  .sub.script{font-size:clamp(1.3rem,5.6vw,1.6rem)}
-  .sign{margin-top:.5rem;font-size:1.5rem}
-  .heart-wrap{position:relative}
-  .heart-wrap::before{content:"";position:absolute;inset:-70%;z-index:-1;pointer-events:none;animation:rays 50s linear infinite;
-    background:repeating-conic-gradient(rgba(255,255,255,.15) 0 5deg,transparent 5deg 22deg);
-    -webkit-mask:radial-gradient(circle,#000 0,transparent 60%);mask:radial-gradient(circle,#000 0,transparent 60%)}
-  @keyframes rays{to{transform:rotate(360deg)}}
-  .btn:active,.pick:active,.chip:active,.day:active{transform:scale(.96)}
-  @media (min-width:720px){.card{width:600px;padding:2.6rem 2.4rem}}
-  @media (max-width:340px){.card{padding:1.4rem .8rem}.tgrid{grid-template-columns:repeat(2,1fr)}}
-  @media (max-height:620px){
-    main{place-items:start center;padding-top:max(.8rem,env(safe-area-inset-top))}
-    .mascot.sm{display:none}.face{width:72px;height:72px}.card{padding:1.2rem 1.2rem}
-  }
-  @media (prefers-reduced-motion:reduce){.heart-wrap::before{animation:none}}
 </style>
 </head>
-<body data-s="s-cover">
-<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
-<canvas id="fx" aria-hidden="true"></canvas>
-<button id="snd" aria-label="Звук" title="Звук">🔊</button>
-
-<main>
-  <div class="card">
-    <i class="shine" aria-hidden="true"></i>
-    <div class="dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-
-    <!-- обложка -->
-    <section class="screen active" id="s-cover">
-      <div class="heart-wrap">
-        <button class="heart-btn" id="open" aria-label="Открыть">
-          <svg viewBox="0 0 100 90" aria-hidden="true">
-            <defs>
-              <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#ffb3c8"/><stop offset=".55" stop-color="#ff6f91"/><stop offset="1" stop-color="#d6336c"/>
-              </linearGradient>
-            </defs>
-            <path d="M50 86C20 62 4 46 4 28 4 14 15 4 28 4c9 0 17 5 22 13C55 9 63 4 72 4c13 0 24 10 24 24 0 18-16 34-46 58z" fill="url(#hg)"/>
-            <path d="M22 20c4-5 11-6 15-3" stroke="#fff" stroke-opacity=".55" stroke-width="4" stroke-linecap="round" fill="none"/>
-          </svg>
-        </button>
-      </div>
-      <h1 class="script">Для тебя</h1>
-      <p class="sub script">Для тебя — маленький сюрприз.<br>Нажми на сердечко 🌸</p>
-    </section>
-
-    <!-- вопрос -->
-    <section class="screen" id="s-ask">
-      <div class="mascot"><span id="mascotE"></span></div>
-      <h1 class="script" id="greet">Привет</h1>
-      <p class="sub">Мы пока совсем мало знакомы, но мне очень хочется узнать тебя лучше.</p>
-      <h2 style="margin-top:1.3rem">Давай встретимся?</h2>
-      <p class="sub">Без давления — просто хорошее настроение и что-нибудь вкусное 🌿</p>
-      <div class="actions" id="actions">
-        <button class="btn yes" id="yes">Да, давай 🌸</button>
-        <button class="btn no" id="no">Нет</button>
-      </div>
-      <p class="hint" id="hint" aria-live="polite"></p>
-      <p class="sign script" id="sign"></p>
-    </section>
-
-    <!-- место -->
-    <section class="screen" id="s-place">
-      <div class="mascot sm"><span id="mascotP"></span></div>
-      <h2>Куда пойдём?</h2>
-      <p class="sub">Выбери то, что тебе по душе — остальное я организую 🌿</p>
-      <div class="grid" id="places"></div>
-      <div class="custom" id="customWrap" hidden>
-        <input class="field" id="customPlace" maxlength="60" autocomplete="off" placeholder="Например: та самая кофейня у парка">
-        <button class="btn yes" id="customGo" style="--grow:1">Дальше</button>
-      </div>
-    </section>
-
-    <!-- дата и время -->
-    <section class="screen" id="s-date">
-      <div class="mascot sm"><span id="mascotD"></span></div>
-      <h2>Когда?</h2>
-      <p class="sub">Выбери день и время, которые тебе удобны 🌷</p>
-      <div class="cal">
-        <div class="cal-head">
-          <button class="nav" id="prev" aria-label="Прошлый месяц">‹</button>
-          <div class="m" id="mLabel"></div>
-          <button class="nav" id="next" aria-label="Следующий месяц">›</button>
-        </div>
-        <div class="wd"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
-        <div class="days" id="days"></div>
-      </div>
-      <div class="times" id="times">
-        <div class="lbl">Во сколько тебе удобно?</div>
-        <div class="tgrid" id="tgrid"></div>
-        <label class="ctime">Другое время
-          <input class="field" type="time" id="ctime">
-        </label>
-        <div class="tmsg" id="tmsg"></div>
-      </div>
-      <div class="actions" style="margin-top:1.2rem">
-        <button class="btn yes" id="toNote" style="--grow:1" disabled>Дальше</button>
-      </div>
-    </section>
-
-    <!-- пожелание -->
-    <section class="screen" id="s-note">
-      <div class="mascot sm"><span id="mascotN"></span></div>
-      <h2>Последний штрих</h2>
-      <p class="recap" id="recap"></p>
-      <div class="note-wrap">
-        <textarea class="field" id="note" maxlength="300" placeholder="Если есть пожелание или идея — напиши, мне важно, чтобы тебе было комфортно (необязательно)"></textarea>
-      </div>
-      <div class="actions" style="margin-top:1.4rem">
-        <button class="btn yes" id="confirm" style="--grow:1.1">Подтвердить встречу 💌</button>
-      </div>
-      <button class="link" id="backDate">Изменить дату</button>
-    </section>
-
-    <!-- финал -->
-    <section class="screen" id="s-done">
-      <div class="mascot"><span id="mascotDone"></span></div>
-      <h1>Договорились!</h1>
-      <p class="sub" id="doneLine"></p>
-      <p class="sub">Спасибо, что согласилась — мне правда очень приятно 🌸</p>
-      <div class="ticket" id="ticket"></div>
-      <p class="count" id="count"></p>
-      <div id="warn"></div>
-      <div class="actions" id="doneActions"></div>
-      <p class="tip" id="calTip" aria-live="polite"></p>
-      <button class="link" id="again">Изменить выбор</button>
-      <p class="dbg" id="dbg"></p>
-    </section>
+<body>
+<div class="bg"></div><div id="stars"></div>
+<header class="topbar">
+  <div class="brand"><span class="brandmark">♡</span><span>A LITTLE SECRET</span></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <button id="soundToggle" class="sound-toggle" type="button" aria-pressed="false" onclick="toggleSound()">♫ <span id="soundLabel">Включить мелодию ♫</span></button>
+    <div class="top-note">для тебя — одна маленькая тайна</div>
   </div>
+</header>
+<div id="ambient" aria-hidden="true"></div>
+<div class="progress" aria-label="Прогресс"><span id="progress"></span></div>
+<main>
+  <section class="screen active" id="s1">
+    <div class="panel hero">
+      <div>
+        <div class="eyebrow"><span class="pip"></span> для человека, которому хочется сделать приятно</div>
+        <h1>Кажется,<br><span class="gradient-text">это знак…</span></h1>
+        <p class="lead">Можно было просто написать «привет»… но мне захотелось придумать для тебя кое-что поинтереснее. Немного красивой загадки, капельку неожиданности и вечер, который я постараюсь сделать особенным. А начнётся всё с этой страницы. ✨</p>
+        <div class="hero-actions"><button class="btn btn-primary" onclick="go(2)">Открыть историю <span>↗</span></button></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit"></div><span class="floating f1">✦</span><span class="floating f2">✧</span><span class="floating f3">♡</span>
+        <div class="heart-wrap"><div class="big-heart">💗</div></div>
+        <div class="art-caption">каждая интересная история с чего-то начинается ✦</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="s2">
+    <div class="panel content center">
+      <div class="little-heart">💌</div><div class="kicker">одна идея для тебя</div>
+      <h2>Я придумал кое-что<br><span class="gradient-text">не совсем обычное.</span></h2>
+      <p class="sub">Мы ещё не успели как следует познакомиться — и, знаешь, в этом есть своя прелесть. Можно начать без заготовленных историй: выбраться куда-нибудь, разговориться, посмеяться и увидеть, каким получится этот вечер. Мне хочется постараться, чтобы тебе было легко, интересно и приятно. 🌙</p>
+      <div class="question-card">
+        <div class="question">Можно я попробую<br>удивить тебя одним вечером? ✨</div>
+        <div class="answer-row"><button class="btn btn-primary" onclick="go(3)">Хочу узнать задумку 💗</button><div class="no-choice-wrap"><button class="btn btn-ghost" id="noBtn" onmouseenter="dodge()" onclick="dodge()">Я подумаю 🙈</button><div id="noReaction" aria-live="polite" role="status"></div></div></div><div class="microcopy">Никаких экзаменов и правильных ответов. Просто маленькое приглашение, за которым я постарался спрятать хорошее настроение. ♡</div>
+      </div>
+      <button class="back-btn" onclick="go(1)">← Вернуться</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s3">
+    <div class="panel content center">
+      <div class="kicker">теперь начинается самое красивое</div><h2>Какой вариант<br><span class="gradient-text">тебе ближе?</span></h2>
+      <p class="sub">Выбери, что тебе ближе. А если выберешь сюрприз — детали я оставлю за собой: хочу сам всё придумать и постараться удивить тебя не вещью, а впечатлением. ✨</p>
+      <div class="choices">
+        <button class="choice selected" data-place="Уютное кафе" onclick="pickPlace(this)"><span class="emoji">☕</span><strong>Уютное кафе</strong><small>Тёплый свет, что-то вкусное и разговоры обо всём.</small></button>
+        <button class="choice" data-place="Прогулка на закате" onclick="pickPlace(this)"><span class="emoji">🌇</span><strong>Прогулка на закате</strong><small>Город зажигает огни, а время будто замедляется.</small></button>
+        <button class="choice" data-place="Вечер-сюрприз" onclick="pickPlace(this)"><span class="emoji">🎀</span><strong>Вечер-сюрприз</strong><small>Детали пока останутся в секрете. Пусть это будет не обычный вечер, а особенная атмосфера, которую захочется запомнить. ✨</small></button>
+      </div>
+      <div class="note">Можешь выбрать настроение — а маленькую неожиданность я оставлю себе. Хочется, чтобы тебе было что вспомнить и над чем улыбнуться. ♡</div>
+      <div class="hero-actions" style="justify-content:center"><button class="btn btn-primary" onclick="go(4)">Продолжить →</button></div>
+      <button class="back-btn" onclick="go(2)">← Назад</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s4">
+    <div class="panel content center">
+      <div class="kicker">у каждой истории есть дата</div><h2>Когда тебе было бы <span class="gradient-text">удобно выбраться?</span></h2>
+      <p class="sub">Выбери день, который тебе удобен. Место и детали ещё можно обсудить — мне важнее, чтобы тебе самой хотелось этого вечера. А сюрпризную часть я постараюсь сохранить до нужного момента. ✨</p>
+      <div class="form-grid">
+        <div class="field"><label for="date">✧ ВЫБЕРИ ДАТУ</label><input id="date" type="date"></div>
+        <div class="field"><label for="time">✧ НАЧАЛО</label><input id="time" type="time" value="18:00"></div>
+        <div class="field full center"><div class="cute-buddy" id="cuteBuddy" role="img" aria-label="Смущённый улыбающийся смайлик">🥹</div><p class="buddy-caption" id="buddyCaption">Я немного волнуюсь… но очень хочу тебя удивить ♡</p></div>
+      </div>
+      <div class="note">Это пока только набросок нашей маленькой авантюры. Если захочешь что-то изменить — с удовольствием подстроюсь. ♡</div>
+      <div class="hero-actions" style="justify-content:center"><button class="btn btn-primary" onclick="makeTicket()">Сохранить этот момент ♡</button></div>
+      <button class="back-btn" onclick="go(3)">← Назад к выбору</button>
+    </div>
+  </section>
+
+  <section class="screen" id="s5">
+    <div class="panel content center">
+      <div class="little-heart">✦</div><div class="kicker">секрет разблокирован · уровень 01</div>
+      <h2>Твоя маленькая<br><span class="gradient-text">карта приключения.</span></h2>
+      <p class="sub">Вот твой билет в ещё не придуманное воспоминание. Я возьму на себя идею и постараюсь добавить в этот вечер что-то неожиданное. А тебе остаётся выбрать настроение — и, если захочется, дать этой истории шанс. ✨</p>
+      <div class="ticket" id="ticket">
+        <div class="ticket-stamp">UNLOCKED ✦</div>
+        <div class="ticket-top"><div class="ticket-label">✦ SECRET QUEST PASS · 001 ✦</div><div class="ticket-title">Операция: необычный вечер</div><div class="ticket-subtitle">редкий билет · доступ открыт только тебе</div></div>
+        <div class="ticket-body">
+          <div class="ticket-item"><span>Твоя миссия</span><strong id="outPlace">Уютное кафе</strong></div>
+          <div class="ticket-item"><span>День начала</span><strong id="outDate">Выберем вместе</strong></div>
+          <div class="ticket-item"><span>Время встречи</span><strong id="outTime">18:00</strong></div>
+          <div class="ticket-item"><span>Секретный бонус</span><strong>Одна неожиданность от меня ✨</strong></div>
+        </div>
+        <div class="ticket-quest"><span class="ticket-sigil">♡</span><span>Для такой необычной девушки — пусть этот билет останется маленьким воспоминанием о вечере, который ещё впереди. Береги его ♡</span><span class="ticket-sigil">✦</span></div>
+        <div class="ticket-footer"><span>Только для одной любопытной девушки ♡</span><span>RARITY · SPECIAL</span></div>
+      </div>
+      <p id="outMessage" class="sub" style="font-size:14px;margin:20px auto 0;max-width:550px"></p>
+      <p class="ticket-send-note">Маленький билет для особенной девушки. Сохрани его на память — возможно, однажды он напомнит тебе о начале красивой истории. ♡</p>
+      <div class="hero-actions" style="justify-content:center"><button class="btn btn-primary" onclick="saveTicket()">Сохранить билет на память ♡</button><button class="btn btn-ghost" onclick="downloadInvite()">Добавить дату в календарь</button><button class="btn btn-ghost" onclick="copyInvite()">Скопировать детали</button></div>
+      <button class="back-btn" onclick="go(4)">← Изменить детали</button>
+    </div>
+  </section>
 </main>
-
+<footer class="footer">для тебя. без лишних слов — только немного магии <span>♡</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-(() => {
-  /* ================== НАСТРОЙКИ — меняй тут ================== */
-  const CONFIG = {
-    name: "",              // её имя, например "Алина" (можно оставить пустым)
-    telegram: "",          // твой ник в Telegram без @ (запасная кнопка «написать»)
-
-    myName: "",            // твоё имя — подпишется под вопросом (необязательно)
-
-    notify: {
-      sheetUrl: "",        // ссылка Google Apps Script — итог ляжет в таблицу на твоём Google Диске
-      ntfyTopic: "",       // ТВОЁ секретное название канала для push-уведомлений (см. инструкцию)
-      web3formsKey: ""     // ключ Web3Forms — чтобы итог ещё приходил на почту (необязательно)
-    },
-
-    places: [
-      { icon: "☕", fx: "coffee", bits: ["♨️","☁️","🤍"], title: "Кофе и десерты", note: "Уютное место, пенка с сердечком и что-нибудь сладкое", done: "Пенка с сердечком, что-нибудь вкусное и приятный разговор — отличный план ☕" },
-      { icon: "🎬", fx: "cinema", bits: ["🍿","🎞️","⭐"], title: "Кино", note: "Хороший фильм, попкорн, а после — обсудим, кому что понравилось", done: "Фильм выберем вместе, а попкорн — за мной 🍿" },
-      { icon: "🌳", fx: "walk", bits: ["🍃","🌸","🦋"], title: "Прогулка", note: "Неспешно, под красивым небом, с мороженым или тёплым чаем", done: "Неспешная прогулка и хороший разговор — моё любимое сочетание 🍃" },
-      { icon: "🍽️", fx: "dinner", bits: ["🍷","✨","🕯️"], title: "Ужин", note: "Вкусная еда, спокойная музыка и душевная беседа", done: "Вкусный ужин и тёплая беседа — постараюсь выбрать самое уютное место 🕯️" },
-      { icon: "🎡", fx: "ferris", bits: ["🎈","⭐","✨"], title: "Аттракционы", note: "Немного веселья и смеха — как в детстве, со сладкой ватой", done: "Немного детской радости, смех и сладкая вата 🎡" },
-      { icon: "🎳", fx: "bowl", bits: ["💥","⭐","✨"], title: "Боулинг", note: "Легко и весело. Кто проиграет — тот угощает десертом", done: "Страйки, смех, а проигравший угощает десертом 🎳" },
-      { icon: "🎁", fx: "gift", bits: ["🎉","✨","💖"], title: "Удиви меня", note: "Доверься мне — я подготовлю что-нибудь приятное", done: "Тссс… я придумаю что-то приятное. Надеюсь, тебе понравится ✨" },
-      { icon: "✍️", fx: "write", bits: ["💌","✨","💖"], title: "Свой вариант", note: "Есть любимое место? Напиши — с радостью пойду", custom: true, done: "Отличный выбор — мне уже нравится, как ты придумываешь 🌸" }
-    ],
-    times: ["12:00", "14:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"],
-    daysAhead: 60,         // на сколько дней вперёд можно выбрать дату
-    durationHours: 2,      // длительность события в календаре
-
-    noLabels: ["Нет", "Ты уверена?", "Подумай ещё", "Не получится", "Ну пожалуйста", "Кнопка устала", "Может, да?", "🙈"],
-    hints: [
-      "",
-      "Ой, кнопка убежала 🙈",
-      "Она стесняется",
-      "Почти поймала!",
-      "Эта кнопка очень застенчивая 😌",
-      "Может, всё-таки «Да»? Обещаю, будет уютно",
-      "Она правда старается спрятаться",
-      "Ещё чуть-чуть…",
-      "Ладно, сдаюсь за неё 🌸"
-    ],
-    moods: ["🥺", "😳", "😅", "🥹", "😢", "😭", "😭", "😭", "🥰"],
-    surrenderAfter: 9
-  };
-  /* =========================================================== */
-
-  const $ = s => document.querySelector(s);
-  const $$ = s => [...document.querySelectorAll(s)];
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const SILENT = /[?&]silent/.test(location.search);   // режим предпросмотра: уведомления не шлются
-  const DEBUG  = /[?&]debug/.test(location.search);    // показать статус отправки
-  const T0 = Date.now();
-  const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
-  const pad = n => String(n).padStart(2, '0');
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-  const state = { place: null, customPlace: '', date: null, time: null, note: '', attempts: 0, gaveUp: false, sends: 0 };
-  const placeName = () => state.place && state.place.custom ? (state.customPlace || 'Своё место') : (state.place ? state.place.title : '');
-  const placeIcon = () => state.place ? state.place.icon : '💖';
-  const who = () => CONFIG.name || 'Она';
-
-  const fmtDate = d => d.toLocaleDateString('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
-  const eventDate = () => {
-    const [h, m] = state.time.split(':').map(Number);
-    return new Date(state.date.getFullYear(), state.date.getMonth(), state.date.getDate(), h, m);
-  };
-  const durStr = () => {
-    const s = Math.round((Date.now() - T0) / 1000), m = Math.floor(s / 60);
-    return (m ? m + ' мин ' : '') + (s % 60) + ' с';
-  };
-
-  /* ---------- экраны ---------- */
-  const STEP = { 's-ask': 0, 's-place': 1, 's-date': 2, 's-note': 3 };
-  function show(id){
-    document.body.dataset.s = id;
-    $$('.screen').forEach(s => s.classList.toggle('active', s.id === id));
-    const dots = $('#dots');
-    if (id in STEP){
-      dots.classList.add('on');
-      [...dots.children].forEach((d, i) => { d.classList.toggle('now', i === STEP[id]); d.classList.toggle('done', i < STEP[id]); });
-    } else dots.classList.remove('on');
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+const state={place:'Уютное кафе',screen:1};
+// Необязательно: укажи уникальную тему ntfy и подпишись на неё в приложении ntfy.
+// Не используй короткое или легко угадываемое название темы.
+let audioCtx=null, musicTimer=null, musicOn=false, noteIndex=0, musicNodes=[], dodgeCount=0, melodyStep=0, masterGain=null, musicDelay=null, delayFeedback=null, delayWet=null;
+const $=id=>document.getElementById(id);
+function audioReady(){
+  if(!audioCtx) {
+    audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    masterGain=audioCtx.createGain();masterGain.gain.value=.72;
+    const filter=audioCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=4200;filter.Q.value=.35;
+    musicDelay=audioCtx.createDelay(1);musicDelay.delayTime.value=.28;
+    delayFeedback=audioCtx.createGain();delayFeedback.gain.value=.19;
+    delayWet=audioCtx.createGain();delayWet.gain.value=.16;
+    musicDelay.connect(delayFeedback);delayFeedback.connect(musicDelay);musicDelay.connect(delayWet);delayWet.connect(masterGain);
+    filter.connect(masterGain);masterGain.connect(audioCtx.destination);
+    window.__airoMusicFilter=filter;
   }
-  const FACE = { '🥺':'shy','😳':'blush','😅':'sweat','🥹':'tear','😢':'sad','😭':'cry','😍':'love','🥰':'love' };
-  let fid = 0;
-  const faceHtml = () => { const n = ++fid, eye = x => `<g class="eye"><circle class="sc" cx="${x}" cy="64" r="10" fill="#fff"/><g class="pu"><circle cx="${x}" cy="65" r="6.5" fill="#2a0d3a"/><circle cx="${x + 2.5}" cy="62.5" r="2.4" fill="#fff"/></g></g><path class="hr" d="M0 5C-9-2-7-11 0-6 7-11 9-2 0 5Z" transform="translate(${x} 64) scale(1.5)" fill="#ff3d7f"/>`;
-    return `<svg class="face" viewBox="0 0 120 120" data-m="shy" aria-hidden="true"><defs><radialGradient id="fg${n}" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#fff2ea"/><stop offset=".6" stop-color="#ffc8b2"/><stop offset="1" stop-color="#ff9db8"/></radialGradient></defs><circle cx="24" cy="30" r="16" fill="#ffb0c6"/><circle cx="96" cy="30" r="16" fill="#ffb0c6"/><circle cx="24" cy="30" r="8" fill="#ff86a8"/><circle cx="96" cy="30" r="8" fill="#ff86a8"/><ellipse cx="60" cy="68" rx="46" ry="42" fill="url(#fg${n})"/><ellipse class="ck" cx="30" cy="80" rx="9" ry="6" fill="#ff5f93"/><ellipse class="ck" cx="90" cy="80" rx="9" ry="6" fill="#ff5f93"/>${eye(42)}${eye(78)}<path class="mo m-shy" d="M52 86q8 7 16 0"/><ellipse class="mo m-o" cx="60" cy="88" rx="4" ry="5"/><path class="mo m-flat" d="M50 88q5-4 10 0t10 0"/><path class="mo m-sad" d="M52 92q8-7 16 0"/><path class="mo m-cry" d="M49 94q11-15 22 0q-11 7-22 0z"/><path class="mo m-big" d="M47 82q13 22 26 0z"/><g transform="translate(33 76)"><path class="tear l" d="M0 0q6 9 0 14-6-5 0-14z"/></g><g transform="translate(87 76)"><path class="tear r" d="M0 0q6 9 0 14-6-5 0-14z"/></g><g transform="translate(98 42)"><path class="sw" d="M0 0q7 10 0 15-7-5 0-15z"/></g></svg>`; };
-  $$('.mascot span').forEach(sp => { sp.innerHTML = faceHtml(); });
-  function mood(emoji, el = $('#mascotE')){
-    const f = el.querySelector('.face'); if (f) f.dataset.m = FACE[emoji] || 'shy';
-    el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');
-  }
-  const look = e => $$('.face').forEach(f => {
-    const r = f.getBoundingClientRect(); if (!r.width) return;
-    const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2), d = Math.hypot(dx, dy) || 1, k = Math.min(2.8, d / 50);
-    f.style.setProperty('--ex', dx / d * k + 'px'); f.style.setProperty('--ey', dy / d * k + 'px');
+  if(audioCtx.state==='suspended')audioCtx.resume();
+}
+function pluck(freq,when=0,duration=.8,volume=.045,wave='triangle'){
+  if(!audioCtx||!musicOn)return;
+  const t=audioCtx.currentTime+when;
+  const osc=audioCtx.createOscillator(),harm=audioCtx.createOscillator(),mix=audioCtx.createGain(),env=audioCtx.createGain();
+  osc.type=wave;osc.frequency.setValueAtTime(freq,t);
+  harm.type='sine';harm.frequency.setValueAtTime(freq*2.003,t);
+  const harmGain=audioCtx.createGain();harmGain.gain.value=.16;
+  mix.gain.value=1;env.gain.setValueAtTime(.0001,t);env.gain.exponentialRampToValueAtTime(volume,t+.018);env.gain.exponentialRampToValueAtTime(Math.max(.0002,volume*.34),t+.13);env.gain.exponentialRampToValueAtTime(.0001,t+duration);
+  osc.connect(mix);harm.connect(harmGain);harmGain.connect(mix);mix.connect(env);env.connect(window.__airoMusicFilter);env.connect(musicDelay);
+  osc.start(t);harm.start(t);osc.stop(t+duration+.05);harm.stop(t+duration+.05);
+}
+function pad(freqs,when=0,duration=2.5,volume=.009){
+  if(!audioCtx||!musicOn)return;
+  const t=audioCtx.currentTime+when;
+  freqs.forEach((freq,i)=>{
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=i===0?'triangle':'sine';o.frequency.value=freq;
+    g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(volume,t+.55);g.gain.setTargetAtTime(.0001,t+duration*.65,.45);
+    o.connect(g);g.connect(window.__airoMusicFilter);g.connect(musicDelay);o.start(t);o.stop(t+duration+1.2);
   });
-  addEventListener('pointermove', look, { passive: true });
-  addEventListener('pointerdown', look, { passive: true });
-
-  /* ---------- звук ---------- */
-  let audioCtx = null, soundOn = true;
-  try { soundOn = localStorage.getItem('snd') !== '0'; } catch (e) {}
-  const sndBtn = $('#snd');
-  const paintSnd = () => { sndBtn.textContent = soundOn ? '🔊' : '🔇'; };
-  paintSnd();
-  sndBtn.addEventListener('click', () => {
-    soundOn = !soundOn; paintSnd();
-    try { localStorage.setItem('snd', soundOn ? '1' : '0'); } catch (e) {}
-    if (soundOn){ startMusic(); chime([659.25, 880]); } else stopMusic();
+}
+function uiSound(kind='tap'){
+  if(!musicOn)return;audioReady();
+  if(kind==='success'){
+    [523.25,659.25,783.99,1046.5].forEach((f,i)=>pluck(f,i*.105,.95,.034,'sine'));
+    pluck(1318.5,.45,.8,.012,'sine');
+  }else{pluck(987.77,0,.24,.012,'sine');pluck(1318.5,.055,.3,.009,'sine')}
+}
+function startMusic(){
+  // A soft original music-box / felt-piano style theme generated locally with Web Audio.
+  // No audio downloads, ads or third-party tracks are required.
+  clearInterval(musicTimer);melodyStep=0;
+  const chords=[ [220,261.63,329.63,392], [196,246.94,293.66,392], [174.61,220,261.63,329.63], [196,246.94,293.66,369.99] ];
+  const melody=[659.25,783.99,880,783.99,659.25,587.33,523.25,587.33,659.25,783.99,987.77,880,783.99,659.25,587.33,523.25,587.33,659.25,783.99,880,1046.5,987.77,880,783.99,659.25,587.33,659.25,523.25,587.33,659.25,587.33,523.25];
+  const beat=365;
+  function tick(){
+    if(!musicOn||!audioCtx)return;
+    const step=melodyStep%32, chordIndex=Math.floor(step/8)%4, chord=chords[chordIndex];
+    if(step%8===0){pad(chord,0,2.65,.0068);pluck(chord[0]/2,0,1.8,.021,'sine');}
+    if(step%4===0)pluck(chord[1],0,.95,.012,'sine');
+    const f=melody[step];
+    if(step%4!==3)pluck(f,0,step%8===6?1.05:.72,step%8===0?.035:.026,'triangle');
+    if(step%8===2||step%8===6)pluck(f*2,0,.42,.006,'sine');
+    if(step%8===4)pluck(chord[2]*2,0,.6,.007,'sine');
+    melodyStep++;
+  }
+  tick();musicTimer=setInterval(tick,beat);
+}
+function toggleSound(){
+  audioReady();musicOn=!musicOn;
+  $('soundToggle').setAttribute('aria-pressed',String(musicOn));
+  $('soundLabel').textContent=musicOn?'Мелодия играет ♡':'Включить мелодию ♫';
+  $('soundToggle').style.background=musicOn?'#ff8eaf24':'#ffffff0a';
+  if(musicOn){startMusic();uiSound('success');showToast('Пусть мелодия задаст настроение ♡')}
+  else{clearInterval(musicTimer);musicTimer=null;showToast('Музыка стала тише ♡')}
+}
+function spawnAmbientHeart(){
+  const layer=$('ambient');if(!layer)return;
+  const h=document.createElement('span');h.className='ambient-heart';h.textContent=['♡','♥','✧','ღ'][Math.floor(Math.random()*4)];
+  h.style.left=Math.random()*100+'%';h.style.fontSize=(12+Math.random()*18)+'px';
+  h.style.setProperty('--drift',((Math.random()*140)-70)+'px');h.style.animationDuration=(9+Math.random()*9)+'s';
+  layer.appendChild(h);setTimeout(()=>h.remove(),19000);
+}
+setInterval(spawnAmbientHeart,1250);
+function go(n){
+  if(state.screen!==n)uiSound();
+  document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
+  $('s'+n).classList.add('active');state.screen=n;
+  $('progress').style.width=({1:10,2:30,3:52,4:75,5:100}[n]||10)+'%';
+  window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  if(n===3)confetti(18);
+}
+function showToast(text){const t=$('toast');t.textContent=text;t.classList.add('show');clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.classList.remove('show'),2600)}
+function dodge(){
+  const b=$('noBtn'),wrap=b.parentElement,row=wrap.parentElement;dodgeCount++;
+  if(dodgeCount>=18){
+    b.onmouseenter=null;b.onclick=null;b.style.transform='none';b.textContent='Ладно, давай! 💖';b.classList.remove('btn-ghost');b.classList.add('btn-primary');b.onclick=()=>{uiSound('success');go(3)};
+    const reaction=$('noReaction');reaction.textContent='Ну всё, любопытство победило 🙈 Нажми ещё раз — и я наконец раскрою, что задумал. Обещаю: дальше будет интереснее. ✨';
+    reaction.classList.remove('no-reaction-pop');void reaction.offsetWidth;reaction.classList.add('no-reaction-pop');
+    return;
+  }
+  // Gentle, bounded movement: visible and tappable on touch screens and small viewports.
+  const maxX=Math.max(0,Math.min(64,row.clientWidth*.19));const maxY=Math.min(16,Math.max(0,row.clientHeight*.2));
+  b.style.transform='translate('+((Math.random()*2-1)*maxX)+'px,'+((Math.random()*2-1)*maxY)+'px) rotate('+(Math.random()*10-5)+'deg)';
+  const lines=[
+    'Ой, а я ведь ещё даже не показал тебе свою задумку. Дай истории шанс? ✨',
+    'Я старался сделать приглашение не как у всех. Кажется, кнопка решила устроить мне испытание. 🙈',
+    'Вечер-сюрприз — это не про подарок. Это про то, чтобы я сам придумал, чем тебя удивить. 🌙',
+    'Честно? Мне хочется увидеть твою улыбку, когда ты поймёшь, что я задумал. ♡',
+    'Тут могла бы быть скучная фраза, но ты заслуживаешь чего-то поинтереснее. 💌',
+    'У меня есть план. Не идеальный, зато придуманный с интересом именно к тебе. ✦',
+    'Представь: огни города, что-нибудь вкусное и разговор, который внезапно затянулся. 🌃',
+    'Я не собираюсь устраивать допрос с вопросами «кем ты видишь себя через пять лет». Обещаю 😄',
+    'В программе вечера: никакой скучной программы. Ну, почти. 😉',
+    'Мне правда интересно узнать тебя получше. А красивый повод для этого уже готовится. 🌷',
+    'Маленький спойлер: я хочу удивить тебя впечатлением, а не коробкой с бантом. 🎀',
+    'Скажем так: я вложил в эту страницу чуть больше усилий, чем в обычное «привет». 💗',
+    'Ты ещё можешь передумать… но тогда я не узнаю, какую идею ты выбрала. 🙃',
+    'Если выберешь сюрприз, детали останутся секретом. Мне ведь тоже нужно немного интриги. ✨',
+    'Я не обещаю фейерверк на каждом углу. Но постараюсь, чтобы вечер запомнился хорошим. 💫',
+    'Кажется, я уже слишком много намекнул. Остальное лучше показать, а не рассказывать. 🤫',
+    'Ты выбираешь настроение, я беру на себя маленькую неожиданность. Звучит как план? ♡',
+    'Возможно, это самый необычный способ пригласить тебя куда-нибудь. Зато точно не шаблонный. 💌',
+    'Мне нравится мысль, что у нас может появиться своя смешная история с самого первого вечера. 🌸',
+    'Можно начать с кофе, прогулки или моей секретной идеи. Главное — чтобы тебе самой было интересно. ☕',
+    'Никаких проверок на романтичность. Просто вечер, в котором можно быть собой. 🤍',
+    'Я оставил кое-что за кадром. Вдруг именно это станет самой приятной частью? ✧',
+    'Если бы приглашения получали оценки за старание, я бы сейчас очень надеялся на высокий балл. 😅',
+    'У этой истории нет готового финала. Зато есть возможность придумать его вместе. 🌙',
+    'Кнопка, не подводи… я ведь так красиво всё задумал. 🙈',
+    'Секретный уровень открыт почти полностью. Осталось только узнать, что же там дальше. 🎮',
+    'Я мог бы написать десять причин, почему будет интересно. Но лучше покажу одну за другой. 💫',
+    'Сюрприз — это когда человек постарался, а не когда просто купил что-то в магазине. 🎁',
+    'Вот увидишь: у меня есть идеи получше, чем спорить с этой кнопкой. 😌',
+    'Последняя подсказка перед следующим уровнем: всё самое интересное начинается с любопытства. ✨'
+  ];
+  const line=lines[(dodgeCount-1)%lines.length];
+  const reaction=$('noReaction');reaction.textContent=line;
+  reaction.classList.remove('no-reaction-pop');void reaction.offsetWidth;reaction.classList.add('no-reaction-pop');
+}
+function pickPlace(btn){document.querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));btn.classList.add('selected');state.place=btn.dataset.place}
+function fmtDate(value){
+  if(!value)return 'Выберем вместе';
+  const d=new Date(value+'T12:00:00');
+  return new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'long',year:'numeric'}).format(d);
+}
+function makeTicket(){
+  $('outPlace').textContent=state.place;
+  $('outDate').textContent=fmtDate($('date').value);
+  $('outTime').textContent=$('time').value||'Выберем вместе';
+  $('outMessage').textContent='Для такой необычной девушки — пусть впереди будет вечер, который подарит улыбку и останется тёплым воспоминанием. ♡';
+  go(5);confetti(85);uiSound('success');
+}
+function inviteText(){
+ return '✦ SECRET QUEST PASS · 001 ✦\nОперация: необычный вечер\n\nТвоя миссия: '+state.place+'\nДень начала: '+fmtDate($('date').value)+'\nВремя встречи: '+($('time').value||'выберем вместе')+'\n\nСекретный бонус: одна неожиданность от меня. ♡\nДля такой необычной девушки — билет на память о вечере, который ещё впереди.';
+}
+function copyInvite(){
+ const text=inviteText();
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(()=>showToast('Приглашение скопировано ♡')).catch(()=>fallbackCopy(text))}
+ else fallbackCopy(text);
+}
+function fallbackCopy(text){
+ const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+ try{document.execCommand('copy');showToast('Приглашение скопировано ♡')}catch(e){showToast('Не удалось скопировать — выдели текст вручную')}
+ ta.remove();
+}
+function escapeICS(s){return String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n')}
+function icsDate(dateValue,timeValue){
+  if(!dateValue)return '';
+  const parts=dateValue.split('-');const t=(timeValue||'18:00').split(':');
+  return parts[0]+parts[1]+parts[2]+'T'+(t[0]||'18')+(t[1]||'00')+'00';
+}
+function calendarStamp(dateValue,timeValue){
+  const parts=dateValue.split('-');const t=(timeValue||'18:00').split(':');
+  return parts[0]+parts[1]+parts[2]+'T'+(t[0]||'18')+(t[1]||'00')+'00';
+}
+function downloadInvite(){
+  if(!$('date').value){
+    showToast('Выбери дату — тогда можно добавить её в календарь ♡');
+    $('date').focus();return;
+  }
+  const startDate=$('date').value;
+  const startTime=$('time').value||'18:00';
+  const d=new Date(startDate+'T'+startTime+':00');
+  d.setHours(d.getHours()+2);
+  const endDate=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const endTime=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  const details='Романтическое приглашение для необычной девушки ♡';
+  const params=new URLSearchParams({
+    action:'TEMPLATE',
+    text:'♡ Свидание — '+state.place,
+    dates:calendarStamp(startDate,startTime)+'/'+calendarStamp(endDate,endTime),
+    details:details,
+    location:state.place
   });
-  function chime(notes = [523.25, 659.25, 783.99, 1046.5]){
-    if (!soundOn) return;
-    try {
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const t0 = audioCtx.currentTime;
-      notes.forEach((f, i) => {
-        const o = audioCtx.createOscillator(), g = audioCtx.createGain(), t = t0 + i * 0.11;
-        o.type = 'sine'; o.frequency.value = f;
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(0.11, t + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
-        o.connect(g); g.connect(audioCtx.destination);
-        o.start(t); o.stop(t + 1);
-      });
-    } catch (e) {}
-  }
+  // Opens a calendar event form in Google Calendar. The user reviews and presses Save.
+  window.open('https://calendar.google.com/calendar/render?'+params.toString(),'_blank','noopener');
+  showToast('Проверь детали и сохрани дату в календаре ♡');
+}
+function confetti(count){
+ const colors=['#ff8eaf','#ffd0dd','#d2b1ff','#fff1f6','#f5c86b'];
+ for(let i=0;i<count;i++){
+  const el=document.createElement('i');el.className='confetti';el.style.left=Math.random()*100+'vw';el.style.background=colors[Math.floor(Math.random()*colors.length)];
+  el.style.animationDelay=Math.random()*.8+'s';el.style.animationDuration=(2.4+Math.random()*2)+'s';el.style.transform='rotate('+Math.random()*360+'deg)';
+  document.body.appendChild(el);setTimeout(()=>el.remove(),5000);
+ }
+}
+document.addEventListener('click',e=>{if(e.target.closest('button')&&!e.target.closest('#soundToggle'))uiSound()});
 
-  /* ---------- музыка: нежная «музыкальная шкатулка», рождается прямо в браузере ---------- */
-  let mus = null;
-  const CH = [[57,60,64],[53,57,60],[48,52,55],[55,59,62]];   // Am · F · C · G
-  const mf = n => 440 * 2 ** ((n - 69) / 12);
-  function startMusic(){
-    if (!soundOn || mus) return;
-    try {
-      audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      const c = audioCtx, out = c.createGain(), dl = c.createDelay(1), fb = c.createGain(), lp = c.createBiquadFilter();
-      out.gain.setValueAtTime(0, c.currentTime); out.gain.linearRampToValueAtTime(1, c.currentTime + 4);
-      dl.delayTime.value = .36; fb.gain.value = .4; lp.type = 'lowpass'; lp.frequency.value = 2400;
-      out.connect(c.destination); out.connect(dl); dl.connect(lp); lp.connect(fb); fb.connect(dl); lp.connect(c.destination);
-      const m = mus = { out, step: 0, next: c.currentTime + .15 };
-      const note = (n, t, d, v, type = 'sine') => {
-        const o = c.createOscillator(), g = c.createGain();
-        o.type = type; o.frequency.value = mf(n);
-        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(v, t + .015); g.gain.exponentialRampToValueAtTime(.0001, t + d);
-        o.connect(g); g.connect(out); o.start(t); o.stop(t + d + .05);
-      };
-      const PAT = [0, 1, 2, 1, 2, 1, 0, 1];
-      m.id = setInterval(() => {
-        while (m.next < c.currentTime + .7){
-          const s = m.step++, ch = CH[(s >> 3) % 4], i = s & 7, t = m.next;
-          if (i === 0){ note(ch[0] - 12, t, 3.4, .06, 'triangle'); note(ch[1], t, 3.4, .02, 'triangle'); note(ch[2], t, 3.4, .02, 'triangle'); }
-          note(ch[PAT[i]] + 12, t, 1.3, .05);
-          if (Math.random() < .22) note(ch[(Math.random() * 3) | 0] + 24, t + .22, 1.8, .022);
-          m.next += .45;
-        }
-      }, 200);
-    } catch (e) { mus = null; }
-  }
-  function stopMusic(){
-    if (!mus) return;
-    const m = mus; mus = null; clearInterval(m.id);
-    try { m.out.gain.cancelScheduledValues(0); m.out.gain.setTargetAtTime(0, audioCtx.currentTime, .15); } catch (e) {}
-  }
-  document.addEventListener('visibilitychange', () => {
-    if (!audioCtx) return;
-    if (document.hidden) audioCtx.suspend(); else if (soundOn) audioCtx.resume();
-  });
+function saveTicket(){
+  showToast('В окне печати выбери «Сохранить как PDF» — билет останется на память ♡');
+  setTimeout(()=>window.print(),250);
+}
+const buddyFaces=['🥹','😊','🙈','☺️','😳','🥰','👀','🤭'];
+const buddyLines=['Я немного волнуюсь… но очень хочу тебя удивить ♡','Улыбнулась? Тогда уже не зря стараюсь 😊','Ой… я немножко смущаюсь 🙈','Кажется, я краснею… ☺️','Только никому не рассказывай мой секрет 😳','Для тебя хочется придумать что-то особенное 🥰','*осторожно смотрит в сторону* 👀','Ладно, всё, я смутился 🤭'];
+let buddyIndex=0;
+setInterval(()=>{const face=$('cuteBuddy'),caption=$('buddyCaption');if(!face||!caption)return;buddyIndex=(buddyIndex+1)%buddyFaces.length;face.textContent=buddyFaces[buddyIndex];caption.textContent=buddyLines[buddyIndex];face.animate([{transform:'scale(.88) rotate(-5deg)',opacity:.65},{transform:'scale(1.08) rotate(4deg)',opacity:1},{transform:'scale(1) rotate(0)',opacity:1}],{duration:480,easing:'ease-out'});},2400);
+function moveAtmosphere(x,y){document.documentElement.style.setProperty('--pointer-x',(x/Math.max(1,window.innerWidth)*100)+'%');document.documentElement.style.setProperty('--pointer-y',(y/Math.max(1,window.innerHeight)*100)+'%')}
+window.addEventListener('pointermove',e=>moveAtmosphere(e.clientX,e.clientY),{passive:true});
+window.addEventListener('touchmove',e=>{if(e.touches&&e.touches[0])moveAtmosphere(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
 
-  /* ---------- живой фон: звёзды, эмодзи, бабочки, шлейф за курсором ---------- */
-  const cv = $('#fx'), cx = cv.getContext('2d');
-  let W = 0, H = 0, dpr = 1;
-  const SET_BG = ['💖','🌸','✨','🍓','🌷','💫','💕','🌹','⭐'];
-  const SET_BURST = ['💖','🌸','✨','🍓','🦋','💕','🌷'];
-  const SET_TRAIL = ['✨','💖','🌸'];
-  const SET_TAP = ['💖','✨','💕'];
-  const sprites = new Map();
-  function sprite(ch){
-    let c = sprites.get(ch);
-    if (c) return c;
-    c = document.createElement('canvas'); c.width = c.height = 96;
-    const g = c.getContext('2d');
-    if (g){
-      g.font = '70px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Twemoji Mozilla",sans-serif';
-      g.textAlign = 'center'; g.textBaseline = 'middle';
-      g.fillText(ch, 48, 54);
-    }
-    sprites.set(ch, c);
-    return c;
-  }
-  function spr(img, x, y, size, rot, alpha, sx = 1){
-    cx.globalAlpha = alpha;
-    cx.save(); cx.translate(x, y); cx.rotate(rot); cx.scale(sx, 1);
-    cx.drawImage(img, -size / 2, -size / 2, size, size);
-    cx.restore();
-  }
-
-  let stars = [], bg = [], fx = [], shoot = null;
-  let tx = 0, ty = 0, px = 0, py = 0, lastTrail = 0, running = false;
-
-  function build(){
-    stars = []; bg = [];
-    const ns = Math.min(90, Math.round(W * H / 16000));
-    for (let i = 0; i < ns; i++) stars.push({ x: Math.random() * W, y: Math.random() * H, r: .4 + Math.random() * 1.2, ph: Math.random() * 6.28, sp: 500 + Math.random() * 900, d: Math.random() });
-    const n = Math.max(14, Math.min(isMobile ? 18 : 36, Math.round(W * H / 26000)));
-    for (let i = 0; i < n; i++){
-      const depth = [.4, .8, 1.3][i % 3];
-      const fly = Math.random() < .14;
-      bg.push({
-        x: Math.random() * W, y: Math.random() * H, d: depth, fly,
-        spr: sprite(fly ? '🦋' : SET_BG[(Math.random() * SET_BG.length) | 0]),
-        s: (fly ? 26 : 14) + depth * (10 + Math.random() * 12),
-        vy: fly ? .15 + Math.random() * .2 : .15 + depth * .22 + Math.random() * .25,
-        a: .3 + depth * .35, ph: Math.random() * 6.28,
-        sw: 900 + Math.random() * 900, amp: 8 + Math.random() * 18
-      });
-    }
-    bg.sort((a, b) => a.d - b.d);
-  }
-  function resize(){
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = innerWidth; H = innerHeight;
-    cv.width = W * dpr; cv.height = H * dpr;
-    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    build();
-    clampNo();
-    if (reduce) frame(0);
-  }
-  function emit(x, y, o = {}){
-    if (reduce) return;
-    const n = o.n ?? 20, sp = o.sp ?? 7, size = o.size ?? [12, 26], g = o.g ?? .22, decay = o.decay ?? .011, up = o.up ?? 3, set = o.set ?? SET_BURST;
-    for (let i = 0; i < n; i++){
-      const a = Math.random() * 6.283, v = sp * (.4 + Math.random() * .6);
-      fx.push({
-        x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - up,
-        s: size[0] + Math.random() * (size[1] - size[0]),
-        r: Math.random() * 6.28, vr: (Math.random() - .5) * .25,
-        life: 1, decay, g, spr: sprite(set[(Math.random() * set.length) | 0])
-      });
-    }
-    if (fx.length > 700) fx.splice(0, fx.length - 700);
-    start();
-  }
-  const burst = (x, y, n = 70) => emit(x, y, { n });
-
-  function frame(t){
-    cx.clearRect(0, 0, W, H);
-    px += (tx - px) * .05; py += (ty - py) * .05;
-
-    cx.fillStyle = '#fff';
-    for (const s of stars){
-      cx.globalAlpha = .2 + .6 * (.5 + .5 * Math.sin(t / s.sp + s.ph));
-      cx.beginPath(); cx.arc(s.x + px * s.d * 10, s.y + py * s.d * 6, s.r, 0, 6.283); cx.fill();
-    }
-    if (!reduce){
-      if (!shoot && Math.random() < .0025) shoot = { x: Math.random() * W * .7, y: Math.random() * H * .35, vx: 9, vy: 4.5, life: 1 };
-      if (shoot){
-        shoot.x += shoot.vx; shoot.y += shoot.vy; shoot.life -= .02;
-        const ex = shoot.x - shoot.vx * 7, ey = shoot.y - shoot.vy * 7;
-        const g = cx.createLinearGradient(shoot.x, shoot.y, ex, ey);
-        g.addColorStop(0, `rgba(255,255,255,${Math.max(0, shoot.life)})`); g.addColorStop(1, 'rgba(255,255,255,0)');
-        cx.globalAlpha = 1; cx.strokeStyle = g; cx.lineWidth = 2;
-        cx.beginPath(); cx.moveTo(shoot.x, shoot.y); cx.lineTo(ex, ey); cx.stroke();
-        if (shoot.life <= 0) shoot = null;
-      }
-    }
-
-    for (const p of bg){
-      if (!reduce){ p.y -= p.vy; if (p.y < -60){ p.y = H + 60; p.x = Math.random() * W; } }
-      let x = p.x + (reduce ? 0 : Math.sin(t / p.sw + p.ph) * p.amp) + px * p.d * 34;
-      let y = p.y + py * p.d * 20;
-      let rot = reduce ? 0 : Math.sin(t / 1600 + p.ph) * .35, sx = 1;
-      if (p.fly && !reduce){
-        x += Math.sin(t / 900 + p.ph) * 30;
-        sx = .55 + .45 * Math.abs(Math.sin(t / 110 + p.ph));
-        rot = Math.sin(t / 700 + p.ph) * .4;
-      }
-      spr(p.spr, x, y, p.s * (1 + (reduce ? 0 : .06 * Math.sin(t / 700 + p.ph))), rot, p.a, sx);
-    }
-
-    for (let i = fx.length - 1; i >= 0; i--){
-      const p = fx[i];
-      p.x += p.vx; p.y += p.vy; p.vy += p.g; p.vx *= .985; p.r += p.vr; p.life -= p.decay;
-      if (p.life <= 0 || p.y > H + 50){ fx.splice(i, 1); continue; }
-      spr(p.spr, p.x, p.y, p.s * (.5 + p.life * .5), p.r, Math.min(1, p.life * 1.5));
-    }
-    cx.globalAlpha = 1;
-    if (!reduce) requestAnimationFrame(frame); else running = false;
-  }
-  function start(){ if (!running && !reduce){ running = true; requestAnimationFrame(frame); } }
-
-  addEventListener('pointermove', e => {
-    tx = (e.clientX / W - .5) * 2; ty = (e.clientY / H - .5) * 2;
-    if (e.pointerType === 'mouse'){
-      const now = performance.now();
-      if (now - lastTrail > 45){
-        lastTrail = now;
-        emit(e.clientX, e.clientY, { n: 1, sp: 1.2, size: [10, 18], g: .01, decay: .035, up: .3, set: SET_TRAIL });
-      }
-    }
-  }, { passive: true });
-  addEventListener('pointerdown', e => {
-    emit(e.clientX, e.clientY, { n: 7, sp: 4, size: [12, 22], g: .12, decay: .02, up: 2, set: SET_TAP });
-  }, { passive: true });
-
-  /* ---------- уведомления тебе ---------- */
-  function post(url, opts, ms = 7000){
-    const c = new AbortController();
-    const t = setTimeout(() => c.abort(), ms);
-    return fetch(url, { ...opts, signal: c.signal, keepalive: true })
-      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r; })
-      .finally(() => clearTimeout(t));
-  }
-  const send = (url, opts) => post(url, opts).catch(() => new Promise(r => setTimeout(r, 1200)).then(() => post(url, opts)));
-  async function notify({ title, lines, priority = 3, tags = [], email = false, data = null }){
-    if (SILENT) return { status: 'silent', detail: 'silent-режим' };
-    const n = CONFIG.notify, msg = lines.join('\n'), jobs = [], names = [];
-    if (n.ntfyTopic){
-      names.push('push');
-      jobs.push(send('https://ntfy.sh', { method: 'POST', body: JSON.stringify({ topic: n.ntfyTopic, title, message: msg, priority, tags }) }));
-    }
-    if (n.web3formsKey && email){
-      names.push('почта');
-      jobs.push(send('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ access_key: n.web3formsKey, subject: title, from_name: 'Встреча 🌸', message: msg })
-      }));
-    }
-    if (n.sheetUrl && email && data){
-      names.push('таблица');
-      jobs.push(fetch(n.sheetUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data), keepalive: true }));
-    }
-    if (!jobs.length) return { status: 'none', detail: 'каналы не настроены' };
-    const res = await Promise.allSettled(jobs);
-    const ok = res.some(r => r.status === 'fulfilled');
-    return { status: ok ? 'ok' : 'fail', detail: res.map((r, i) => names[i] + (r.status === 'fulfilled' ? ' ✓' : ' ✗')).join(', ') };
-  }
-  const envLines = () => [`📱 Устройство: ${isMobile ? 'телефон' : 'компьютер'}`, `⏱ На сайте: ${durStr()}`];
-
-  /* ---------- обложка ---------- */
-  $('#sign').textContent = CONFIG.myName ? '— ' + CONFIG.myName : '';
-  $('#greet').textContent = CONFIG.name ? `Привет, ${CONFIG.name}` : 'Привет';
-  let openedSent = false;
-  $('#open').addEventListener('click', e => {
-    const r = e.currentTarget.getBoundingClientRect();
-    const x = r.left + r.width / 2, y = r.top + r.height / 2;
-    if (!reduce){
-      const b = document.createElement('div');
-      b.className = 'bloom'; b.style.left = x + 'px'; b.style.top = y + 'px';
-      document.body.appendChild(b);
-      setTimeout(() => b.remove(), 1200);
-    }
-    emit(x, y, { n: 60 });
-    chime([523.25, 783.99]); startMusic();
-    setTimeout(() => show('s-ask'), reduce ? 0 : 380);
-    if (!openedSent){
-      openedSent = true;
-      notify({ title: `👀 ${who()} открыла сюрприз`, lines: ['Нажала на сердце — сейчас увидит вопрос.', ...envLines()], tags: ['eyes'] });
-    }
-  });
-
-  /* ---------- убегающая кнопка «Нет» ---------- */
-  const noBtn = $('#no'), yesBtn = $('#yes'), hint = $('#hint');
-  let floating = false, placeholder = null, lastDodge = 0;
-
-  function floatNo(){
-    if (floating) return;
-    const r = noBtn.getBoundingClientRect();
-    placeholder = document.createElement('span');
-    placeholder.style.cssText = `display:inline-block;width:${r.width}px;height:${r.height}px`;
-    noBtn.parentNode.insertBefore(placeholder, noBtn);
-    noBtn.classList.add('float');
-    noBtn.style.left = r.left + 'px';
-    noBtn.style.top = r.top + 'px';
-    noBtn.getBoundingClientRect();
-    floating = true;
-  }
-  function unfloatNo(){
-    if (!floating) return;
-    noBtn.classList.remove('float');
-    noBtn.style.left = noBtn.style.top = '';
-    if (placeholder){ placeholder.remove(); placeholder = null; }
-    floating = false;
-  }
-  function clampNo(){
-    if (!floating) return;
-    const m = 12, w = noBtn.offsetWidth, h = noBtn.offsetHeight;
-    const x = Math.min(Math.max(m, parseFloat(noBtn.style.left) || m), innerWidth - w - m);
-    const y = Math.min(Math.max(m, parseFloat(noBtn.style.top) || m), innerHeight - h - m);
-    noBtn.style.left = x + 'px'; noBtn.style.top = y + 'px';
-  }
-  function dodge(pX, pY){
-    if (state.gaveUp) return;
-    const now = performance.now();
-    if (now - lastDodge < 220) return;
-    lastDodge = now;
-    state.attempts++;
-
-    yesBtn.style.setProperty('--grow', Math.min(1 + state.attempts * 0.09, 1.7));
-    hint.textContent = CONFIG.hints[Math.min(state.attempts, CONFIG.hints.length - 1)];
-    mood(CONFIG.moods[Math.min(state.attempts, CONFIG.moods.length - 1)]);
-
-    if (state.attempts >= CONFIG.surrenderAfter){
-      state.gaveUp = true;
-      unfloatNo();
-      noBtn.textContent = 'Ладно, да 💖';
-      noBtn.classList.add('give-up');
-      return;
-    }
-    noBtn.textContent = CONFIG.noLabels[Math.min(state.attempts, CONFIG.noLabels.length - 1)];
-    floatNo();
-
-    const w = noBtn.offsetWidth, h = noBtn.offsetHeight, m = 12;
-    const yr = yesBtn.getBoundingClientRect();
-    let best = null;
-    for (let i = 0; i < 40; i++){
-      const x = m + Math.random() * Math.max(1, innerWidth - w - 2 * m);
-      const y = m + Math.random() * Math.max(1, innerHeight - h - 2 * m);
-      const hitsYes = x < yr.right + 12 && x + w > yr.left - 12 && y < yr.bottom + 12 && y + h > yr.top - 12;
-      if (hitsYes) continue;
-      const far = Math.hypot(x + w / 2 - pX, y + h / 2 - pY);
-      if (!best || far > best.far) best = { x, y, far };
-    }
-    if (!best) best = { x: m, y: m };
-    noBtn.style.left = best.x + 'px';
-    noBtn.style.top = best.y + 'px';
-  }
-  const centerOfNo = () => { const r = noBtn.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
-
-  noBtn.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') dodge(e.clientX, e.clientY); });
-  noBtn.addEventListener('pointerdown', e => {
-    if (state.gaveUp) return;
-    e.preventDefault();
-    dodge(e.clientX, e.clientY);
-  });
-  noBtn.addEventListener('focus', () => { if (!state.gaveUp){ const [x, y] = centerOfNo(); dodge(x, y); } });
-  noBtn.addEventListener('click', e => {
-    if (state.gaveUp){ accept(e); return; }
-    e.preventDefault();
-    const [x, y] = centerOfNo(); dodge(x, y);
-  });
-  document.addEventListener('pointermove', e => {
-    if (!floating || state.gaveUp || e.pointerType !== 'mouse') return;
-    const [x, y] = centerOfNo();
-    if (Math.hypot(e.clientX - x, e.clientY - y) < 95) dodge(e.clientX, e.clientY);
-  });
-  addEventListener('resize', resize);
-
-  /* ---------- ДА ---------- */
-  let yesSent = false;
-  function accept(e){
-    const r = (e.currentTarget || yesBtn).getBoundingClientRect();
-    emit(r.left + r.width / 2, r.top + r.height / 2, { n: 90 });
-    chime();
-    mood('😍');
-    unfloatNo();
-    if (!yesSent){
-      yesSent = true;
-      notify({
-        title: `🎉 ${who()} сказала ДА!`,
-        lines: [
-          'Согласилась на встречу 🌸',
-          `😅 Кнопку «Нет» пыталась нажать: ${state.attempts} раз${state.gaveUp ? ' (кнопка сдалась)' : ''}`,
-          'Сейчас выберет место и время…',
-          ...envLines()
-        ],
-        priority: 4, tags: ['tada', 'heart']
-      });
-    }
-    setTimeout(() => show('s-place'), reduce ? 0 : 750);
-  }
-  yesBtn.addEventListener('click', accept);
-
-  /* ---------- место ---------- */
-  const placesEl = $('#places');
-  CONFIG.places.forEach(p => {
-    const b = document.createElement('button');
-    b.className = 'pick';
-    b.dataset.fx = p.fx || '';
-    b.innerHTML = `<span class="ic">${p.icon}</span>${(p.bits || []).map((x, i) => `<i class="bit b${i}">${x}</i>`).join()}<span class="t">${esc(p.title)}</span><span class="n">${esc(p.note)}</span>`;
-    b.addEventListener('click', () => {
-      placesEl.querySelectorAll('.pick').forEach(x => x.classList.remove('sel'));
-      b.classList.add('sel');
-      state.place = p;
-      const r = b.getBoundingClientRect();
-      emit(r.left + r.width / 2, r.top + r.height / 2, { n: 34, set: [p.icon, ...(p.bits || [])] });
-      mood('😍', $('#mascotP'));
-      chime([659.25, 783.99]);
-      if (p.custom){
-        $('#customWrap').hidden = false;
-        $('#customPlace').focus();
-      } else {
-        $('#customWrap').hidden = true;
-        setTimeout(goDate, reduce ? 0 : 450);
-      }
-    });
-    placesEl.appendChild(b);
-  });
-  function submitCustom(){
-    const v = $('#customPlace').value.trim();
-    if (!v){ $('#customPlace').focus(); return; }
-    state.customPlace = v;
-    goDate();
-  }
-  $('#customGo').addEventListener('click', submitCustom);
-  $('#customPlace').addEventListener('keydown', e => { if (e.key === 'Enter') submitCustom(); });
-
-  /* ---------- дата и время ---------- */
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  let view = new Date(today.getFullYear(), today.getMonth(), 1);
-  const same = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-  const isPast = (d, t) => {
-    const [h, mi] = t.split(':').map(Number);
-    return new Date(d.getFullYear(), d.getMonth(), d.getDate(), h, mi).getTime() < Date.now() + 30 * 60e3;
-  };
-
-  function renderCal(){
-    const y = view.getFullYear(), m = view.getMonth();
-    $('#mLabel').textContent = view.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' }).replace(/\s?г\.$/, '');
-    const maxD = new Date(today); maxD.setDate(maxD.getDate() + CONFIG.daysAhead);
-    $('#prev').disabled = y === today.getFullYear() && m === today.getMonth();
-    $('#next').disabled = new Date(y, m + 1, 1) > maxD;
-    const first = (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate();
-    const box = $('#days'); box.innerHTML = '';
-    for (let i = 0; i < first; i++) box.appendChild(document.createElement('span'));
-    for (let d = 1; d <= dim; d++){
-      const dt = new Date(y, m, d);
-      const b = document.createElement('button');
-      b.className = 'day'; b.textContent = d;
-      b.disabled = dt < today || dt > maxD;
-      if (same(dt, today)) b.classList.add('today');
-      if (state.date && same(dt, state.date)) b.classList.add('sel');
-      b.setAttribute('aria-label', fmtDate(dt));
-      b.addEventListener('click', e => pickDate(dt, e));
-      box.appendChild(b);
-    }
-  }
-  function renderTimes(){
-    const g = $('#tgrid'); g.innerHTML = '';
-    CONFIG.times.forEach(t => {
-      const b = document.createElement('button');
-      b.className = 'chip'; b.textContent = t;
-      b.disabled = state.date ? isPast(state.date, t) : false;
-      if (state.time === t) b.classList.add('sel');
-      b.addEventListener('click', () => {
-        state.time = t; $('#ctime').value = ''; $('#tmsg').textContent = '';
-        renderTimes(); updateNext(); chime([783.99]);
-        const r = b.getBoundingClientRect();
-        emit(r.left + r.width / 2, r.top + r.height / 2, { n: 10, sp: 4 });
-      });
-      g.appendChild(b);
-    });
-  }
-  function updateNext(){
-    const ready = !!(state.date && state.time);
-    const b = $('#toNote');
-    b.disabled = !ready;
-    b.classList.toggle('ready', ready);
-  }
-  function pickDate(dt, e){
-    state.date = dt;
-    mood('🥰', $('#mascotD'));
-    if (state.time && isPast(dt, state.time)){ state.time = null; $('#ctime').value = ''; }
-    renderCal(); renderTimes(); updateNext();
-    $('#times').classList.add('show');
-    chime([587.33, 880]);
-    emit(e.clientX, e.clientY, { n: 12, sp: 5 });
-  }
-  $('#ctime').addEventListener('change', e => {
-    const v = e.target.value, msg = $('#tmsg');
-    if (!v) return;
-    if (state.date && isPast(state.date, v)){ msg.textContent = 'Это время уже прошло — выбери позже'; state.time = null; }
-    else { msg.textContent = ''; state.time = v; }
-    renderTimes(); updateNext();
-  });
-  $('#prev').addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() - 1, 1); renderCal(); });
-  $('#next').addEventListener('click', () => { view = new Date(view.getFullYear(), view.getMonth() + 1, 1); renderCal(); });
-
-  function goDate(){
-    renderCal(); renderTimes(); updateNext();
-    $('#times').classList.toggle('show', !!state.date);
-    show('s-date');
-  }
-  $('#toNote').addEventListener('click', () => {
-    $('#recap').innerHTML = `${placeIcon()} <b>${esc(placeName())}</b><br>📅 ${esc(fmtDate(state.date))}, 🕒 ${esc(state.time)}`;
-    show('s-note');
-  });
-  $('#backDate').addEventListener('click', goDate);
-
-  /* ---------- подтверждение ---------- */
-  const tgLink = text => `https://t.me/${encodeURIComponent(CONFIG.telegram)}?text=${encodeURIComponent(text)}`;
-  const summaryLine = () => `${placeName()}, ${fmtDate(state.date)}, ${state.time}`;
-
-  $('#confirm').addEventListener('click', async () => {
-    const btn = $('#confirm');
-    state.note = $('#note').value.trim();
-    btn.disabled = true; btn.textContent = 'Отправляю… 💌';
-    emit(innerWidth / 2, innerHeight * .6, { n: 40 });
-    chime();
-
-    const again = state.sends > 0;
-    state.sends++;
-    const lines = [
-      `📍 Куда: ${placeName()}`,
-      `📅 Когда: ${fmtDate(state.date)}`,
-      `🕒 Во сколько: ${state.time}`,
-      state.note ? `💬 Пожелание: ${state.note}` : '💬 Пожелание: нет',
-      `😅 Нажимала «Нет»: ${state.attempts} раз`,
-      ...envLines()
-    ];
-    const res = await notify({
-      title: again ? `🔄 ${who()} изменила планы` : `🌸 ${who()} назначила встречу!`,
-      lines, priority: 5, tags: ['heart', 'tada'], email: true,
-      data: { place: placeName(), date: fmtDate(state.date), time: state.time, note: state.note, attempts: state.attempts, device: isMobile ? 'телефон' : 'компьютер', again }
-    });
-    btn.disabled = false; btn.textContent = 'Подтвердить встречу 💌';
-    renderDone(res);
-  });
-
-  /* ---------- финал ---------- */
-  let cdTimer = null;
-  function startCount(){
-    clearInterval(cdTimer);
-    const el = $('#count');
-    const tick = () => {
-      const ms = eventDate().getTime() - Date.now();
-      if (ms <= 0){ el.textContent = 'Время пришло 💖'; clearInterval(cdTimer); return; }
-      const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4), s = Math.floor(ms % 6e4 / 1e3);
-      el.textContent = d ? `До встречи: ${d} д ${h} ч ${m} мин` : `До встречи: ${h} ч ${m} мин ${s} с`;
-    };
-    tick(); cdTimer = setInterval(tick, 1000);
-  }
-  const UA = navigator.userAgent;
-  const isIOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const isAndroid = /Android/i.test(UA);
-  const inApp = /Telegram|Instagram|FBAN|FBAV|VKClient|; wv\)/i.test(UA);
-  const enc = new TextEncoder();
-  const fold = line => {
-    const out = []; let cur = '', len = 0;
-    for (const ch of line){
-      const n = enc.encode(ch).length;
-      if (len + n > (out.length ? 72 : 74)){ out.push(cur); cur = ''; len = 0; }
-      cur += ch; len += n;
-    }
-    out.push(cur);
-    return out.join('\r\n ');
-  };
-  const fmtLocal = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
-  const endDate = () => new Date(eventDate().getTime() + CONFIG.durationHours * 3600e3);
-  function makeIcs(){
-    const t = s => String(s).replace(/[\\,;]/g, '\\$&').replace(/\n/g, '\\n');
-    const stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    return [
-      'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Date invite//RU', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
-      'BEGIN:VEVENT', `UID:date-${eventDate().getTime()}@date-invite`, `DTSTAMP:${stamp}`, 'SEQUENCE:0',
-      `DTSTART:${fmtLocal(eventDate())}`, `DTEND:${fmtLocal(endDate())}`,
-      `SUMMARY:${t('Встреча 🌸 ' + placeName())}`, `LOCATION:${t(placeName())}`,
-      `DESCRIPTION:${t(state.note || 'Я уже жду этот день')}`, 'STATUS:CONFIRMED', 'TRANSP:OPAQUE',
-      'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY', 'DESCRIPTION:Завтра наша встреча 🌸', 'END:VALARM',
-      'BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', 'DESCRIPTION:Через 2 часа наша встреча 🌸', 'END:VALARM',
-      'END:VEVENT', 'END:VCALENDAR'
-    ].map(fold).join('\r\n') + '\r\n';
-  }
-  const gcalUrl = () => 'https://calendar.google.com/calendar/render?action=TEMPLATE'
-    + '&text=' + encodeURIComponent('Встреча 🌸 ' + placeName())
-    + '&dates=' + fmtLocal(eventDate()) + '/' + fmtLocal(endDate())
-    + '&details=' + encodeURIComponent(state.note || 'Я уже жду этот день')
-    + '&location=' + encodeURIComponent(placeName());
-  function addToCalendar(){
-    const ics = makeIcs(), tip = $('#calTip');
-    if (isIOS){
-      location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);   // Safari сам покажет «Добавить»
-      tip.textContent = 'Нажми «Добавить» вверху экрана — и встреча в календаре 💖';
-      return;
-    }
-    const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-    const a = document.createElement('a');
-    a.href = url; a.download = 'svidanie.ics';
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4000);
-    tip.textContent = isAndroid
-      ? 'Файл скачан — нажми на него в уведомлении, и календарь сохранит встречу 💖'
-      : 'Файл скачан — открой его, и встреча появится в календаре 💖';
-  }
-  function renderDone(res){
-    $('#ticket').innerHTML = `
-      <div class="top"><div class="big" data-fx="${esc((state.place && state.place.fx) || '')}">${esc(placeIcon())}</div>
-        <div><div class="k">Встреча</div><div class="v">${esc(placeName())}</div></div></div>
-      <div class="sep"></div>
-      <div class="bot"><div class="date">${esc(fmtDate(state.date))}</div><div class="time">${esc(state.time)}</div></div>
-      ${state.note ? `<div class="wish">«${esc(state.note)}»</div>` : ''}`;
-
-    const warn = $('#warn'), box = $('#doneActions');
-    warn.innerHTML = ''; box.innerHTML = '';
-
-    const cal = document.createElement('button');
-    cal.className = 'btn yes'; cal.style.setProperty('--grow', 1);
-    cal.textContent = 'Добавить в календарь 📅';
-    cal.addEventListener('click', addToCalendar);
-    box.appendChild(cal);
-    const g = document.createElement('a');
-    g.className = 'btn ghost'; g.href = gcalUrl(); g.target = '_blank'; g.rel = 'noopener';
-    g.textContent = 'Google Календарь';
-    box.appendChild(g);
-    $('#calTip').textContent = inApp ? 'Если календарь не открылся — нажми ⋯ и «Открыть в браузере» (Safari / Chrome).' : '';
-
-    const needTg = CONFIG.telegram && (res.status === 'fail' || res.status === 'none');
-    if (res.status === 'fail'){
-      warn.innerHTML = '<div class="warn">Не получилось отправить автоматически. Нажми кнопку ниже и напиши мне лично 💬</div>';
-    }
-    if (needTg){
-      const a = document.createElement('a');
-      a.className = 'btn ghost';
-      a.href = tgLink(`Да! Идём: ${summaryLine()} 💖${state.note ? '\n' + state.note : ''}`);
-      a.target = '_blank'; a.rel = 'noopener';
-      a.textContent = 'Написать в Telegram';
-      box.appendChild(a);
-    }
-    $('#dbg').textContent = DEBUG ? `Отправка: ${res.status}${res.detail ? ' (' + res.detail + ')' : ''}` : '';
-
-    $('#doneLine').textContent = (state.place && state.place.done) || 'Я уже считаю часы до встречи 💖';
-    show('s-done');
-    startCount();
-    mood('🥰', $('#mascotDone'));
-    chime([523.25, 659.25, 783.99, 1046.5, 1318.5]);
-    emit(innerWidth / 2, innerHeight * .3, { n: 130 });
-    const rainSet = [placeIcon(), ...((state.place && state.place.bits) || ['💖'])];
-    for (let i = 0; i < 5; i++) setTimeout(() => emit(Math.random() * innerWidth, -20, { n: 14, sp: 1.5, g: .09, up: 0, decay: .005, size: [16, 30], set: rainSet }), 500 + i * 450);
-    setTimeout(() => emit(innerWidth * .2, innerHeight * .5, { n: 55 }), 250);
-    setTimeout(() => emit(innerWidth * .8, innerHeight * .5, { n: 55 }), 450);
-  }
-  $('#again').addEventListener('click', () => {
-    clearInterval(cdTimer);
-    placesEl.querySelectorAll('.sel').forEach(x => x.classList.remove('sel'));
-    state.place = null; $('#customWrap').hidden = true;
-    show('s-place');
-  });
-
-  const cardEl = $('.card');
-  const glow = e => {
-    const r = cardEl.getBoundingClientRect();
-    cardEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-    cardEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-  };
-  addEventListener('pointermove', glow, { passive: true });
-  addEventListener('pointerdown', glow, { passive: true });
-
-  resize(); start();
+(function init(){
+ const stars=$('stars');
+ for(let i=0;i<75;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*4+'s';s.style.animationDuration=(2+Math.random()*4)+'s';stars.appendChild(s)}
+ const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());$('date').min=d.toISOString().slice(0,10);
 })();
 </script>
 </body>
