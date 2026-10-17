@@ -226,6 +226,61 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
  #ticket .ticket-quest{break-inside:avoid}
 }
 
+
+/* ===== v2: живой персонаж, орбиты, печатные подписи, подпись на билете ===== */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:35;overflow:hidden}
+.fxp{position:absolute;left:0;top:0;line-height:1;will-change:transform,opacity;text-shadow:0 0 14px currentColor}
+.fxp svg{display:block}
+
+.buddy{--bs:160px;display:block;width:min(var(--bs),64vw);aspect-ratio:200/210;margin:0 auto;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;filter:drop-shadow(0 0 34px #f6a9c540)}
+.buddy:focus-visible{outline:3px solid #ffd2df;outline-offset:6px;border-radius:30%}
+.bd-svg{display:block;width:100%;height:100%;overflow:visible}
+.heart-wrap .buddy{--bs:236px}
+.little-buddy{margin-bottom:6px}
+.orbiters{position:absolute;inset:0;pointer-events:none;z-index:3}
+.orb-i{position:absolute;left:50%;top:50%;line-height:1;will-change:transform,opacity;text-shadow:0 0 16px currentColor}
+
+.art-caption{left:0;right:0;padding:0 8px;min-height:2.6em;display:flex;align-items:flex-end;justify-content:center}
+.buddy-caption{min-height:2.7em;display:flex;align-items:flex-start;justify-content:center;text-align:center}
+.typing:after{content:"";display:inline-block;width:2px;height:1em;margin-left:3px;background:currentColor;vertical-align:-.12em;animation:caret .7s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.bd-hint{margin:2px 0 0;font-size:12px;color:#bcb3cd;letter-spacing:.04em}
+
+/* лёгкие «живые» облачка по экрану */
+.amb{position:absolute;bottom:-50px;opacity:0;animation:ambRise var(--dur) linear forwards;will-change:transform,opacity}
+.amb-in{display:block;line-height:1;animation:ambSway var(--sw) ease-in-out infinite alternate;filter:drop-shadow(0 0 10px currentColor)}
+.amb-in svg{display:block}
+@keyframes ambRise{0%{transform:translateY(0) translateX(0);opacity:0}10%{opacity:var(--o)}85%{opacity:var(--o)}100%{transform:translateY(-118vh) translateX(var(--drift));opacity:0}}
+@keyframes ambSway{from{transform:translateX(-12px) rotate(-14deg) scale(.92)}to{transform:translateX(12px) rotate(14deg) scale(1.08)}}
+
+/* подпись на билете */
+.ticket-sign{margin:0 27px 22px}
+.ticket-sign-k{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#c8b8d2;margin-bottom:9px}
+.sig-pad-wrap{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(150deg,#ffffff0d,#ffffff03);box-shadow:inset 0 0 0 1px #f7d7b540}
+.sig-pad-wrap:after{content:"";position:absolute;left:6%;right:6%;bottom:19%;border-top:1px dashed #f7d7b54d;pointer-events:none}
+#sigPad{display:block;width:100%;aspect-ratio:5/2;touch-action:none;cursor:crosshair;position:relative;z-index:1}
+.sig-ph{position:absolute;inset:0 0 12% 0;display:grid;place-items:center;text-align:center;padding:0 12px;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:clamp(21px,3.4vw,27px);color:#f7d7b585;pointer-events:none;animation:phPulse 2.6s ease-in-out infinite}
+.sig-ph.off{display:none}
+@keyframes phPulse{50%{opacity:.5}}
+@media(max-width:520px){.ticket-sign{margin:0 18px 18px}}
+
+.sig-tools{max-width:630px;margin:16px auto 0}
+.sig-hint{font-size:13px;color:#d6d0e1;line-height:1.6;margin:0 0 12px}
+.sig-row{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;align-items:center;margin-top:9px}
+.sig-btn{min-height:44px;min-width:44px;padding:10px 18px;border-radius:999px;border:1px solid #f7d7b53b;background:#ffffff0a;color:#f8eaf1;font-weight:700;font-size:13px;transition:background .2s,border-color .2s,transform .2s;touch-action:manipulation}
+.sig-btn:hover{background:#ffffff14;border-color:#f7d7b57a}
+.sig-btn.on{background:linear-gradient(115deg,#fff4e7 0%,#f7d7b5 45%,#f2a8c8 100%);color:#211323;border-color:transparent}
+.sig-btn:disabled{opacity:.35;cursor:default}
+.sig-inks{display:inline-flex;gap:10px;align-items:center;padding:0 4px;transition:opacity .25s}
+.sig-inks.dim{opacity:.35}
+.sig-ink{width:28px;height:28px;padding:0;border-radius:50%;border:2px solid #ffffffb0;transition:transform .2s,box-shadow .2s;touch-action:manipulation}
+.sig-ink.on{transform:scale(1.14);box-shadow:0 0 0 3px #f7d7b566}
+
+.ov{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;overflow:auto;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:#090b18ec}
+.ov.on{display:flex}
+.ov img{max-width:100%;max-height:74vh;border-radius:16px;box-shadow:0 20px 60px #000a}
+.ov p{max-width:34ch;text-align:center;font-size:14px;line-height:1.55;color:#e6dcec;margin:0}
+@media print{.sig-ph{display:none!important}}
 </style>
 </head>
 <body>
@@ -249,16 +304,17 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
         <div class="hero-actions"><button class="btn btn-primary" onclick="go(2)">Открыть историю <span>↗</span></button></div>
       </div>
       <div class="hero-art" aria-hidden="true">
-        <div class="orbit"></div><span class="floating f1">✦</span><span class="floating f2">✧</span><span class="floating f3">♡</span>
-        <div class="heart-wrap"><div class="big-heart">💗</div></div>
-        <div class="art-caption">каждая интересная история с чего-то начинается ✦</div>
+        <div class="orbit"></div>
+        <div class="heart-wrap"><div class="buddy" data-key="hero" data-mood="smile" data-size="236"></div></div>
+        <div class="orbiters" id="orbiters"></div>
+        <div class="art-caption" id="capHero">каждая интересная история с чего-то начинается ✦</div>
       </div>
     </div>
   </section>
 
   <section class="screen" id="s2">
     <div class="panel content center">
-      <div class="little-heart">💌</div><div class="kicker">одна идея для тебя</div>
+      <div class="buddy little-buddy" data-key="s2" data-mood="shy" data-size="124" data-letter="1" data-label="Застенчивое сердечко с письмом"></div><div class="kicker">одна идея для тебя</div>
       <h2>Я придумал кое-что<br><span class="gradient-text">не совсем обычное.</span></h2>
       <p class="sub">Мы ещё не успели как следует познакомиться — и, знаешь, в этом есть своя прелесть. Можно начать без заготовленных историй: выбраться куда-нибудь, разговориться, посмеяться и увидеть, каким получится этот вечер. Мне хочется постараться, чтобы тебе было легко, интересно и приятно. 🌙</p>
       <div class="question-card">
@@ -291,7 +347,7 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
       <div class="form-grid">
         <div class="field"><label for="date">✧ ВЫБЕРИ ДАТУ</label><input id="date" type="date"></div>
         <div class="field"><label for="time">✧ НАЧАЛО</label><input id="time" type="time" value="18:00"></div>
-        <div class="field full center"><div class="cute-buddy" id="cuteBuddy" role="img" aria-label="Смущённый улыбающийся смайлик">🥹</div><p class="buddy-caption" id="buddyCaption">Я немного волнуюсь… но очень хочу тебя удивить ♡</p></div>
+        <div class="field full center"><div class="buddy" data-key="s4" data-mood="shy" data-size="168" data-label="Смущённое живое сердечко — его можно потрогать"></div><p class="buddy-caption" id="capS4">Я немного волнуюсь… но очень хочу тебя удивить ♡</p><p class="bd-hint">сердечко можно потрогать ♡</p></div>
       </div>
       <div class="note">Это пока только набросок нашей маленькой авантюры. Если захочешь что-то изменить — с удовольствием подстроюсь. ♡</div>
       <div class="hero-actions" style="justify-content:center"><button class="btn btn-primary" onclick="makeTicket()">Сохранить этот момент ♡</button></div>
@@ -301,7 +357,7 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
 
   <section class="screen" id="s5">
     <div class="panel content center">
-      <div class="little-heart">✦</div><div class="kicker">секрет разблокирован · уровень 01</div>
+      <div class="buddy little-buddy" data-key="s5" data-mood="proud" data-size="132" data-label="Счастливое сердечко"></div><p class="buddy-caption" id="capS5">Ура! Твой билет готов 🎟 Осталось расписаться ♡</p><div class="kicker">секрет разблокирован · уровень 01</div>
       <h2>Твоя маленькая<br><span class="gradient-text">карта приключения.</span></h2>
       <p class="sub">Вот твой билет в ещё не придуманное воспоминание. Я возьму на себя идею и постараюсь добавить в этот вечер что-то неожиданное. А тебе остаётся выбрать настроение — и, если захочется, дать этой истории шанс. ✨</p>
       <div class="ticket" id="ticket">
@@ -314,7 +370,18 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
           <div class="ticket-item"><span>Секретный бонус</span><strong>Одна неожиданность от меня ✨</strong></div>
         </div>
         <div class="ticket-quest"><span class="ticket-sigil">♡</span><span>Для такой необычной девушки — пусть этот билет останется маленьким воспоминанием о вечере, который ещё впереди. Береги его ♡</span><span class="ticket-sigil">✦</span></div>
+        <div class="ticket-sign"><div class="ticket-sign-k">✦ Твоя подпись</div><div class="sig-pad-wrap"><canvas id="sigPad" aria-label="Поле для подписи: проведи пальцем или мышкой"></canvas><div class="sig-ph" id="sigPh">Распишись здесь ✍️</div></div></div>
         <div class="ticket-footer"><span>Только для одной любопытной девушки ♡</span><span>RARITY · SPECIAL</span></div>
+      </div>
+      <div class="sig-tools" id="sigTools">
+        <p class="sig-hint">Распишись пальцем или мышкой и добавь сердечки — подпись сохранится вместе с билетом ♡</p>
+        <div class="sig-row"><button class="sig-btn on" id="sigPen" type="button">✍️ Подпись</button><button class="sig-btn" id="sigHeart" type="button">💖 Сердечки</button></div>
+        <div class="sig-row"><span class="sig-inks" id="sigInks">
+          <button class="sig-ink on" type="button" data-c="#fff4f6" style="background:#fff4f6" aria-label="Жемчужные чернила"></button>
+          <button class="sig-ink" type="button" data-c="#f7d7b5" style="background:#f7d7b5" aria-label="Золотые чернила"></button>
+          <button class="sig-ink" type="button" data-c="#ff9fc0" style="background:#ff9fc0" aria-label="Розовые чернила"></button>
+          <button class="sig-ink" type="button" data-c="#c8b6ff" style="background:#c8b6ff" aria-label="Сиреневые чернила"></button></span>
+          <button class="sig-btn" id="sigUndo" type="button" disabled aria-label="Отменить последнее">↶</button><button class="sig-btn" id="sigClear" type="button" disabled>Стереть</button></div>
       </div>
       <p id="outMessage" class="sub" style="font-size:14px;margin:20px auto 0;max-width:550px"></p>
       <p class="ticket-send-note">Маленький билет для особенной девушки. Сохрани его на память — возможно, однажды он напомнит тебе о начале красивой истории. ♡</p>
@@ -325,6 +392,8 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
 </main>
 <footer class="footer">для тебя. без лишних слов — только немного магии <span>♡</span></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="fx" aria-hidden="true"></div>
+<div class="ov" id="ov" role="dialog" aria-label="Твой билет"><img id="ovImg" alt="Билет на память"><p>Нажми на билет и подержи, чтобы сохранить. На компьютере: правая кнопка, «Сохранить картинку как…»</p><button class="btn btn-primary" id="ovClose" type="button">Закрыть</button></div>
 <script>
 const state={place:'Уютное кафе',screen:1};
 // Необязательно: укажи уникальную тему ntfy и подпишись на неё в приложении ntfy.
@@ -407,7 +476,7 @@ function spawnAmbientHeart(){
   h.style.setProperty('--drift',((Math.random()*140)-70)+'px');h.style.animationDuration=(9+Math.random()*9)+'s';
   layer.appendChild(h);setTimeout(()=>h.remove(),19000);
 }
-setInterval(spawnAmbientHeart,1250);
+/* фоновые сердечки теперь в новом скрипте */
 function go(n){
   if(state.screen!==n)uiSound();
   document.querySelectorAll('.screen').forEach(el=>el.classList.remove('active'));
@@ -537,10 +606,6 @@ function saveTicket(){
   showToast('В окне печати выбери «Сохранить как PDF» — билет останется на память ♡');
   setTimeout(()=>window.print(),250);
 }
-const buddyFaces=['🥹','😊','🙈','☺️','😳','🥰','👀','🤭'];
-const buddyLines=['Я немного волнуюсь… но очень хочу тебя удивить ♡','Улыбнулась? Тогда уже не зря стараюсь 😊','Ой… я немножко смущаюсь 🙈','Кажется, я краснею… ☺️','Только никому не рассказывай мой секрет 😳','Для тебя хочется придумать что-то особенное 🥰','*осторожно смотрит в сторону* 👀','Ладно, всё, я смутился 🤭'];
-let buddyIndex=0;
-setInterval(()=>{const face=$('cuteBuddy'),caption=$('buddyCaption');if(!face||!caption)return;buddyIndex=(buddyIndex+1)%buddyFaces.length;face.textContent=buddyFaces[buddyIndex];caption.textContent=buddyLines[buddyIndex];face.animate([{transform:'scale(.88) rotate(-5deg)',opacity:.65},{transform:'scale(1.08) rotate(4deg)',opacity:1},{transform:'scale(1) rotate(0)',opacity:1}],{duration:480,easing:'ease-out'});},2400);
 function moveAtmosphere(x,y){document.documentElement.style.setProperty('--pointer-x',(x/Math.max(1,window.innerWidth)*100)+'%');document.documentElement.style.setProperty('--pointer-y',(y/Math.max(1,window.innerHeight)*100)+'%')}
 window.addEventListener('pointermove',e=>moveAtmosphere(e.clientX,e.clientY),{passive:true});
 window.addEventListener('touchmove',e=>{if(e.touches&&e.touches[0])moveAtmosphere(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
@@ -550,6 +615,549 @@ window.addEventListener('touchmove',e=>{if(e.touches&&e.touches[0])moveAtmospher
  for(let i=0;i<75;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*4+'s';s.style.animationDuration=(2+Math.random()*4)+'s';stars.appendChild(s)}
  const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());$('date').min=d.toISOString().slice(0,10);
 })();
+</script>
+<script>
+(function(){
+'use strict';
+const REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+const $q = (s, r) => (r || document).querySelector(s);
+const $$q = (s, r) => Array.from((r || document).querySelectorAll(s));
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const rand = (a, b) => a + Math.random() * (b - a);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const PAL = ['#ff9fc0', '#f7d7b5', '#ffd0dd', '#d5c4ff', '#ff7da8', '#fff4f6'];
+const HEART_D = 'M12 21C3 14 0 9 0 6C0 2.5 2.8 0 6 0C8.5 0 10.8 1.4 12 3.6C13.2 1.4 15.5 0 18 0C21.2 0 24 2.5 24 6C24 9 21 14 12 21Z';
+const heartSvg = (c, s) => `<svg width="${s}" height="${(s * .92).toFixed(1)}" viewBox="0 0 24 22" aria-hidden="true"><path d="${HEART_D}" fill="${c}"/></svg>`;
+
+/* ---------- печатная машинка ---------- */
+function typeInto(el, text, speed){
+  if(!el) return;
+  const tok = (el._tk = (el._tk || 0) + 1);
+  if(REDUCED){ el.textContent = text; el.classList.remove('typing'); return; }
+  const chars = Array.from(text); let i = 0;
+  el.classList.add('typing'); el.textContent = '';
+  (function f(){
+    if(el._tk !== tok) return;
+    i++; el.textContent = chars.slice(0, i).join('');
+    if(i < chars.length) setTimeout(f, (speed || 26) + (/[.,!?…—]/.test(chars[i - 1]) ? 130 : 0));
+    else el.classList.remove('typing');
+  })();
+}
+
+/* ---------- частицы ---------- */
+function burst(x, y, o){
+  if(REDUCED) return; o = o || {};
+  const layer = $q('#fx'); if(!layer) return;
+  const n = o.n || 10, glyphs = o.glyphs || ['♡', '✦', '✧', '♥', '💗'];
+  for(let i = 0; i < n; i++){
+    const el = document.createElement('span'); el.className = 'fxp';
+    el.textContent = pick(glyphs); el.style.fontSize = rand(o.min || 14, o.max || 28) + 'px'; el.style.color = pick(PAL);
+    layer.appendChild(el);
+    const ang = rand(-Math.PI * .96, -Math.PI * .04), sp = rand(55, o.power || 150);
+    const dx = Math.cos(ang) * sp, dy = Math.sin(ang) * sp, rot = rand(-100, 100);
+    const a = el.animate([
+      { transform: `translate(${x}px,${y}px) translate(-50%,-50%) scale(.3) rotate(0deg)`, opacity: 0 },
+      { transform: `translate(${x + dx * .6}px,${y + dy * .6}px) translate(-50%,-50%) scale(1.05) rotate(${rot * .5}deg)`, opacity: 1, offset: .28 },
+      { transform: `translate(${x + dx}px,${y + dy + 95}px) translate(-50%,-50%) scale(.7) rotate(${rot}deg)`, opacity: 0 }
+    ], { duration: rand(900, 1600), easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+    a.onfinish = () => el.remove();
+  }
+}
+window.confetti = function(count){
+  if(REDUCED) return;
+  const layer = $q('#fx'); if(!layer) return;
+  const n = Math.min(count || 40, 130), W = innerWidth, H = innerHeight;
+  for(let i = 0; i < n; i++){
+    const el = document.createElement('span'); el.className = 'fxp'; el.style.textShadow = 'none';
+    const k = Math.random(), c = pick(PAL);
+    if(k < .34) el.innerHTML = heartSvg(c, rand(11, 22));
+    else if(k < .6){ el.textContent = pick(['✦', '✧', '♡']); el.style.color = c; el.style.fontSize = rand(12, 22) + 'px'; el.style.textShadow = '0 0 10px ' + c; }
+    else if(k < .86){ el.style.cssText += `width:7px;height:${rand(12, 18)}px;background:${c};border-radius:2px`; }
+    else { el.style.cssText += `width:8px;height:8px;background:${c};border-radius:50%`; }
+    layer.appendChild(el);
+    const x0 = rand(0, W), sway = rand(30, 90), spin = rand(360, 900) * (Math.random() < .5 ? -1 : 1), ph = rand(0, 6), steps = 6, kf = [];
+    for(let s = 0; s <= steps; s++){
+      const t = s / steps;
+      kf.push({ transform: `translate(${x0 + Math.sin(t * 6 + ph) * sway}px,${-30 + t * (H + 80)}px) rotate(${t * spin}deg)`, opacity: t > .92 ? 0 : 1, offset: t });
+    }
+    el.animate(kf, { duration: rand(2600, 4600), delay: rand(0, 700), easing: 'linear', fill: 'both' }).onfinish = () => el.remove();
+  }
+};
+
+/* ---------- живое сердечко ---------- */
+const HEART = 'M100 178C34 132 8 92 8 60C8 30 32 12 58 12C78 12 93 24 100 40C107 24 122 12 142 12C168 12 192 30 192 60C192 92 166 132 100 178Z';
+function eyeSvg(side, u){
+  return `<g class="bd-eye ${side}"><g class="bd-open">
+    <ellipse rx="15.5" ry="18" fill="#fff"/><ellipse rx="15.5" ry="18" fill="none" stroke="#e9b5cb" stroke-width="1.4" opacity=".7"/>
+    <g class="bd-pupil"><circle r="11" fill="url(#bdi${u})"/><circle r="6.2" fill="#2c0c26"/>
+      <circle class="h1" cx="-3.8" cy="-4.4" r="3.6" fill="#fff"/><circle cx="3.4" cy="3.6" r="1.8" fill="#fff" opacity=".9"/></g>
+    <g class="bd-love"><path d="M0 10C-15 -1 -10 -13 0 -5C10 -13 15 -1 0 10Z" fill="#ff3d7f"/><path d="M-6 -6C-9 -4 -9 -1 -7 0" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" opacity=".8"/></g>
+  </g><path class="bd-arc" d="M-13 5Q0 -14 13 5" fill="none" stroke="#3b1230" stroke-width="5.2" stroke-linecap="round"/></g>`;
+}
+function buddySvg(u){
+  return `<svg class="bd-svg" viewBox="0 0 200 210" aria-hidden="true" focusable="false"><defs>
+  <radialGradient id="bdg${u}" cx=".34" cy=".2" r=".95"><stop offset="0" stop-color="#ffe6ee"/><stop offset=".36" stop-color="#ffa9c6"/><stop offset=".78" stop-color="#f06a9b"/><stop offset="1" stop-color="#c24a84"/></radialGradient>
+  <linearGradient id="bdr${u}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#f7d7b5" stop-opacity=".25"/></linearGradient>
+  <radialGradient id="bdi${u}" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#8a3d7a"/><stop offset="1" stop-color="#3b1230"/></radialGradient>
+  <clipPath id="bdc${u}"><path class="bd-mclip"/></clipPath></defs>
+  <ellipse class="bd-shadow" cx="100" cy="198" rx="50" ry="6.5" fill="#000" opacity=".28"/>
+  <g class="bd-root">
+    <g><path d="${HEART}" fill="url(#bdg${u})"/><path d="${HEART}" fill="none" stroke="url(#bdr${u})" stroke-width="2.4" opacity=".7"/>
+      <path d="M34 50C36 33 52 24 68 28" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".5"/><circle cx="80" cy="25" r="3" fill="#fff" opacity=".65"/></g>
+    <g class="bd-bow"><path d="M0 0C-8 -13 -27 -14 -26 0C-26 12 -8 12 0 0Z" fill="#f7d7b5"/><path d="M0 0C8 -13 27 -14 26 0C26 12 8 12 0 0Z" fill="#f7d7b5"/>
+      <path d="M-20 -4Q-14 0 -20 5M20 -4Q14 0 20 5" stroke="#e2b98a" stroke-width="1.6" fill="none" opacity=".8"/><circle r="5" fill="#e8bf93"/></g>
+    <g class="bd-ckg"><ellipse class="bd-ck" cx="45" cy="108" rx="15" ry="9" fill="#ff4f86"/><ellipse class="bd-ck" cx="155" cy="108" rx="15" ry="9" fill="#ff4f86"/>
+      <path class="bd-hatch" d="M37 114l4-8M43 114l4-8M49 114l4-8M151 114l4-8M157 114l4-8M163 114l4-8" stroke="#fff" stroke-width="1.8" stroke-linecap="round" fill="none"/></g>
+    ${eyeSvg('L', u)}${eyeSvg('R', u)}
+    <path class="bd-brow L" d="M-11 1Q0 -4 11 1" fill="none" stroke="#7d3560" stroke-width="3.6" stroke-linecap="round" opacity=".85"/>
+    <path class="bd-brow R" d="M-11 1Q0 -4 11 1" fill="none" stroke="#7d3560" stroke-width="3.6" stroke-linecap="round" opacity=".85"/>
+    <g><path class="bd-mfill" fill="#5d1637"/><ellipse class="bd-tongue" fill="#ff7aa2" clip-path="url(#bdc${u})"/>
+      <path class="bd-mline" fill="none" stroke="#6b1d41" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g class="bd-letter"><g transform="rotate(-7)"><rect x="-27" y="-18" width="54" height="36" rx="6" fill="#fff6ec" stroke="#e8c9a4" stroke-width="2"/>
+      <path d="M-26 -16L0 5L26 -16" fill="none" stroke="#e8c9a4" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M0 12C-9 6 -6 -1 0 3C6 -1 9 6 0 12Z" fill="#ff5f93" transform="translate(0 -2) scale(.8)"/></g></g>
+    <path class="bd-sweat" d="M0 -9C6 -1 7 4 0 7C-7 4 -6 -1 0 -9Z" fill="#a8dcff" stroke="#fff" stroke-opacity=".8"/>
+  </g></svg>`;
+}
+const BASE = { happyL: 0, happyR: 0, love: 0, shine: .25, w: 15, c: 9, o: 0, H: 14, wave: 0, blush: .35, tilt: 0, lift: 0, sweat: 0, open: 1, wide: 1, lx: 0, ly: 0, lw: 1, bob: 1, shake: 0, letter: 0 };
+const MOODS = {
+  idle: {},
+  smile: { w: 17, c: 12, blush: .5, shine: .5 },
+  happy: { happyL: 1, happyR: 1, w: 22, c: 14, o: .75, H: 20, blush: .65, lift: 2, bob: 1.6, lw: 0 },
+  shy: { w: 11, c: 5, wave: 1, blush: 1, tilt: 1, lift: -1, open: .85, lx: -.6, ly: .7, lw: .15, shine: .3 },
+  blush: { w: 17, c: 12, blush: 1, shine: .6, lx: -.3, ly: .45, lw: .3 },
+  love: { love: 1, w: 19, c: 13, o: .35, H: 14, blush: .85, shine: 1, bob: 1.5, lw: .2 },
+  wink: { happyR: 1, w: 19, c: 13, o: .3, H: 13, blush: .55, lw: .6 },
+  surprised: { w: 7, c: 0, o: 1, H: 19, blush: .3, wide: 1.12, shine: 1, lift: 5, lw: 1 },
+  nervous: { w: 12, c: -2, wave: 1.4, sweat: 1, tilt: 1, blush: .45, wide: 1.05, lx: .5, ly: -.2, lw: .2 },
+  pleading: { shine: 1, wide: 1.1, w: 9, c: -4, wave: .6, tilt: 1.4, blush: .8, lift: 3, lw: 1 },
+  giggle: { happyL: 1, happyR: 1, w: 23, c: 15, o: .9, H: 22, blush: .8, shake: 1, bob: 2.4, lw: 0 },
+  peek: { w: 12, c: 6, blush: .4, lw: 0, lx: 1, ly: .1 },
+  proud: { happyL: 1, happyR: 1, w: 21, c: 14, o: .55, H: 16, blush: .7, lift: 3, bob: 2, lw: 0 }
+};
+function mouthPath(cx, my, w, c, o, H, wave){
+  const x1 = cx - w, x2 = cx + w, cy = c * 1.33, wv = wave * 4, bd = cy + o * H, ow = wv * (1 - clamp(o, 0, 1));
+  const f = n => n.toFixed(2);
+  return `M${f(x1)} ${f(my)}C${f(cx - w * .45)} ${f(my + cy + wv)} ${f(cx + w * .45)} ${f(my + cy - wv)} ${f(x2)} ${f(my)}C${f(cx + w * .45)} ${f(my + bd - ow)} ${f(cx - w * .45)} ${f(my + bd + ow)} ${f(x1)} ${f(my)}Z`;
+}
+const PTR = { x: null, y: 0, t: 0 };
+addEventListener('pointermove', e => { PTR.x = e.clientX; PTR.y = e.clientY; PTR.t = performance.now(); }, { passive: true });
+addEventListener('pointerdown', e => { PTR.x = e.clientX; PTR.y = e.clientY; PTR.t = performance.now(); }, { passive: true });
+
+class Buddy {
+  constructor(host, o){
+    this.host = host; this.u = ++Buddy.n; this.base = o.mood || 'idle'; this.cap = o.cap || null; this.onPoke = null; this.onTick = null;
+    host.style.setProperty('--bs', (o.size || 160) + 'px'); host.innerHTML = buddySvg(this.u);
+    if(o.label){ host.setAttribute('role', 'img'); host.setAttribute('aria-label', o.label); } else host.setAttribute('aria-hidden', 'true');
+    const q = s => host.querySelector(s), eye = s => ({ g: q('.bd-eye.' + s), open: q('.bd-eye.' + s + ' .bd-open'), pupil: q('.bd-eye.' + s + ' .bd-pupil'), love: q('.bd-eye.' + s + ' .bd-love'), arc: q('.bd-eye.' + s + ' .bd-arc'), h1: q('.bd-eye.' + s + ' .h1'), brow: q('.bd-brow.' + s) });
+    this.e = { root: q('.bd-root'), shadow: q('.bd-shadow'), bow: q('.bd-bow'), L: eye('L'), R: eye('R'), cks: $$q('.bd-ck', host), hatch: q('.bd-hatch'),
+      mf: q('.bd-mfill'), ml: q('.bd-mline'), mc: q('.bd-mclip'), tg: q('.bd-tongue'), letter: q('.bd-letter'), sweat: q('.bd-sweat') };
+    this.p = Object.assign({}, BASE); this.v = {}; this.t = Object.assign({}, BASE);
+    this.look = [0, 0]; this.glance = [0, 0]; this.glanceAt = 0;
+    this.blink = 0; this.blinkPh = -1; this.blinkAt = performance.now() + rand(1200, 3000);
+    this.sq = 0; this.sqv = 0; this.jy = 0; this.jv = 0; this.pokes = 0; this.lastPoke = 0; this.lastAct = 0; this.beatRate = .9; this.letterOn = !!o.letter;
+    this.setMood(this.base);
+    host.addEventListener('pointerdown', () => this.poke());
+    host.tabIndex = o.label ? 0 : -1;
+    host.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); this.poke(); } });
+    Buddy.all.push(this); this.render(0);
+  }
+  setMood(m){
+    this.mood = m; this.t = Object.assign({}, BASE, MOODS[m] || {}); if(this.letterOn) this.t.letter = 1;
+    if(m === 'peek'){ this.peekDir = -(this.peekDir || -1); this.t.lx = this.peekDir; }
+    this.beatRate = m === 'love' || m === 'giggle' || m === 'proud' ? 1.45 : m === 'shy' || m === 'nervous' ? 1.2 : .9;
+    if(REDUCED){ Object.assign(this.p, this.t); this.render(0); }
+  }
+  setBase(m){ this.base = m; this.setMood(m); }
+  react(m, ms, text){
+    clearTimeout(this.rt); this.setMood(m); this.lastAct = performance.now();
+    if(text && this.cap) typeInto(this.cap, text);
+    this.rt = setTimeout(() => this.setMood(this.base), ms || 1500);
+  }
+  hop(power){ if(REDUCED) return; if(this.jy < .5) this.jv = power || 230; }
+  poke(){
+    const now = performance.now();
+    this.pokes = now - this.lastPoke < 2200 ? this.pokes + 1 : 1; this.lastPoke = now; this.lastAct = now;
+    if(!REDUCED){ this.sqv += 11; this.hop(200); }
+    if(this.onPoke) this.onPoke(this.pokes); else this.react('giggle', 1400);
+    const r = this.host.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height * .38, { n: 7, power: 140 });
+    if(typeof uiSound === 'function') try { uiSound(); } catch(_){}
+  }
+  visible(){ return this.host.isConnected && !document.hidden && !!this.host.closest('.screen.active'); }
+  step(dt, T, now){
+    const K = 140, D = 15;
+    for(const k in this.t){ const x = this.p[k], v = this.v[k] || 0, a = K * (this.t[k] - x) - D * v; this.v[k] = v + a * dt; this.p[k] = x + this.v[k] * dt; }
+    this.sqv += (-260 * this.sq - 14 * this.sqv) * dt; this.sq += this.sqv * dt;
+    if(this.jy > 0 || this.jv > 0){ this.jv -= 900 * dt; this.jy += this.jv * dt; if(this.jy <= 0){ if(this.jv < -80) this.sqv += 5; this.jy = 0; this.jv = 0; } }
+    if(this.blinkPh < 0 && now > this.blinkAt){ this.blinkPh = 0; this.dbl = Math.random() < .2; }
+    if(this.blinkPh >= 0){ this.blinkPh += dt / .16; this.blink = this.blinkPh < 1 ? Math.sin(this.blinkPh * Math.PI) : 0;
+      if(this.blinkPh >= 1){ this.blinkPh = -1; this.blinkAt = now + (this.dbl ? 140 : rand(2200, 5200)); this.dbl = false; } }
+    const r = this.host.getBoundingClientRect(), idle = PTR.x === null || now - PTR.t > 3500;
+    let tx, ty;
+    if(idle){ if(now > this.glanceAt){ this.glance = [rand(-.8, .8), rand(-.3, .5)]; this.glanceAt = now + rand(2200, 4000); } tx = this.glance[0]; ty = this.glance[1]; }
+    else { const dx = (PTR.x - (r.left + r.width / 2)) / (r.width * 1.1), dy = (PTR.y - (r.top + r.height * .45)) / (r.height * 1.1), m = Math.hypot(dx, dy) || 1, s = Math.min(1, m) / m; tx = dx * s; ty = dy * s; }
+    const lw = clamp(this.p.lw, 0, 1); tx = tx * lw + this.p.lx * (1 - lw); ty = ty * lw + this.p.ly * (1 - lw);
+    const f = Math.min(1, dt * 9); this.look[0] += (tx - this.look[0]) * f; this.look[1] += (ty - this.look[1]) * f;
+    if(this.onTick) this.onTick(now);
+    this.render(T);
+  }
+  render(T){
+    const p = this.p, e = this.e, lk = this.look, n = x => x.toFixed(2);
+    const ph = (T * this.beatRate) % 1, beat = .04 * (Math.exp(-(((ph - .05) / .05) ** 2)) + .7 * Math.exp(-(((ph - .22) / .06) ** 2)));
+    const bob = REDUCED ? 0 : Math.sin(T * 2.2) * 2.2 * p.bob, br = Math.sin(T * 1.7) * .012;
+    const sx = 1 + this.sq * .1 + beat * .6 - br * .5, sy = 1 - this.sq * .14 + beat + br, rot = lk[0] * 3.5 + Math.sin(T * 1.1) * 1.2 + Math.sin(T * 45) * p.shake * 2.2;
+    e.root.setAttribute('transform', `translate(0 ${n(-bob - this.jy)}) translate(100 178) rotate(${n(rot)}) scale(${sx.toFixed(4)} ${sy.toFixed(4)}) translate(-100 -178)`);
+    e.shadow.setAttribute('rx', n(50 * (1 - this.jy / 180))); e.shadow.setAttribute('opacity', n(.28 * (1 - this.jy / 200)));
+    e.bow.setAttribute('transform', `translate(148 22) rotate(${n(26 + Math.sin(T * 2.6) * 4 + p.shake * 3)})`);
+    const bl = this.blink;
+    [['L', 68, p.happyL, -1], ['R', 132, p.happyR, 1]].forEach(([s, ex, hap, sg]) => {
+      const E = e[s], hh = clamp(hap, 0, 1), ey = 86, oy = clamp(p.open, 0, 1.1) * (1 - bl * .95) * p.wide;
+      E.open.setAttribute('transform', `translate(${n(ex + lk[0] * 3.2)} ${n(ey + lk[1] * 2.4)}) scale(${n(p.wide)} ${n(Math.max(.02, oy))})`);
+      E.open.setAttribute('opacity', n(1 - hh));
+      E.arc.setAttribute('transform', `translate(${n(ex + lk[0] * 3)} ${n(ey + 2 + lk[1] * 2)})`); E.arc.setAttribute('opacity', n(hh));
+      E.pupil.setAttribute('transform', `translate(${n(lk[0] * 5.2)} ${n(lk[1] * 6)})`); E.pupil.setAttribute('opacity', n(clamp(1 - p.love * 1.2, 0, 1)));
+      E.love.setAttribute('opacity', n(clamp(p.love, 0, 1))); E.love.setAttribute('transform', `scale(${n(.85 + p.love * .2 + beat * 4)})`);
+      E.h1.setAttribute('r', n(3.6 + p.shine * 1.5));
+      E.brow.setAttribute('transform', `translate(${n(ex + lk[0] * 2.8)} ${n(ey - 29 - p.lift + lk[1] * 2)}) rotate(${n(sg * p.tilt * 16)})`);
+    });
+    e.cks.forEach(c => c.setAttribute('opacity', n(.15 + clamp(p.blush, 0, 1.2) * .5)));
+    e.hatch.setAttribute('opacity', n(clamp((p.blush - .72) * 3, 0, .75)));
+    const mcx = 100 + lk[0] * 2.4, my = 114 + lk[1] * 1.6, o = clamp(p.o, 0, 1.05), d = mouthPath(mcx, my, Math.max(3, p.w), p.c, o, p.H, p.wave);
+    e.mf.setAttribute('d', d); e.ml.setAttribute('d', d); e.mc.setAttribute('d', d); e.mf.setAttribute('fill-opacity', n(clamp(o * 3, 0, 1)));
+    e.tg.setAttribute('cx', n(mcx)); e.tg.setAttribute('cy', n(my + p.c + o * p.H * .78)); e.tg.setAttribute('rx', n(Math.max(.01, p.w * .5))); e.tg.setAttribute('ry', n(Math.max(.01, o * p.H * .32))); e.tg.setAttribute('opacity', n(clamp((o - .3) * 3, 0, 1)));
+    const sw = clamp(p.sweat, 0, 1), slide = (T * 14) % 14;
+    e.sweat.setAttribute('transform', `translate(160 ${n(52 + slide * sw)}) scale(${n(Math.max(.01, sw))})`); e.sweat.setAttribute('opacity', n(sw * (1 - slide / 14 * .6)));
+    const lt = clamp(p.letter, 0, 1);
+    e.letter.setAttribute('opacity', n(lt)); e.letter.setAttribute('transform', `translate(100 ${n(158 - (1 - lt) * 18 + Math.sin(T * 2.2) * 1.5)})`);
+  }
+}
+Buddy.n = 0; Buddy.all = [];
+
+/* ---------- запуск ---------- */
+const B = {};
+const cfg = { hero: { cap: '#capHero' }, s2: {}, s4: { cap: '#capS4' }, s5: { cap: '#capS5' } };
+$$q('.buddy').forEach(h => {
+  const key = h.dataset.key;
+  B[key] = new Buddy(h, { mood: h.dataset.mood, size: +h.dataset.size, letter: h.dataset.letter === '1', label: h.dataset.label, cap: cfg[key] && cfg[key].cap ? $q(cfg[key].cap) : null });
+});
+let last = performance.now();
+function frame(now){
+  const dt = Math.min(.033, (now - last) / 1000); last = now; const T = now / 1000;
+  for(const b of Buddy.all) if(b.visible()) b.step(dt, T, now);
+  stepOrb(T); requestAnimationFrame(frame);
+}
+
+/* орбиты вокруг героя */
+const orbEl = $q('#orbiters'), OR = [];
+if(orbEl){
+  ['✦', '♡', '✧', '♥', '✦', '✧', '♡'].forEach((g, i) => {
+    const s = document.createElement('i'); s.className = 'orb-i'; s.textContent = g; s.style.color = PAL[i % PAL.length]; s.style.fontSize = (14 + (i % 3) * 5) + 'px';
+    orbEl.appendChild(s); OR.push({ s, r: .72 + (i % 4) * .08, ph: i / 7 * 6.283, sp: .35 + (i % 3) * .12, tilt: .34 + (i % 2) * .1, rot: i % 2 ? 1 : -1 });
+  });
+}
+function stepOrb(T){
+  if(!orbEl || !$q('#s1').classList.contains('active')) return;
+  const R = Math.min(190, orbEl.clientWidth * .42);
+  OR.forEach(o => {
+    const a = (REDUCED ? 0 : T * o.sp) + o.ph, x = Math.cos(a) * R * o.r, y = Math.sin(a) * R * o.r * o.tilt - 6, dp = (Math.sin(a) + 1) / 2;
+    o.s.style.transform = `translate(calc(-50% + ${x.toFixed(1)}px),calc(-50% + ${y.toFixed(1)}px)) scale(${(.7 + dp * .5).toFixed(2)}) rotate(${(T * 40 * o.rot).toFixed(0)}deg)`;
+    o.s.style.opacity = (.35 + dp * .65).toFixed(2);
+  });
+}
+
+/* живой фон */
+const amb = $q('#ambient');
+function spawnAmb(){
+  if(!amb || document.hidden || REDUCED || amb.childElementCount > 26) return;
+  const el = document.createElement('div'); el.className = 'amb'; const near = Math.random(), size = 10 + near * 24, c = pick(PAL);
+  el.style.cssText = `left:${rand(0, 100)}%;color:${c};--dur:${(16 - near * 7 + rand(-2, 3)).toFixed(1)}s;--drift:${rand(-80, 80).toFixed(0)}px;--o:${(.18 + near * .35).toFixed(2)};--sw:${rand(2.4, 4.6).toFixed(1)}s;filter:blur(${near < .25 ? 1.4 : 0}px)`;
+  const inn = document.createElement('span'); inn.className = 'amb-in';
+  if(Math.random() < .6) inn.innerHTML = heartSvg('currentColor', size); else { inn.textContent = pick(['✦', '✧', '♡']); inn.style.fontSize = size + 'px'; }
+  el.appendChild(inn); amb.appendChild(el); setTimeout(() => el.remove(), 17000);
+}
+setInterval(spawnAmb, 950);
+
+/* искорки по касанию */
+addEventListener('pointerdown', e => {
+  if(e.target.closest && e.target.closest('canvas,input,textarea,.buddy,.sig-tools,.ov')) return;
+  burst(e.clientX, e.clientY, { n: 5, glyphs: ['✦', '✧', '♡'], min: 11, max: 20, power: 90 });
+}, { passive: true });
+
+/* ---------- сценарии экранов ---------- */
+const capHero = $q('#capHero');
+const heroCaps = ['каждая интересная история с чего-то начинается ✦', 'тссс… сегодня здесь немного волшебства ✧', 'кто-то сегодня обязательно улыбнётся ♡', 'потрогай сердечко — оно ужасно щекотливое 🙈'];
+let heroI = 1, heroLast = performance.now();
+if(B.hero){
+  B.hero.cap = capHero;
+  B.hero.onPoke = n => {
+    heroLast = performance.now();
+    if(n >= 5){ B.hero.react('love', 2600, 'я сейчас лопну от счастья 🥹'); window.confetti(26); }
+    else B.hero.react('giggle', 1400, ['хи-хи, щекотно 🙈', 'ой-ой, ну хватит 😳', 'ладно, ладно… ♡', 'ты ужасно настойчивая 😄'][Math.min(n - 1, 3)]);
+  };
+  B.hero.onTick = now => {
+    if(now - heroLast > 6200 && $q('#s1').classList.contains('active')){ heroLast = now; typeInto(capHero, heroCaps[heroI++ % heroCaps.length], 30); if(heroI % 2) B.hero.react('wink', 1200); }
+  };
+  setTimeout(() => { heroLast = performance.now(); typeInto(capHero, heroCaps[0], 30); }, 700);
+}
+if(B.s2){
+  B.s2.onPoke = () => B.s2.react('giggle', 1400);
+  $$q('#s2 .btn-primary').forEach(b => b.addEventListener('pointerenter', () => B.s2.react('happy', 1500)));
+}
+const s4Seq = [['shy', 'Я немного волнуюсь… но очень хочу тебя удивить ♡'], ['happy', 'Если ты улыбнулась — значит, я уже не зря стараюсь 😊'], ['shy', 'Ой… я немножко смущаюсь 🙈'], ['blush', 'Кажется, я краснею… ☺️'], ['nervous', 'Только никому не рассказывай мой секрет 😳'], ['love', 'Для тебя хочется придумать что-то особенное 🥰'], ['peek', '*осторожно смотрит в сторону* 👀'], ['giggle', 'Ладно, всё, я смутился 🤭']];
+let s4i = 0, s4At = 0;
+if(B.s4){
+  B.s4.onPoke = n => { B.s4.react(n > 3 ? 'love' : 'giggle', 1800, ['Ой! Это моё слабое место 🙈', 'Хи-хи… перестань, я краснею ☺️', 'Ты точно умеешь удивлять 😳', 'Щекотно! 🤭'][Math.min(n - 1, 3)]); };
+  B.s4.onTick = now => {
+    if(now < s4At || now - B.s4.lastAct < 5500) return;
+    const s = s4Seq[s4i++ % s4Seq.length]; B.s4.setBase(s[0]); typeInto(B.s4.cap, s[1], 26); s4At = now + 5200;
+  };
+}
+function dateLine(v){
+  if(!v) return null; const d = new Date(v + 'T12:00:00'), t = new Date(); t.setHours(12, 0, 0, 0);
+  const diff = Math.round((d - t) / 864e5), wd = d.getDay();
+  if(diff === 0) return ['surprised', 'Сегодня?! Я уже бегу готовиться 😳'];
+  if(diff === 1) return ['happy', 'Завтра? Смело! Мне нравится 😄'];
+  if(wd === 6 || wd === 0) return ['love', 'Выходной — идеально: никуда не спешим ✨'];
+  if(wd === 5) return ['wink', 'Пятничный вечер — классика жанра 🎉'];
+  return ['happy', 'Отличный день. Я уже отметил его у себя в голове 💗'];
+}
+function timeLine(v){
+  if(!v) return null; const h = +v.split(':')[0];
+  if(h < 12) return ['happy', 'Утро? Да ты настоящая ранняя пташка ☀️'];
+  if(h < 17) return ['smile', 'Днём — светло и легко, мне нравится 🌤'];
+  if(h < 21) return ['love', 'Вечерний свет — лучшее время для историй 🌇'];
+  return ['wink', 'Поздний вечер… звучит таинственно 🌙'];
+}
+function reactField(fn, id){
+  const el = document.getElementById(id); if(!el || !B.s4) return;
+  el.addEventListener('input', () => { const r = fn(el.value); if(!r) return; B.s4.react(r[0], 3200, r[1]); const b = B.s4.host.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + b.height * .3, { n: 8 }); });
+}
+reactField(dateLine, 'date'); reactField(timeLine, 'time');
+
+/* ---------- обёртки над исходными функциями ---------- */
+const _go = window.go;
+window.go = function(n){
+  _go.apply(this, arguments);
+  const now = performance.now();
+  if(n === 1 && B.hero) B.hero.react('wink', 1300);
+  if(n === 2 && B.s2){ B.s2.react('surprised', 900); B.s2.hop(200); }
+  if(n === 4 && B.s4){ s4i = 0; s4At = 0; B.s4.lastAct = 0; B.s4.setBase('shy'); }
+  if(n === 5){
+    requestAnimationFrame(sizeSig);
+    if(B.s5){ B.s5.setBase('proud'); B.s5.setMood('proud'); B.s5.hop(240); setTimeout(() => B.s5.hop(200), 520); typeInto(B.s5.cap, 'Ура! Твой билет готов 🎟 Осталось расписаться ♡', 28); }
+  }
+};
+const _dodge = window.dodge;
+window.dodge = function(){
+  _dodge.apply(this, arguments);
+  const r = document.getElementById('noReaction');
+  if(r && r.textContent){ const full = r.textContent; r.style.minHeight = ''; r.style.minHeight = r.offsetHeight + 'px'; typeInto(r, full, 16); }
+  if(!B.s2) return;
+  const n = typeof dodgeCount === 'number' ? dodgeCount : 1;
+  if(n >= 18){ B.s2.setBase('love'); B.s2.react('love', 4000); B.s2.hop(250); const b = B.s2.host.getBoundingClientRect(); burst(b.left + b.width / 2, b.top + b.height * .3, { n: 16 }); }
+  else if(n <= 4) B.s2.react('nervous', 1500);
+  else if(n <= 10) B.s2.react('pleading', 1800);
+  else B.s2.react(n % 2 ? 'surprised' : 'shy', 1500);
+};
+const _pick = window.pickPlace;
+window.pickPlace = function(btn){
+  _pick.apply(this, arguments);
+  const em = btn.querySelector('.emoji'), b = btn.getBoundingClientRect();
+  burst(b.left + b.width / 2, b.top + b.height * .4, { n: 12, glyphs: [em ? em.textContent : '✦', '♡', '✦', em ? em.textContent : '✧'], max: 30 });
+};
+
+/* ---------- подпись и сердечки ---------- */
+const sigCv = $q('#sigPad'), sctx = sigCv.getContext('2d');
+const INKS = ['#fff4f6', '#f7d7b5', '#ff9fc0', '#c8b6ff'], HEARTS = ['#ff7da8', '#f6a9c5', '#f7d7b5', '#ff5f93', '#d5c4ff'];
+const sig = { items: [], mode: 'pen', ink: INKS[0], drawing: false, cur: null, last: null, first: true };
+function heartPath(g, x, y, s, rot){
+  g.save(); g.translate(x, y); g.rotate(rot); const k = s / 84; g.scale(k, k);
+  g.beginPath(); g.moveTo(0, 40); g.bezierCurveTo(-70, -5, -40, -55, 0, -20); g.bezierCurveTo(40, -55, 70, -5, 0, 40); g.closePath(); g.restore();
+}
+function paintSig(g, w, h, glow){
+  g.lineCap = 'round'; g.lineJoin = 'round';
+  for(const it of sig.items){
+    if(it.t === 'h'){ g.save(); if(glow){ g.shadowColor = it.c; g.shadowBlur = w * .02; } heartPath(g, it.x * w, it.y * h, it.s * w, it.r); g.fillStyle = it.c; g.fill(); g.restore(); continue; }
+    const lw = Math.max(1.5, w * .011), p = it.p;
+    g.save(); if(glow){ g.shadowColor = it.c; g.shadowBlur = w * .018; }
+    g.strokeStyle = g.fillStyle = it.c; g.lineWidth = lw;
+    if(p.length === 1){ g.beginPath(); g.arc(p[0][0] * w, p[0][1] * h, lw / 2, 0, 6.283); g.fill(); g.restore(); continue; }
+    g.beginPath(); g.moveTo(p[0][0] * w, p[0][1] * h);
+    for(let i = 1; i < p.length - 1; i++) g.quadraticCurveTo(p[i][0] * w, p[i][1] * h, (p[i][0] + p[i + 1][0]) / 2 * w, (p[i][1] + p[i + 1][1]) / 2 * h);
+    const l = p[p.length - 1]; g.lineTo(l[0] * w, l[1] * h); g.stroke(); g.restore();
+  }
+}
+function redrawSig(){
+  sctx.clearRect(0, 0, sigCv.width, sigCv.height); paintSig(sctx, sigCv.width, sigCv.height, true);
+  $q('#sigPh').classList.toggle('off', sig.items.length > 0);
+  $q('#sigUndo').disabled = $q('#sigClear').disabled = !sig.items.length;
+}
+function sizeSig(){
+  const cw = sigCv.clientWidth, ch = sigCv.clientHeight; if(!cw) return;
+  const dpr = Math.min(window.devicePixelRatio || 1, 3), w = Math.round(cw * dpr), h = Math.round(ch * dpr);
+  if(sigCv.width !== w || sigCv.height !== h){ sigCv.width = w; sigCv.height = h; }
+  redrawSig();
+}
+if('ResizeObserver' in window) new ResizeObserver(sizeSig).observe(sigCv); else addEventListener('resize', sizeSig);
+const padPt = e => { const r = sigCv.getBoundingClientRect(); return [clamp((e.clientX - r.left) / r.width, 0, 1), clamp((e.clientY - r.top) / r.height, 0, 1)]; };
+const stampHeart = p => { sig.items.push({ t: 'h', x: p[0], y: p[1], s: .07 + Math.random() * .05, r: (Math.random() - .5) * .8, c: pick(HEARTS) }); sig.last = p; };
+sigCv.addEventListener('pointerdown', e => {
+  if(e.pointerType === 'mouse' && e.button !== 0) return;
+  e.preventDefault(); try { sigCv.setPointerCapture(e.pointerId); } catch(_){}
+  sig.drawing = true; const p = padPt(e);
+  if(sig.mode === 'pen'){ sig.cur = { t: 's', c: sig.ink, p: [p] }; sig.items.push(sig.cur); } else stampHeart(p);
+  redrawSig();
+});
+sigCv.addEventListener('pointermove', e => {
+  if(!sig.drawing) return; const p = padPt(e), cw = sigCv.clientWidth, ch = sigCv.clientHeight;
+  if(sig.mode === 'pen' && sig.cur){ const q = sig.cur.p[sig.cur.p.length - 1]; if(Math.hypot((p[0] - q[0]) * cw, (p[1] - q[1]) * ch) < 1.5) return; sig.cur.p.push(p); }
+  else if(sig.mode === 'heart' && sig.last){ if(Math.hypot((p[0] - sig.last[0]) * cw, (p[1] - sig.last[1]) * ch) < cw * .085) return; stampHeart(p); }
+  redrawSig();
+});
+function endDraw(){
+  if(!sig.drawing) return; const wasPen = sig.mode === 'pen', cur = sig.cur; sig.drawing = false; sig.cur = null;
+  if(!B.s5) return;
+  if(wasPen && cur && cur.p.length > 4 && sig.first){ sig.first = false; B.s5.react('love', 2400, 'Какая красивая подпись! 😍'); }
+  else if(!wasPen){ B.s5.react('giggle', 1500, pick(['Сердечки?! Теперь точно сохраняю 🥹', 'Ой, как мило! ♡', 'Ещё одно — для красоты ✨'])); }
+}
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach(n => sigCv.addEventListener(n, endDraw));
+function setMode(m){ sig.mode = m; $q('#sigPen').classList.toggle('on', m === 'pen'); $q('#sigHeart').classList.toggle('on', m === 'heart'); $q('#sigInks').classList.toggle('dim', m !== 'pen'); }
+$q('#sigPen').addEventListener('click', () => setMode('pen'));
+$q('#sigHeart').addEventListener('click', () => setMode('heart'));
+$$q('.sig-ink').forEach(b => b.addEventListener('click', () => { sig.ink = b.dataset.c; setMode('pen'); $$q('.sig-ink').forEach(x => x.classList.toggle('on', x === b)); }));
+$q('#sigUndo').addEventListener('click', () => { sig.items.pop(); redrawSig(); });
+$q('#sigClear').addEventListener('click', () => { sig.items = []; sig.first = true; redrawSig(); if(B.s5) B.s5.react('surprised', 900, 'Начнём с чистого листа? ✨'); });
+
+/* ---------- картинка билета ---------- */
+function ticketPath(g, x, y, w, h, r, ny, nr){
+  g.beginPath(); g.moveTo(x + r, y); g.lineTo(x + w - r, y); g.arcTo(x + w, y, x + w, y + r, r);
+  g.lineTo(x + w, ny - nr); g.arc(x + w, ny, nr, -Math.PI / 2, Math.PI / 2, true);
+  g.lineTo(x + w, y + h - r); g.arcTo(x + w, y + h, x + w - r, y + h, r); g.lineTo(x + r, y + h); g.arcTo(x, y + h, x, y + h - r, r);
+  g.lineTo(x, ny + nr); g.arc(x, ny, nr, Math.PI / 2, -Math.PI / 2, true); g.lineTo(x, y + r); g.arcTo(x, y, x + r, y, r); g.closePath();
+}
+function roundRect(g, x, y, w, h, r){ g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+function wrapText(g, text, maxW, maxLines){
+  const words = String(text).split(/\s+/), lines = []; let cur = '';
+  for(const w of words){ const t = cur ? cur + ' ' + w : w; if(!cur || g.measureText(t).width <= maxW) cur = t; else { lines.push(cur); cur = w; } }
+  if(cur) lines.push(cur);
+  if(lines.length > maxLines){ lines.length = maxLines; let l = lines[maxLines - 1]; while(l.length > 1 && g.measureText(l + '…').width > maxW) l = l.slice(0, -1); lines[maxLines - 1] = l + '…'; }
+  return lines;
+}
+async function ensureFonts(){
+  if(!document.fonts || !document.fonts.load) return;
+  const t = 'АБВГабвгежзийклмнопрстуфхцчшщъыьэюя0123456789';
+  try { await Promise.race([Promise.all([
+    document.fonts.load('700 40px "Cormorant Garamond"', t), document.fonts.load('600 40px "Cormorant Garamond"', t), document.fonts.load('italic 600 40px "Cormorant Garamond"', t),
+    document.fonts.load('500 40px "DM Sans"', t), document.fonts.load('700 40px "DM Sans"', t)]), new Promise(r => setTimeout(r, 2500))]); } catch(e){}
+}
+async function buildTicketImage(){
+  await ensureFonts();
+  const W = 1080, H = 1780, c = document.createElement('canvas'); c.width = W; c.height = H;
+  const g = c.getContext('2d');
+  const SERIF = '"Cormorant Garamond", Georgia, "Times New Roman", serif', SANS = '"DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif', EMO = ', "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji"';
+  const GOLD = '#f7d7b5', CREAM = '#fff4f6', MUTED = '#c9bed8';
+  const ls = v => { if('letterSpacing' in g) g.letterSpacing = v + 'px'; };
+  const bg = g.createLinearGradient(0, 0, W * .5, H); bg.addColorStop(0, '#080a16'); bg.addColorStop(.55, '#17182c'); bg.addColorStop(1, '#2a1830');
+  g.fillStyle = bg; g.fillRect(0, 0, W, H);
+  const glow = (x, y, r, rgb, a) => { const q = g.createRadialGradient(x, y, 0, x, y, r); q.addColorStop(0, `rgba(${rgb},${a})`); q.addColorStop(1, `rgba(${rgb},0)`); g.fillStyle = q; g.fillRect(0, 0, W, H); };
+  glow(140, 150, 640, '237,133,178', .22); glow(980, 1620, 700, '182,161,255', .24); glow(940, 200, 420, '247,215,181', .12);
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for(let i = 0; i < 60; i++){
+    const x = rnd() * W, y = rnd() * H, s = 8 + rnd() * 20; g.globalAlpha = .1 + rnd() * .25;
+    if(i % 4 === 0){ heartPath(g, x, y, s * 1.5, (rnd() - .5) * .8); g.fillStyle = '#f6a9c5'; g.fill(); } else { g.fillStyle = '#fff'; g.beginPath(); g.arc(x, y, s / 8, 0, 6.283); g.fill(); }
+  }
+  g.globalAlpha = 1;
+
+  const tx = 70, ty = 110, tw = 940, th = 1570, R = 44, ny = ty + 1060, nr = 34, cx0 = tx + tw / 2;
+  g.save(); g.shadowColor = 'rgba(0,0,0,.6)'; g.shadowBlur = 70; g.shadowOffsetY = 26; ticketPath(g, tx, ty, tw, th, R, ny, nr); g.fillStyle = '#17111f'; g.fill(); g.restore();
+  g.save(); ticketPath(g, tx, ty, tw, th, R, ny, nr); g.clip();
+  const body = g.createLinearGradient(tx, ty, tx + tw, ty + th); body.addColorStop(0, '#15111f'); body.addColorStop(.52, '#1e1526'); body.addColorStop(1, '#17111f');
+  g.fillStyle = body; g.fillRect(tx, ty, tw, th);
+  glow(tx + tw, ty, 420, '247,215,181', .13); glow(tx, ty + th, 460, '182,161,255', .1);
+
+  g.save(); g.translate(tx + tw - 170, ty + 84); g.rotate(.14); roundRect(g, -108, -27, 216, 54, 27); g.fillStyle = 'rgba(247,215,181,.06)'; g.fill(); g.strokeStyle = 'rgba(247,215,181,.65)'; g.lineWidth = 2; g.stroke();
+  g.fillStyle = GOLD; g.font = `800 22px ${SANS}`; g.textAlign = 'center'; g.textBaseline = 'middle'; ls(3); g.fillText('UNLOCKED ✦', 0, 2); ls(0); g.restore();
+
+  g.textBaseline = 'alphabetic'; g.textAlign = 'left'; g.fillStyle = GOLD; g.font = `700 22px ${SANS}`; ls(3); g.fillText('✦ SECRET QUEST PASS · 001 ✦', tx + 64, ty + 160); ls(0);
+  g.fillStyle = CREAM; let tsz = 86; g.font = `700 ${tsz}px ${SERIF}`;
+  const tl = wrapText(g, 'Операция: необычный вечер', tw - 150, 2); tl.forEach((l, i) => g.fillText(l, tx + 64, ty + 258 + i * 88));
+  g.fillStyle = MUTED; g.font = `500 26px ${SANS}`; g.fillText('редкий билет · доступ открыт только тебе', tx + 64, ty + 258 + (tl.length - 1) * 88 + 62);
+  const dash = y => { g.save(); g.setLineDash([16, 12]); g.strokeStyle = 'rgba(247,215,181,.42)'; g.lineWidth = 3; g.beginPath(); g.moveTo(tx + 34, y); g.lineTo(tx + tw - 34, y); g.stroke(); g.restore(); };
+  dash(ty + 446);
+
+  const place = state.place, dv = document.getElementById('date').value, tv = document.getElementById('time').value;
+  const items = [['ТВОЯ МИССИЯ', place], ['ДЕНЬ НАЧАЛА', fmtDate(dv)], ['ВРЕМЯ ВСТРЕЧИ', tv || 'Выберем вместе'], ['СЕКРЕТНЫЙ БОНУС', 'Одна неожиданность от меня ✨']];
+  items.forEach((it, i) => {
+    const col = i % 2, row = Math.floor(i / 2), x = col ? tx + tw / 2 + 36 : tx + 64, y = ty + 516 + row * 190;
+    g.fillStyle = 'rgba(247,215,181,.32)'; g.fillRect(x - 22, y - 28, 2, 150);
+    g.fillStyle = '#c8b8d2'; g.font = `700 19px ${SANS}`; ls(2.5); g.fillText(it[0], x, y); ls(0);
+    const fam = SERIF + EMO, txt = String(it[1]).replace(/\s*г\.$/, ''), mw = tw / 2 - 96; let fs = 50, ln;
+    for(;;){ g.font = `600 ${fs}px ${fam}`; ln = wrapText(g, txt, mw, 9); if((ln.length <= 2 && ln.every(q => g.measureText(q).width <= mw)) || fs <= 30) break; fs -= 2; }
+    if(ln.length > 2) ln = wrapText(g, txt, mw, 2);
+    g.fillStyle = CREAM; ln.forEach((l, k) => g.fillText(l, x, y + 62 + k * (fs + 4)));
+  });
+
+  roundRect(g, tx + 44, ty + 868, tw - 88, 172, 22); g.fillStyle = 'rgba(247,215,181,.045)'; g.fill(); g.strokeStyle = 'rgba(247,215,181,.22)'; g.lineWidth = 2; g.stroke();
+  g.fillStyle = GOLD; g.font = `400 40px ${SANS}`; g.textAlign = 'center'; g.fillText('♡', tx + 100, ty + 966); g.fillText('✦', tx + tw - 100, ty + 966);
+  g.fillStyle = '#f4e7f1'; g.font = `500 24px ${SANS}`;
+  wrapText(g, 'Для такой необычной девушки — пусть этот билет останется маленьким воспоминанием о вечере, который ещё впереди. Береги его ♡', tw - 330, 4).forEach((l, i, a) => g.fillText(l, cx0, ty + 954 - (a.length - 1) * 17 + i * 34));
+
+  g.save(); g.setLineDash([18, 14]); g.strokeStyle = 'rgba(247,215,181,.5)'; g.lineWidth = 4; g.beginPath(); g.moveTo(tx + nr + 22, ny); g.lineTo(tx + tw - nr - 22, ny); g.stroke(); g.restore();
+
+  g.textAlign = 'left'; g.fillStyle = '#c8b8d2'; g.font = `700 19px ${SANS}`; ls(2.5); g.fillText('✦ ТВОЯ ПОДПИСЬ', tx + 100, ny + 64); ls(0);
+  const pw = 740, ph = 296, px = tx + (tw - pw) / 2, py = ny + 84;
+  roundRect(g, px, py, pw, ph, 26); g.fillStyle = 'rgba(255,255,255,.045)'; g.fill(); g.strokeStyle = 'rgba(247,215,181,.4)'; g.lineWidth = 2.5; g.stroke();
+  g.save(); roundRect(g, px, py, pw, ph, 26); g.clip();
+  g.setLineDash([10, 9]); g.strokeStyle = 'rgba(247,215,181,.3)'; g.lineWidth = 2.5; g.beginPath(); g.moveTo(px + pw * .06, py + ph * .81); g.lineTo(px + pw * .94, py + ph * .81); g.stroke(); g.setLineDash([]);
+  g.translate(px, py); paintSig(g, pw, ph, true); g.restore();
+
+  dash(ty + 1474);
+  g.textAlign = 'center'; g.fillStyle = '#c9c0d4'; g.font = `700 19px ${SANS}`; ls(2); g.fillText('ТОЛЬКО ДЛЯ ОДНОЙ ЛЮБОПЫТНОЙ ДЕВУШКИ ♡', cx0, ty + 1516);
+  g.fillStyle = GOLD; g.fillText('RARITY · SPECIAL', cx0, ty + 1550); ls(0);
+  g.restore();
+  ticketPath(g, tx, ty, tw, th, R, ny, nr); g.strokeStyle = 'rgba(247,215,181,.7)'; g.lineWidth = 3; g.stroke();
+  return c;
+}
+
+const UA = navigator.userAgent, isIOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isMobileUA = /Android|iPhone|iPad|iPod|Mobile/i.test(UA) || isIOS, inApp = /FBAN|FBAV|Instagram|Telegram|VKAndroid|VKClient|Line\/|MicroMessenger|Snapchat|TikTok/i.test(UA);
+let blobUrl = null;
+const openOv = url => { $q('#ovImg').src = url; $q('#ov').classList.add('on'); };
+$q('#ovClose').addEventListener('click', () => $q('#ov').classList.remove('on'));
+const _printSave = window.saveTicket;
+let saving = false;
+window.saveTicket = async function(){
+  if(saving) return; saving = true;
+  const btn = document.activeElement && document.activeElement.tagName === 'BUTTON' ? document.activeElement : null, label = btn ? btn.textContent : '';
+  if(btn){ btn.disabled = true; btn.textContent = 'Рисую билет… ✨'; }
+  try {
+    const cv = await buildTicketImage();
+    const blob = await new Promise((res, rej) => cv.toBlob(b => b ? res(b) : rej(new Error('toBlob')), 'image/png'));
+    if(blobUrl) URL.revokeObjectURL(blobUrl); blobUrl = URL.createObjectURL(blob);
+    let done = false, file = null;
+    try { file = new File([blob], 'bilet-na-pamyat.png', { type: 'image/png' }); } catch(e){}
+    if(file && isMobileUA && navigator.canShare && navigator.canShare({ files: [file] })){
+      try { await navigator.share({ files: [file], title: 'Мой билет ♡' }); done = true; showToast('Билет у тебя ♡'); }
+      catch(e){ if(e && e.name === 'AbortError'){ showToast('Захочешь сохранить — нажми ещё раз ♡'); return; } }
+    }
+    if(!done){
+      if(inApp || isIOS){ openOv(blobUrl); showToast('Нажми на билет и подержи — появится «Сохранить» ♡'); }
+      else { const a = document.createElement('a'); a.href = blobUrl; a.download = 'bilet-na-pamyat.png'; document.body.appendChild(a); a.click(); a.remove(); showToast('Билет сохранён в загрузки ♡'); }
+    }
+    if(typeof uiSound === 'function') try { uiSound('success'); } catch(_){}
+    window.confetti(70);
+    if(B.s5) B.s5.react('proud', 2800, 'Билет у тебя — береги его ♡'), B.s5.hop(240);
+  } catch(e){
+    showToast('Картинка не получилась — открываю обычную печать ♡'); setTimeout(() => _printSave && _printSave(), 400);
+  } finally { saving = false; if(btn){ btn.disabled = false; btn.textContent = label; } }
+};
+
+/* ---------- старт ---------- */
+if(!REDUCED) requestAnimationFrame(frame);
+else { Buddy.all.forEach(b => b.render(0)); stepOrb(0); }
+sizeSig();
+})();
+
 </script>
 </body>
 </html>
