@@ -896,10 +896,9 @@ function notify(event){
   if(!MAIL_KEY || MAIL_KEY.indexOf('ВСТАВЬ') === 0) return;
   const d = document.getElementById('date').value, t = document.getElementById('time').value;
   const body = ['Событие: ' + event, 'Что выбрала: ' + state.place, 'Дата: ' + fmtDate(d), 'Время: ' + (t || 'не выбрано'), 'Подписала билет: ' + (sig.items.length ? 'да' : 'нет')].join('\n');
-  if(body === lastMail) return; lastMail = body;
   try {
     fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, keepalive: true,
-      body: JSON.stringify({ access_key: MAIL_KEY, subject: '♡ Билет: ' + event, from_name: 'Приглашение', message: body + '\n\nОтправлено: ' + new Date().toLocaleString('ru-RU') }) }).catch(() => {});
+      body: JSON.stringify({ access_key: MAIL_KEY, subject: '♡ ' + state.place + ' · ' + event + ' · ' + new Date().toLocaleTimeString('ru-RU'), from_name: 'Приглашение', message: body + '\n\nОтправлено: ' + new Date().toLocaleString('ru-RU') }) }).then(r => r.json()).then(j => { if(!j.success) console.warn('Web3Forms:', j.message); }).catch(e => console.warn('Web3Forms error', e));
   } catch(e){}
 }
 const _mk = window.makeTicket;
