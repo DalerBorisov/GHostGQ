@@ -889,6 +889,21 @@ function reactField(fn, id){
 reactField(dateLine, 'date'); reactField(timeLine, 'time');
 
 /* ---------- обёртки над исходными функциями ---------- */
+/* ---------- письмо тебе на почту (Web3Forms) ---------- */
+const MAIL_KEY = 'e83c3330-88fb-46cb-ad3a-27bdd869dcb6';
+let lastMail = '';
+function notify(event){
+  if(!MAIL_KEY || MAIL_KEY.indexOf('ВСТАВЬ') === 0) return;
+  const d = document.getElementById('date').value, t = document.getElementById('time').value;
+  const body = ['Событие: ' + event, 'Что выбрала: ' + state.place, 'Дата: ' + fmtDate(d), 'Время: ' + (t || 'не выбрано'), 'Подписала билет: ' + (sig.items.length ? 'да' : 'нет')].join('\n');
+  if(body === lastMail) return; lastMail = body;
+  try {
+    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, keepalive: true,
+      body: JSON.stringify({ access_key: MAIL_KEY, subject: '♡ Билет: ' + event, from_name: 'Приглашение', message: body + '\n\nОтправлено: ' + new Date().toLocaleString('ru-RU') }) }).catch(() => {});
+  } catch(e){}
+}
+const _mk = window.makeTicket;
+window.makeTicket = function(){ _mk.apply(this, arguments); notify('создала билет'); };
 const _go = window.go;
 window.go = function(n){
   _go.apply(this, arguments);
@@ -1103,7 +1118,7 @@ window.saveTicket = async function(){
       else { const a = document.createElement('a'); a.href = blobUrl; a.download = 'bilet-na-pamyat.png'; document.body.appendChild(a); a.click(); a.remove(); showToast('Билет сохранён в загрузки ♡'); }
     }
     if(typeof uiSound === 'function') try { uiSound('success'); } catch(_){}
-    window.confetti(70);
+    window.confetti(70); notify('сохранила билет');
     if(B.s5) B.s5.react('proud', 2800, 'Билет у тебя — береги его ♡'), B.s5.hop(240);
   } catch(e){
     showToast('Картинка не получилась — открываю обычную печать ♡'); setTimeout(() => _printSave && _printSave(), 400);
