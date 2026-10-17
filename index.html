@@ -10,6 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <title>Только для тебя — маленькое чудо ♡</title>
 <meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23f6a9c5' d='M16 28S3 19.6 3 11.2C3 7 6 4.5 9.4 4.5c2.6 0 5 1.6 6.6 4 1.6-2.4 4-4 6.6-4C26 4.5 29 7 29 11.2 29 19.6 16 28 16 28z'/%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Только для тебя — маленькое чудо ♡">
+<meta property="og:description" content="Маленькое романтическое приглашение, созданное специально для тебя. ♡">
+<meta name="twitter:card" content="summary">
 <style>
 :root{
   --night:#10091c;--plum:#24112f;--pink:#ff7da8;--rose:#ffb4c9;--cream:#fff5f7;
@@ -104,7 +111,7 @@ h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(32px,5vw,52px)
 .toast.show{opacity:1;transform:translate(-50%,0) scale(1)}
 .progress{width:min(1060px,calc(100% - 32px));height:2px;background:#ffffff13;margin:0 auto 6px;border-radius:9px;overflow:hidden}
 .progress span{display:block;height:100%;width:25%;background:linear-gradient(90deg,#ff8eaf,#d3b0ff);transition:width .4s}
-.back-btn{margin-top:15px;background:none;border:0;color:#c7b1cc;padding:10px}
+.back-btn{margin-top:15px;background:none;border:0;color:#c7b1cc;padding:10px 14px;min-height:44px}
 .back-btn:hover{color:#fff}
 
 .sound-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff24;background:#ffffff0a;color:#f8dce8;border-radius:999px;padding:9px 13px;font-size:12px;white-space:nowrap}
@@ -252,6 +259,9 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
 .sig-inks.dim{opacity:.35}
 .sig-ink{width:28px;height:28px;padding:0;border-radius:50%;border:2px solid #ffffffb0;transition:transform .2s,box-shadow .2s;touch-action:manipulation}
 .sig-ink.on{transform:scale(1.14);box-shadow:0 0 0 3px #f7d7b566}
+.sig-ink{position:relative}.sig-ink:before{content:"";position:absolute;inset:-8px;border-radius:50%}
+button,.choice{touch-action:manipulation}
+h1:focus,h2:focus{outline:none}
 
 .ov{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;flex-direction:column;gap:16px;overflow:auto;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:#090b18ec}
 .ov.on{display:flex}
@@ -261,6 +271,7 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
 </style>
 </head>
 <body>
+<noscript><p style="margin:0;padding:24px;text-align:center;color:#f8eaf1;background:#10091c;font:18px/1.6 Georgia,serif">Чтобы увидеть приглашение, включи JavaScript в браузере ♡</p></noscript>
 <div class="bg"><i class="glow" id="glow"></i></div><div id="stars"></div>
 <header class="topbar">
   <div class="brand"><span class="brandmark">♡</span><span>A LITTLE SECRET</span></div>
@@ -557,7 +568,14 @@ function downloadInvite(){
     location:state.place
   });
   // Opens a calendar event form in Google Calendar. The user reviews and presses Save.
-  window.open('https://calendar.google.com/calendar/render?'+params.toString(),'_blank','noopener');
+  if(/iPhone|iPad|iPod|Macintosh/.test(navigator.userAgent)){
+    const stamp=new Date().toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+    const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Only for you//RU','BEGIN:VEVENT','UID:'+Date.now()+'@only-for-you','DTSTAMP:'+stamp,
+      'DTSTART:'+icsDate(startDate,startTime),'DTEND:'+icsDate(endDate,endTime),'SUMMARY:'+escapeICS('♡ Свидание — '+state.place),
+      'LOCATION:'+escapeICS(state.place),'DESCRIPTION:'+escapeICS(details),'END:VEVENT','END:VCALENDAR'].join('\r\n');
+    const url=URL.createObjectURL(new Blob([ics],{type:'text/calendar;charset=utf-8'})),a=document.createElement('a');
+    a.href=url;a.download='svidanie.ics';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);
+  } else window.open('https://calendar.google.com/calendar/render?'+params.toString(),'_blank','noopener');
   showToast('Проверь детали и сохрани дату в календаре ♡');
 }
 document.addEventListener('click',e=>{if(e.target.closest('button')&&!e.target.closest('#soundToggle'))uiSound()});
@@ -910,10 +928,22 @@ function notify(event){
   send(1);
 }
 const _mk = window.makeTicket;
-window.makeTicket = function(){ _mk.apply(this, arguments); notify('создала билет'); };
+window.makeTicket = function(){
+  const dv = document.getElementById('date'), v = dv.value;
+  if(v && dv.min && v < dv.min){ showToast('Эта дата уже прошла — выбери, пожалуйста, другую ♡'); dv.focus(); return; }
+  _mk.apply(this, arguments); notify('создала билет');
+};
 const _go = window.go;
-window.go = function(n){
+try { history.replaceState({ s: 1 }, ''); } catch(e){}
+addEventListener('popstate', e => { const n = e.state && e.state.s; if(n && n !== state.screen) window.go(n, true); });
+window.go = function(n, fromPop){
+  const prev = state.screen;
   _go.apply(this, arguments);
+  if(n !== prev){
+    if(!fromPop){ try { history.pushState({ s: n }, ''); } catch(e){} }
+    const hd = document.querySelector('#s' + n + ' h1, #s' + n + ' h2');
+    if(hd){ hd.tabIndex = -1; hd.focus({ preventScroll: true }); }
+  }
   const now = performance.now();
   if(n === 1 && B.hero) B.hero.react('wink', 1300);
   if(n === 2 && B.s2){ B.s2.react('surprised', 900); B.s2.hop(200); }
