@@ -234,7 +234,8 @@ h2{font-size:clamp(42px,6vw,62px);line-height:.98}
 .ticket-sign-k{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#c8b8d2;margin-bottom:9px}
 .sig-pad-wrap{position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(150deg,#ffffff0d,#ffffff03);box-shadow:inset 0 0 0 1px #f7d7b540}
 .sig-pad-wrap:after{content:"";position:absolute;left:6%;right:6%;bottom:19%;border-top:1px dashed #f7d7b54d;pointer-events:none}
-#sigPad{display:block;width:100%;aspect-ratio:5/2;touch-action:none;cursor:crosshair;position:relative;z-index:1}
+#sigPad{display:block;width:100%;aspect-ratio:2/1;touch-action:none;cursor:crosshair;position:relative;z-index:1}
+@media(max-width:520px){#sigPad{aspect-ratio:3/2}}
 .sig-ph{position:absolute;inset:0 0 12% 0;display:grid;place-items:center;text-align:center;padding:0 12px;font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:clamp(21px,3.4vw,27px);color:#f7d7b585;pointer-events:none;animation:phPulse 2.6s ease-in-out infinite}
 .sig-ph.off{display:none}
 @keyframes phPulse{50%{opacity:.5}}
@@ -891,15 +892,22 @@ reactField(dateLine, 'date'); reactField(timeLine, 'time');
 /* ---------- обёртки над исходными функциями ---------- */
 /* ---------- письмо тебе на почту (Web3Forms) ---------- */
 const MAIL_KEY = 'e83c3330-88fb-46cb-ad3a-27bdd869dcb6';
-let lastMail = '';
+const MAIL_DEBUG = /[?&]debug/.test(location.search);
+function mailNote(t){ if(MAIL_DEBUG) showToast(t); console.log('[mail]', t); }
 function notify(event){
   if(!MAIL_KEY || MAIL_KEY.indexOf('ВСТАВЬ') === 0) return;
   const d = document.getElementById('date').value, t = document.getElementById('time').value;
-  const body = ['Событие: ' + event, 'Что выбрала: ' + state.place, 'Дата: ' + fmtDate(d), 'Время: ' + (t || 'не выбрано'), 'Подписала билет: ' + (sig.items.length ? 'да' : 'нет')].join('\n');
-  try {
-    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, keepalive: true,
-      body: JSON.stringify({ access_key: MAIL_KEY, subject: '♡ ' + state.place + ' · ' + event + ' · ' + new Date().toLocaleTimeString('ru-RU'), from_name: 'Приглашение', message: body + '\n\nОтправлено: ' + new Date().toLocaleString('ru-RU') }) }).then(r => r.json()).then(j => { if(!j.success) console.warn('Web3Forms:', j.message); }).catch(e => console.warn('Web3Forms error', e));
-  } catch(e){}
+  const body = ['Событие: ' + event, 'Что выбрала: ' + state.place, 'Дата: ' + fmtDate(d), 'Время: ' + (t || 'не выбрано'), 'Подписала билет: ' + (sig.items.length ? 'да' : 'нет'), '', 'Отправлено: ' + new Date().toLocaleString('ru-RU')].join('\n');
+  const subject = '♡ ' + state.place + ' · ' + event + ' · ' + new Date().toLocaleTimeString('ru-RU');
+  const send = tries => {
+    const fd = new FormData();
+    fd.append('access_key', MAIL_KEY); fd.append('subject', subject); fd.append('from_name', 'Приглашение'); fd.append('message', body);
+    fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd })
+      .then(r => r.json().catch(() => ({ success: false, message: 'HTTP ' + r.status })))
+      .then(j => { if(j.success) mailNote('✉ письмо ушло'); else { mailNote('✉ ошибка: ' + (j.message || 'неизвестно')); if(tries > 0) setTimeout(() => send(tries - 1), 2500); } })
+      .catch(e => { mailNote('✉ не отправилось: ' + e); if(tries > 0) setTimeout(() => send(tries - 1), 2500); });
+  };
+  send(1);
 }
 const _mk = window.makeTicket;
 window.makeTicket = function(){ _mk.apply(this, arguments); notify('создала билет'); };
